@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7 מסכים - Landing Page</title>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/screens.css">
+    <link rel="stylesheet" href="styles/animations.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Progress Bar -->
+        <div class="progress-bar" id="progressBar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <!-- Screen 1: Logo -->
+        <div class="screen active" id="screen1" data-screen="1">
+            <div class="screen-content">
+                <div class="logo-container">
+                    <div class="logo-placeholder">LOGO</div>
+                    <div class="loading-spinner"></div>
+                    <p>טוען...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 2: Pain Identification -->
+        <div class="screen" id="screen2" data-screen="2">
+            <div class="screen-content">
+                <div class="content-wrapper">
+                    <h1 class="screen-title">זיהוי הכאב</h1>
+                    <div class="hero-image">
+                        <div class="image-placeholder">תמונה: זיהוי כאב</div>
+                    </div>
+                    <div class="text-content">
+                        <p class="main-text">כאן יהיה הטקסט שלך מפיגמה על זיהוי הכאב...</p>
+                        <p class="sub-text">טקסט משני נוסף...</p>
+                    </div>
+                </div>
+                <div class="navigation">
+                    <button class="nav-btn next-btn" onclick="nextScreen()">
+                        <span>המשך</span>
+                        <span class="arrow">←</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 3: Value Proposition -->
+        <div class="screen" id="screen3" data-screen="3">
+            <div class="screen-content">
+                <div class="content-wrapper">
+                    <h1 class="screen-title">הצעת הערך</h1>
+                    <div class="value-illustration">
+                        <div class="image-placeholder">תמונה: הצעת ערך</div>
+                    </div>
+                    <div class="text-content">
+                        <p class="main-text">כאן יהיה הטקסט שלך מפיגמה על הצעת הערך...</p>
+                        <ul class="benefits-list">
+                            <li>יתרון ראשון</li>
+                            <li>יתרון שני</li>
+                            <li>יתרון שלישי</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="navigation">
+                    <button class="nav-btn prev-btn" onclick="prevScreen()">
+                        <span class="arrow">→</span>
+                        <span>חזרה</span>
+                    </button>
+                    <button class="nav-btn next-btn" onclick="nextScreen()">
+                        <span>המשך</span>
+                        <span class="arrow">←</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 4: Parents Calculator -->
+        <div class="screen" id="screen4" data-screen="4">
+            <div class="screen-content">
+                <div class="content-wrapper">
+                    <h1 class="screen-title">מחשבון הורים</h1>
+                    <div class="calculator-container">
+                        <div class="calculator-image">
+                            <div class="image-placeholder">תמונה: מחשבון</div>
+                        </div>
+                        <div class="calculator-form">
+                            <div class="input-group">
+                                <label>גיל הילד:</label>
+                                <input type="number" id="childAge" min="1" max="18" placeholder="הכנס גיל" value="8">
+                            </div>
+                            <div class="input-group">
+                                <label>שעות מסך ביום:</label>
+                                <input type="number" id="screenTime" min="0" max="24" placeholder="הכנס שעות" value="4">
+                            </div>
+                            <button class="calculate-btn" onclick="calculateDemo()">חשב</button>
+                            <div class="result" id="calculatorResult"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="navigation">
+                    <button class="nav-btn prev-btn" onclick="prevScreen()">
+                        <span class="arrow">→</span>
+                        <span>חזרה</span>
+                    </button>
+                    <button class="nav-btn next-btn" onclick="nextScreen()">
+                        <span>המשך</span>
+                        <span class="arrow">←</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 5: Challenge Animation -->
+        <div class="screen" id="screen5" data-screen="5">
+            <div class="screen-content">
+                <div class="content-wrapper">
+                    <h1 class="screen-title">האתגר</h1>
+                    <div class="animation-container">
+                        <div class="challenge-animation">🎯 אנימציה תופיע כאן</div>
+                    </div>
+                    <div class="text-content">
+                        <p class="main-text">תיאור האתגר מפיגמה...</p>
+                        <div class="challenge-points">
+                            <div class="point">📱 נקודה ראשונה</div>
+                            <div class="point">⏰ נקודה שנייה</div>
+                            <div class="point">👨‍👩‍👧‍👦 נקודה שלישית</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="navigation">
+                    <button class="nav-btn prev-btn" onclick="prevScreen()">
+                        <span class="arrow">→</span>
+                        <span>חזרה</span>
+                    </button>
+                    <button class="nav-btn next-btn" onclick="nextScreen()">
+                        <span>המשך</span>
+                        <span class="arrow">←</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 6: Registration -->
+        <div class="screen" id="screen6" data-screen="6">
+            <div class="screen-content">
+                <div class="content-wrapper">
+                    <h1 class="screen-title">הרשמה</h1>
+                    <div class="registration-form">
+                        <div class="input-group">
+                            <label>שם מלא:</label>
+                            <input type="text" placeholder="הכנס שם מלא" value="ישראל ישראלי">
+                        </div>
+                        <div class="input-group">
+                            <label>אימייל:</label>
+                            <input type="email" placeholder="הכנס אימייל" value="israel@example.com">
+                        </div>
+                        <div class="input-group">
+                            <label>טלפון:</label>
+                            <input type="tel" placeholder="הכנס מספר טלפון" value="050-1234567">
+                        </div>
+                        <div class="input-group">
+                            <label>גיל הילד:</label>
+                            <input type="number" min="1" max="18" placeholder="גיל הילד" value="8">
+                        </div>
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox" checked>
+                                אני מסכים/ה לתנאי השימוש
+                            </label>
+                        </div>
+                        <button class="submit-btn" onclick="submitDemo()">שלח הרשמה</button>
+                    </div>
+                </div>
+                <div class="navigation">
+                    <button class="nav-btn prev-btn" onclick="prevScreen()">
+                        <span class="arrow">→</span>
+                        <span>חזרה</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 7: Research & Testimonials -->
+        <div class="screen" id="screen7" data-screen="7">
+            <div class="screen-content">
+                <div class="content-wrapper">
+                    <h1 class="screen-title">מחקרים ועדויות</h1>
+                    <div class="research-content">
+                        <div class="research-image">
+                            <div class="image-placeholder">תמונה: מחקרים</div>
+                        </div>
+                        <div class="research-text">
+                            <h2>מחקרים מדעיים</h2>
+                            <p>כאן יהיה תוכן המחקרים מפיגמה...</p>
+                        </div>
+                        <div class="testimonials">
+                            <h2>עדויות הורים</h2>
+                            <div class="testimonial">
+                                <p>"עדות מרגשת של הורה מרוצה..."</p>
+                                <span class="author">- שרה כהן</span>
+                            </div>
+                            <div class="testimonial">
+                                <p>"עוד עדות חיובית..."</p>
+                                <span class="author">- דוד לוי</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="success-message">
+                        <div class="check-icon">✓</div>
+                        <h2>תודה על ההרשמה!</h2>
+                        <p>נהיה בקשר בקרוב</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts/app.js"></script>
+</body>
+</html>
