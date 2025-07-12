@@ -22,7 +22,7 @@ function initializeMobileApp() {
     updateActiveSection();
 }
 
-// Section Navigation
+// Section Navigation - Forward Only
 function nextSection() {
     if (currentSection < totalSections - 1) {
         currentSection++;
@@ -30,15 +30,12 @@ function nextSection() {
     }
 }
 
-function prevSection() {
-    if (currentSection > 0) {
-        currentSection--;
-        moveToSection(currentSection);
-    }
-}
+// Remove previous section function - only forward navigation
+// function prevSection() - REMOVED
 
 function goToSection(sectionIndex) {
-    if (sectionIndex >= 0 && sectionIndex < totalSections) {
+    // Only allow forward navigation or same section
+    if (sectionIndex >= currentSection && sectionIndex < totalSections) {
         currentSection = sectionIndex;
         moveToSection(currentSection);
     }
@@ -62,7 +59,7 @@ function updateActiveSection() {
     });
 }
 
-// Touch/Swipe Navigation
+// Touch/Swipe Navigation - Forward Only
 function addTouchNavigation() {
     let startX = 0;
     let startY = 0;
@@ -94,44 +91,35 @@ function addTouchNavigation() {
         // Minimum swipe distance
         const minSwipe = 50;
         
-        // Horizontal swipe is stronger than vertical
+        // Only forward swipe (left swipe in RTL)
         if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > minSwipe) {
             if (diffX > 0) {
                 // Swipe left (next section in RTL)
                 nextSection();
-            } else {
-                // Swipe right (previous section in RTL)
-                prevSection();
             }
+            // Remove backward swipe functionality
         }
     }, { passive: true });
 }
 
-// Keyboard Navigation
+// Keyboard Navigation - Forward Only
 function addKeyboardNavigation() {
     document.addEventListener('keydown', function(e) {
         switch(e.key) {
             case 'ArrowLeft':
+            case 'Space':
+            case 'Enter':
                 nextSection();
                 e.preventDefault();
                 break;
-            case 'ArrowRight':
-                prevSection();
-                e.preventDefault();
-                break;
-            case 'Home':
-                goToSection(0);
-                e.preventDefault();
-                break;
-            case 'End':
-                goToSection(totalSections - 1);
-                e.preventDefault();
-                break;
+            // Remove backward navigation keys
             default:
-                // Number keys 1-7
+                // Number keys 1-7 - only allow forward navigation
                 if (e.key >= '1' && e.key <= '7') {
                     const sectionIndex = parseInt(e.key) - 1;
-                    goToSection(sectionIndex);
+                    if (sectionIndex >= currentSection) {
+                        goToSection(sectionIndex);
+                    }
                     e.preventDefault();
                 }
                 break;
@@ -139,12 +127,15 @@ function addKeyboardNavigation() {
     });
 }
 
-// Dot Navigation
+// Dot Navigation - Forward Only
 function addDotNavigation() {
     const dots = document.querySelectorAll('.dot');
     dots.forEach((dot, index) => {
         dot.addEventListener('click', function() {
-            goToSection(index);
+            // Only allow clicking on current or future sections
+            if (index >= currentSection) {
+                goToSection(index);
+            }
         });
     });
 }

@@ -83,13 +83,6 @@ body {
 }
 
 /* Navigation Buttons */
-.nav-buttons {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-}
-
 .nav-btn {
     background: rgba(255, 255, 255, 0.9);
     border: none;
@@ -104,6 +97,8 @@ body {
     backdrop-filter: blur(10px);
     min-width: 100px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    display: block;
 }
 
 .nav-btn:hover {
@@ -116,10 +111,17 @@ body {
     transform: translateY(0);
 }
 
-/* Single button centering */
-.section:first-child .nav-btn,
-.section:last-child .nav-btn {
-    margin: 0 auto;
+/* Final message styling */
+.final-message {
+    text-align: center;
+    padding: 20px;
+}
+
+.final-message p {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 /* Touch gestures indicator (optional) */
