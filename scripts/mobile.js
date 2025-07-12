@@ -5,10 +5,17 @@ const totalSections = 7;
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
     initializeMobileApp();
+    
+    // Auto advance from logo after 3 seconds
+    setTimeout(() => {
+        if (currentSection === 0) {
+            nextSection();
+        }
+    }, 3000);
 });
 
 function initializeMobileApp() {
-    console.log('Mobile app initialized');
+    console.log('Mobile app initialized - 7 sections ready');
     
     // Add touch/swipe navigation
     addTouchNavigation();
@@ -20,6 +27,16 @@ function initializeMobileApp() {
     addDotNavigation();
     
     updateActiveSection();
+    
+    // Debug: Log all sections
+    for (let i = 1; i <= totalSections; i++) {
+        const section = document.getElementById(`section${i}`);
+        if (section) {
+            console.log(`Section ${i}: Found`);
+        } else {
+            console.error(`Section ${i}: Missing!`);
+        }
+    }
 }
 
 // Section Navigation - Forward Only
@@ -45,10 +62,13 @@ function moveToSection(sectionIndex) {
     const container = document.getElementById('sectionsContainer');
     const translateX = -(sectionIndex * 100);
     
-    container.style.transform = `translateX(${translateX}vw)`;
-    updateActiveSection();
-    
-    console.log(`Moved to section ${sectionIndex + 1}`);
+    if (container) {
+        container.style.transform = `translateX(${translateX}vw)`;
+        updateActiveSection();
+        console.log(`Moved to section ${sectionIndex + 1} - translateX: ${translateX}vw`);
+    } else {
+        console.error('sectionsContainer not found!');
+    }
 }
 
 function updateActiveSection() {

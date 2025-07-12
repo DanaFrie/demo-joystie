@@ -1,3 +1,6 @@
+/* Import Montserrat Alternates Font */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@300;400;500;600;700&display=swap');
+
 /* Reset & Base */
 * {
     margin: 0;
@@ -42,7 +45,8 @@ body {
     display: flex;
     width: 700vw; /* 7 sections × 100vw */
     height: 100vh;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(0);
 }
 
 /* Individual Section */
@@ -54,16 +58,82 @@ body {
     flex-direction: column;
     justify-content: space-between;
     position: relative;
+    flex-shrink: 0; /* Prevent sections from shrinking */
 }
 
-/* Section Colors */
-.section:nth-child(1) { background: linear-gradient(135deg, #667eea, #764ba2); }
-.section:nth-child(2) { background: linear-gradient(135deg, #f093fb, #f5576c); }
-.section:nth-child(3) { background: linear-gradient(135deg, #4facfe, #00f2fe); }
-.section:nth-child(4) { background: linear-gradient(135deg, #43e97b, #38f9d7); }
-.section:nth-child(5) { background: linear-gradient(135deg, #fa709a, #fee140); }
-.section:nth-child(6) { background: linear-gradient(135deg, #a8edea, #fed6e3); }
-.section:nth-child(7) { background: linear-gradient(135deg, #ff9a9e, #fecfef); }
+/* Section Colors - Fixed selectors */
+#section1 { background: linear-gradient(135deg, #667eea, #764ba2); }
+#section2 { background: linear-gradient(135deg, #f093fb, #f5576c); }
+#section3 { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+#section4 { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+#section5 { background: linear-gradient(135deg, #fa709a, #fee140); }
+#section6 { background: linear-gradient(135deg, #a8edea, #fed6e3); }
+#section7 { background: linear-gradient(135deg, #ff9a9e, #fecfef); }
+
+/* Splash Screen Styling */
+.splash-screen {
+    position: relative;
+    overflow: hidden;
+}
+
+.splash-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Use same gradient as section background */
+    background: inherit;
+    border-radius: 20px;
+}
+
+.splash-background::before {
+    content: '';
+    position: absolute;
+    top: -74px;
+    left: -98px;
+    width: 359px;
+    height: 359px;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.splash-background::after {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    left: -76px;
+    width: 488px;
+    height: 437px;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.logo-group {
+    position: relative;
+    text-align: center;
+    z-index: 10;
+}
+
+.joystie-logo {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-weight: 600;
+    font-size: 39.89px;
+    line-height: 121.21%;
+    color: #FFFCF8;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.logo-underline {
+    width: 55.45px;
+    height: 9.79px;
+    background: #FFFCF8;
+    border: 3.26px solid #FFFCF8;
+    transform: rotate(1deg);
+    margin: 0 auto;
+    border-radius: 2px;
+}
 
 /* Section Content */
 .section-content {
