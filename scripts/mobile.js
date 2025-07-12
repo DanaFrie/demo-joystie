@@ -1,5 +1,5 @@
-// Mobile Navigation Logic
-let currentSection = 0;
+// Mobile Navigation Logic - Fixed order
+let currentSection = 0; // Start at 0 (section1)
 const totalSections = 7;
 
 // Initialize
@@ -16,6 +16,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function initializeMobileApp() {
     console.log('Mobile app initialized - 7 sections ready');
+    
+    // Force start at section 1
+    currentSection = 0;
+    moveToSection(0);
     
     // Add touch/swipe navigation
     addTouchNavigation();
@@ -60,12 +64,19 @@ function goToSection(sectionIndex) {
 
 function moveToSection(sectionIndex) {
     const container = document.getElementById('sectionsContainer');
+    
+    // Ensure we're within bounds
+    if (sectionIndex < 0) sectionIndex = 0;
+    if (sectionIndex >= totalSections) sectionIndex = totalSections - 1;
+    
+    // Calculate correct translation
     const translateX = -(sectionIndex * 100);
     
     if (container) {
         container.style.transform = `translateX(${translateX}vw)`;
+        currentSection = sectionIndex; // Update current section
         updateActiveSection();
-        console.log(`Moved to section ${sectionIndex + 1} - translateX: ${translateX}vw`);
+        console.log(`Moved to section ${sectionIndex + 1} (index: ${sectionIndex}) - translateX: ${translateX}vw`);
     } else {
         console.error('sectionsContainer not found!');
     }

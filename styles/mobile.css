@@ -61,22 +61,14 @@ body {
     flex-shrink: 0; /* Prevent sections from shrinking */
 }
 
-/* Section Colors - Fixed selectors */
-#section1 { background: linear-gradient(135deg, #667eea, #764ba2); }
-#section2 { background: linear-gradient(135deg, #f093fb, #f5576c); }
-#section3 { background: linear-gradient(135deg, #4facfe, #00f2fe); }
-#section4 { background: linear-gradient(135deg, #43e97b, #38f9d7); }
-#section5 { background: linear-gradient(135deg, #fa709a, #fee140); }
-#section6 { background: linear-gradient(135deg, #a8edea, #fed6e3); }
-#section7 { background: linear-gradient(135deg, #ff9a9e, #fecfef); }
-
-/* Splash Screen Styling - With SVG background */
-.splash-screen {
-    position: relative;
-    overflow: hidden;
+/* Section Colors - All sections use same background */
+#section1, #section2, #section3, #section4, #section5, #section6, #section7 { 
+    background: transparent; /* No background, will use SVG */
 }
 
-.splash-background {
+/* Universal background for all sections */
+.section::before {
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -86,7 +78,16 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    z-index: -1;
 }
+
+/* Splash Screen Styling - Remove duplicate background */
+.splash-screen {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Remove splash-background since all sections now have the same background */
 
 .splash-background::before {
     content: '';
