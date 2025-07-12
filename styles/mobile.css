@@ -70,7 +70,7 @@ body {
 #section6 { background: linear-gradient(135deg, #a8edea, #fed6e3); }
 #section7 { background: linear-gradient(135deg, #ff9a9e, #fecfef); }
 
-/* Splash Screen Styling */
+/* Splash Screen Styling - With SVG background */
 .splash-screen {
     position: relative;
     overflow: hidden;
@@ -82,9 +82,10 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    /* Use same gradient as section background */
-    background: inherit;
-    border-radius: 20px;
+    background-image: url('../assets/images/splash1-bg.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .splash-background::before {
