@@ -1,6 +1,7 @@
-// Vercel Edge Function for Excel OneDrive Integration
+import { google } from 'googleapis';
+
 export default async function handler(req, res) {
-  // Enable CORS
+  // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -16,108 +17,84 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { name, phone, email, triggerTime } = req.body;
+    const { name, phone, email, timestamp } = req.body;
 
-    // Validate required fields
+    // Validate input
     if (!name || !phone || !email) {
       return res.status(400).json({ 
         error: 'Missing required fields: name, phone, email' 
       });
     }
 
-    // Get Microsoft Graph access token
-    const accessToken = await getAccessToken();
-    
-    // Add row to Excel
-    const result = await addRowToExcel(accessToken, {
+    // Google service account credentials
+    const credentials = {
+      type: 'service_account',
+      project_id: process.env.GOOGLE_PROJECT_ID,
+      private_key_id: process.env.GOOGLE_PRIVATE_KEY_ID,
+      private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+      client_email: process.env.GOOGLE_CLIENT_EMAIL,
+      client_id: process.env.GOOGLE_CLIENT_ID,
+      auth_uri: 'https://accounts.google.com/o/oauth2/auth',
+      token_uri: 'https://oauth2.googleapis.com/token',
+      auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
+      client_x509_cert_url: `https://www.googleapis.com/robot/v1/metadata/x509/${process.env.GOOGLE_CLIENT_EMAIL}`
+    };
+
+    // Auth
+    const auth = new google.auth.GoogleAuth({
+      credentials,
+      scopes: ['https://www.googleapis.com/auth/spreadsheets']
+    });
+
+    const sheets = google.sheets({ version: 'v4', auth });
+
+    // Prepare data row
+    const now = new Date();
+    const israelTime = now.toLocaleString('he-IL', {
+      timeZone: 'Asia/Jerusalem',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+
+    const rowData = [
+      timestamp || israelTime,
       name,
       phone,
       email,
-      triggerTime: triggerTime || new Date().toISOString()
+      req.headers['user-agent'] || 'Unknown',
+      req.headers['x-forwarded-for'] || req.connection?.remoteAddress || 'Unknown'
+    ];
+
+    // Append to sheet
+    const response = await sheets.spreadsheets.values.append({
+      spreadsheetId: process.env.GOOGLE_SHEET_ID,
+      range: 'Sheet1!A:F',
+      valueInputOption: 'RAW',
+      requestBody: {
+        values: [rowData]
+      }
     });
+
+    console.log(`✅ Registration saved: ${email} at ${israelTime}`);
 
     return res.status(200).json({
       success: true,
-      message: 'Data saved to Excel',
-      timestamp: new Date().toISOString(),
-      result
+      message: 'נשמר בהצלחה',
+      timestamp: israelTime,
+      updatedRows: response.data.updates.updatedRows
     });
 
   } catch (error) {
-    console.error('Excel API Error:', error);
+    console.error('❌ Google Sheets error:', error.message);
+    
     return res.status(500).json({
       success: false,
-      error: 'Failed to save to Excel',
+      error: 'שגיאה בשמירה',
       details: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
-}
-
-// Get access token from Microsoft Graph
-async function getAccessToken() {
-  const tokenUrl = `https://login.microsoftonline.com/${process.env.AZURE_TENANT_ID}/oauth2/v2.0/token`;
-  
-  const params = new URLSearchParams({
-    client_id: process.env.AZURE_CLIENT_ID,
-    client_secret: process.env.AZURE_CLIENT_SECRET,
-    scope: 'https://graph.microsoft.com/.default',
-    grant_type: 'client_credentials'
-  });
-
-  const response = await fetch(tokenUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: params
-  });
-
-  if (!response.ok) {
-    const error = await response.text();
-    throw new Error(`Token request failed: ${error}`);
-  }
-
-  const data = await response.json();
-  return data.access_token;
-}
-
-// Add row to Excel file in OneDrive
-async function addRowToExcel(accessToken, userData) {
-  // Excel file path in OneDrive
-  const excelPath = process.env.EXCEL_FILE_PATH;
-  const worksheetName = process.env.WORKSHEET_NAME; 
-  
-  // Graph API endpoint for Excel
-  const graphUrl = `https://graph.microsoft.com/v1.0/me/drive/root:${excelPath}:/workbook/worksheets('${worksheetName}')/tables('Table1')/rows`;
-
-  // Prepare row data
-  const timestamp = new Date().toLocaleString('he-IL', {
-    timeZone: 'Asia/Jerusalem'
-  });
-
-  const rowData = {
-    values: [[
-      timestamp,
-      userData.name,
-      userData.phone,
-      userData.email,
-      userData.triggerTime
-    ]]
-  };
-
-  const response = await fetch(graphUrl, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${accessToken}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(rowData)
-  });
-
-  if (!response.ok) {
-    const error = await response.text();
-    throw new Error(`Excel API failed: ${response.status} - ${error}`);
-  }
-
-  return await response.json();
 }

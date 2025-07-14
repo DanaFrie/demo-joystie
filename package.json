@@ -1,0 +1,19 @@
+{
+  "name": "demo-7-screens",
+  "version": "1.0.0",
+  "description": "7 מסכים - Landing Page",
+  "dependencies": {
+    "googleapis": "^126.0.1"
+  },
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Static site - no build needed'"
+  },
+  "keywords": [
+    "landing-page",
+    "hebrew",
+    "static"
+  ],
+  "author": "Dana",
+  "license": "MIT"
+}
