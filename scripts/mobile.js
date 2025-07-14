@@ -1,215 +1,301 @@
-// Mobile Navigation Logic - Fixed order
-let currentSection = 0; // Start at 0 (section1)
-const totalSections = 7;
+// Mobile App JavaScript
+let currentScreen = 1;
 
-// Initialize
+// Initialize app
 document.addEventListener('DOMContentLoaded', function() {
-    initializeMobileApp();
+    // Start with screen 1 (logo)
+    showScreen(1);
     
-    // Auto advance from logo after 3 seconds
+    // Auto transition from screen 1 to screen 2 after 3 seconds
     setTimeout(() => {
-        if (currentSection === 0) {
-            nextSection();
-        }
+        fadeOutScreen1();
     }, 3000);
 });
 
-function initializeMobileApp() {
-    console.log('Mobile app initialized - 7 sections ready');
+// Slide button functionality
+let isSliding = false;
+let slideStartX = 0;
+let slideButton = null;
+let slideContainer = null;
+
+// Initialize slide button
+function initSlideButton() {
+    slideButton = document.getElementById('slideButton');
+    slideContainer = document.querySelector('.slide-container');
     
-    // Force start at section 1
-    currentSection = 0;
-    moveToSection(0);
-    
-    // Add touch/swipe navigation
-    addTouchNavigation();
-    
-    // Add keyboard navigation
-    addKeyboardNavigation();
-    
-    // Add dot navigation
-    addDotNavigation();
-    
-    updateActiveSection();
-    
-    // Debug: Log all sections
-    for (let i = 1; i <= totalSections; i++) {
-        const section = document.getElementById(`section${i}`);
-        if (section) {
-            console.log(`Section ${i}: Found`);
-        } else {
-            console.error(`Section ${i}: Missing!`);
-        }
+    if (slideButton && slideContainer) {
+        // Mouse events
+        slideButton.addEventListener('mousedown', startSlide);
+        document.addEventListener('mousemove', handleSlide);
+        document.addEventListener('mouseup', endSlide);
+        
+        // Touch events
+        slideButton.addEventListener('touchstart', startSlide);
+        document.addEventListener('touchmove', handleSlide);
+        document.addEventListener('touchend', endSlide);
     }
 }
 
-// Section Navigation - Forward Only
-function nextSection() {
-    if (currentSection < totalSections - 1) {
-        currentSection++;
-        moveToSection(currentSection);
+function startSlide(e) {
+    if (currentScreen !== 2) return;
+    
+    isSliding = true;
+    slideStartX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
+    slideButton.classList.add('sliding');
+    e.preventDefault();
+}
+
+function handleSlide(e) {
+    if (!isSliding || currentScreen !== 2) return;
+    
+    const currentX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
+    const deltaX = currentX - slideStartX;
+    const containerWidth = slideContainer.offsetWidth;
+    const buttonWidth = slideButton.offsetWidth;
+    const maxSlide = containerWidth - buttonWidth - 10;
+    
+    // Calculate slide position (right to left for RTL)
+    let slidePosition = Math.max(0, Math.min(maxSlide, -deltaX));
+    
+    // Apply position
+    slideButton.style.right = slidePosition + 'px';
+    
+    // Check if slide is complete (80% of the way)
+    if (slidePosition >= maxSlide * 0.8) {
+        completeSlide();
     }
+    
+    e.preventDefault();
 }
 
-// Remove previous section function - only forward navigation
-// function prevSection() - REMOVED
-
-function goToSection(sectionIndex) {
-    // Only allow forward navigation or same section
-    if (sectionIndex >= currentSection && sectionIndex < totalSections) {
-        currentSection = sectionIndex;
-        moveToSection(currentSection);
-    }
-}
-
-function moveToSection(sectionIndex) {
-    const container = document.getElementById('sectionsContainer');
+function endSlide() {
+    if (!isSliding || currentScreen !== 2) return;
     
-    // Ensure we're within bounds
-    if (sectionIndex < 0) sectionIndex = 0;
-    if (sectionIndex >= totalSections) sectionIndex = totalSections - 1;
+    isSliding = false;
+    slideButton.classList.remove('sliding');
     
-    // Calculate correct translation
-    const translateX = -(sectionIndex * 100);
+    // If not completed, snap back
+    const containerWidth = slideContainer.offsetWidth;
+    const buttonWidth = slideButton.offsetWidth;
+    const maxSlide = containerWidth - buttonWidth - 10;
+    const currentPosition = parseInt(slideButton.style.right) || 0;
     
-    if (container) {
-        container.style.transform = `translateX(${translateX}vw)`;
-        currentSection = sectionIndex; // Update current section
-        updateActiveSection();
-        console.log(`Moved to section ${sectionIndex + 1} (index: ${sectionIndex}) - translateX: ${translateX}vw`);
-    } else {
-        console.error('sectionsContainer not found!');
-    }
-}
-
-function updateActiveSection() {
-    // Update progress dots
-    const dots = document.querySelectorAll('.dot');
-    dots.forEach((dot, index) => {
-        dot.classList.toggle('active', index === currentSection);
-    });
-}
-
-// Touch/Swipe Navigation - Forward Only
-function addTouchNavigation() {
-    let startX = 0;
-    let startY = 0;
-    let isDragging = false;
-    
-    document.addEventListener('touchstart', function(e) {
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-        isDragging = true;
-    }, { passive: true });
-    
-    document.addEventListener('touchmove', function(e) {
-        if (!isDragging) return;
+    if (currentPosition < maxSlide * 0.8) {
+        slideButton.style.transition = 'right 0.3s ease';
+        slideButton.style.right = '0px';
         
-        // Prevent scrolling while swiping
-        e.preventDefault();
-    }, { passive: false });
-    
-    document.addEventListener('touchend', function(e) {
-        if (!isDragging) return;
-        isDragging = false;
-        
-        const endX = e.changedTouches[0].clientX;
-        const endY = e.changedTouches[0].clientY;
-        
-        const diffX = startX - endX;
-        const diffY = startY - endY;
-        
-        // Minimum swipe distance
-        const minSwipe = 50;
-        
-        // Only forward swipe (left swipe in RTL)
-        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > minSwipe) {
-            if (diffX > 0) {
-                // Swipe left (next section in RTL)
-                nextSection();
-            }
-            // Remove backward swipe functionality
-        }
-    }, { passive: true });
-}
-
-// Keyboard Navigation - Forward Only
-function addKeyboardNavigation() {
-    document.addEventListener('keydown', function(e) {
-        switch(e.key) {
-            case 'ArrowLeft':
-            case 'Space':
-            case 'Enter':
-                nextSection();
-                e.preventDefault();
-                break;
-            // Remove backward navigation keys
-            default:
-                // Number keys 1-7 - only allow forward navigation
-                if (e.key >= '1' && e.key <= '7') {
-                    const sectionIndex = parseInt(e.key) - 1;
-                    if (sectionIndex >= currentSection) {
-                        goToSection(sectionIndex);
-                    }
-                    e.preventDefault();
-                }
-                break;
-        }
-    });
-}
-
-// Dot Navigation - Forward Only
-function addDotNavigation() {
-    const dots = document.querySelectorAll('.dot');
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', function() {
-            // Only allow clicking on current or future sections
-            if (index >= currentSection) {
-                goToSection(index);
-            }
-        });
-    });
-}
-
-// Mouse wheel navigation (optional)
-function addWheelNavigation() {
-    let isScrolling = false;
-    
-    document.addEventListener('wheel', function(e) {
-        if (isScrolling) return;
-        
-        isScrolling = true;
         setTimeout(() => {
-            isScrolling = false;
-        }, 500);
-        
-        if (e.deltaY > 0) {
-            nextSection();
-        } else {
-            prevSection();
-        }
-        
-        e.preventDefault();
-    }, { passive: false });
-}
-
-// Optional: Auto-advance from first section
-function autoAdvanceFromLogo() {
-    if (currentSection === 0) {
-        setTimeout(() => {
-            nextSection();
-        }, 3000);
+            slideButton.style.transition = 'none';
+        }, 300);
     }
 }
 
-// Uncomment if you want auto-advance from logo
-// setTimeout(autoAdvanceFromLogo, 1000);
-
-// Debug functions
-function getCurrentSection() {
-    return currentSection + 1;
+function completeSlide() {
+    if (currentScreen !== 2) return;
+    
+    isSliding = false;
+    slideButton.classList.add('completed');
+    slideButton.style.right = (slideContainer.offsetWidth - slideButton.offsetWidth - 10) + 'px';
+    
+    // Proceed to next screen after short delay
+    setTimeout(() => {
+        nextScreen();
+    }, 300);
 }
 
-function logCurrentSection() {
-    console.log(`Current section: ${getCurrentSection()}/${totalSections}`);
+// Initialize slide button when screen 2 is shown
+function showScreen(screenNumber) {
+    // Hide all screens
+    const screens = document.querySelectorAll('.screen');
+    screens.forEach(screen => {
+        screen.classList.remove('active', 'fadeout');
+    });
+    
+    // Show target screen
+    const targetScreen = document.getElementById(`screen${screenNumber}`);
+    if (targetScreen) {
+        targetScreen.classList.add('active');
+        currentScreen = screenNumber;
+        
+        // Initialize slide button for screen 2
+        if (screenNumber === 2) {
+            setTimeout(() => {
+                initSlideButton();
+            }, 100);
+        }
+        
+        // Start animation for screen 5
+        if (screenNumber === 5) {
+            startAnimation();
+        }
+    }
 }
+
+// Fade out screen 1 (logo)
+function fadeOutScreen1() {
+    const screen1 = document.getElementById('screen1');
+    screen1.classList.add('fadeout');
+    
+    // After fade out, show screen 2
+    setTimeout(() => {
+        showScreen(2);
+    }, 500);
+}
+
+// Move to next screen
+function nextScreen() {
+    if (currentScreen < 7) {
+        showScreen(currentScreen + 1);
+    }
+}
+
+// Restart app
+function restartApp() {
+    // Reset slide button
+    const slideBtn = document.getElementById('slideButton');
+    if (slideBtn) {
+        slideBtn.classList.remove('completed', 'sliding');
+        slideBtn.style.right = '0px';
+        slideBtn.style.transition = 'none';
+    }
+    
+    showScreen(1);
+    
+    // Auto transition from screen 1 to screen 2 after 3 seconds
+    setTimeout(() => {
+        fadeOutScreen1();
+    }, 3000);
+}
+
+// Start animation for screen 5
+function startAnimation() {
+    const animatedElement = document.querySelector('.animated-element');
+    if (animatedElement) {
+        animatedElement.style.animation = 'bounce-around 3s infinite';
+    }
+}
+
+// Touch/swipe functionality for mobile
+let touchStartX = 0;
+let touchStartY = 0;
+
+document.addEventListener('touchstart', function(e) {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+});
+
+document.addEventListener('touchend', function(e) {
+    if (!touchStartX || !touchStartY) {
+        return;
+    }
+    
+    const touchEndX = e.changedTouches[0].clientX;
+    const touchEndY = e.changedTouches[0].clientY;
+    
+    const diffX = touchStartX - touchEndX;
+    const diffY = touchStartY - touchEndY;
+    
+    // Only handle horizontal swipes
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+        // Swipe left (next screen)
+        if (diffX > 50 && currentScreen > 1 && currentScreen < 7) {
+            nextScreen();
+        }
+        // Swipe right (previous screen) - optional
+        else if (diffX < -50 && currentScreen > 2) {
+            showScreen(currentScreen - 1);
+        }
+    }
+    
+    touchStartX = 0;
+    touchStartY = 0;
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', function(e) {
+    switch(e.key) {
+        case 'ArrowLeft':
+        case 'ArrowDown':
+            if (currentScreen < 7) {
+                nextScreen();
+            }
+            break;
+        case 'ArrowRight':
+        case 'ArrowUp':
+            if (currentScreen > 2) {
+                showScreen(currentScreen - 1);
+            }
+            break;
+        case 'Home':
+            restartApp();
+            break;
+    }
+});
+
+// Form validation for screen 6
+function validateForm() {
+    const form = document.querySelector('.details-form');
+    const inputs = form.querySelectorAll('input');
+    let isValid = true;
+    
+    inputs.forEach(input => {
+        if (!input.value.trim()) {
+            isValid = false;
+            input.style.borderColor = '#ff6b6b';
+        } else {
+            input.style.borderColor = '#E6F19A';
+        }
+    });
+    
+    return isValid;
+}
+
+// Enhanced button interactions
+document.addEventListener('click', function(e) {
+    // Add click effect to buttons
+    if (e.target.classList.contains('slide-button') || 
+        e.target.classList.contains('next-button')) {
+        
+        e.target.style.transform = e.target.style.transform.replace('scale(1.05)', '') + ' scale(0.95)';
+        
+        setTimeout(() => {
+            e.target.style.transform = e.target.style.transform.replace('scale(0.95)', '');
+        }, 150);
+    }
+    
+    // Form validation for screen 6
+    if (e.target.classList.contains('next-button') && currentScreen === 6) {
+        if (!validateForm()) {
+            e.preventDefault();
+            return false;
+        }
+    }
+});
+
+// Add smooth transitions between screens
+function smoothTransition(fromScreen, toScreen) {
+    const from = document.getElementById(`screen${fromScreen}`);
+    const to = document.getElementById(`screen${toScreen}`);
+    
+    // Slide out current screen
+    from.style.transform = 'translateX(-100%)';
+    
+    // Slide in new screen
+    setTimeout(() => {
+        from.classList.remove('active');
+        to.classList.add('active');
+        to.style.transform = 'translateX(0)';
+    }, 250);
+}
+
+// Preload optimization
+function preloadScreens() {
+    // This ensures smooth transitions by preparing all screens
+    const screens = document.querySelectorAll('.screen');
+    screens.forEach(screen => {
+        screen.style.willChange = 'transform, opacity';
+    });
+}
+
+// Initialize preloading
+preloadScreens();

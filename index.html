@@ -3,81 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>7 סקשנים - מובייל</title>
-    <link rel="stylesheet" href="styles/mobile.css">
+    <title>אפליקציית מובייל</title>
+    <link rel="stylesheet" href="mobile.css">
 </head>
 <body>
-    <!-- Progress Dots -->
-    <div class="progress-dots">
-        <div class="dot active" data-section="0"></div>
-        <div class="dot" data-section="1"></div>
-        <div class="dot" data-section="2"></div>
-        <div class="dot" data-section="3"></div>
-        <div class="dot" data-section="4"></div>
-        <div class="dot" data-section="5"></div>
-        <div class="dot" data-section="6"></div>
-    </div>
-
-    <!-- Sections Container -->
-    <div class="sections-container" id="sectionsContainer">
-        
-        <!-- Section 1: Logo -->
-        <section class="section splash-screen" id="section1">
-            <div class="section-content">
-                <!-- Logo is in the SVG background -->
+    <div class="mobile-container">
+        <!-- Screen 1: Logo with fade out -->
+        <div class="screen active" id="screen1">
+            <div class="svg-container">
+                <img src="splash1-bg.svg" alt="Splash Background" class="background-svg">
             </div>
-            <button class="nav-btn next-btn" onclick="nextSection()"></button>
-        </section>
+        </div>
 
-        <!-- Section 2: Pain Identification -->
-        <section class="section" id="section2">
-            <div class="section-content">
-                <h1>זיהוי הכאב</h1>
+        <!-- Screen 2: בעיה -->
+        <div class="screen" id="screen2">
+            <div class="svg-container">
+                <img src="other-screens-bg.svg" alt="Background" class="background-svg">
             </div>
-            <button class="nav-btn next-btn" onclick="nextSection()"></button>
-        </section>
-
-        <!-- Section 3: Value Proposition -->
-        <section class="section" id="section3">
-            <div class="section-content">
-                <h1>הצעת הערך</h1>
+            <div class="content">
+                <h1>בעיה</h1>
+                <div class="slide-container">
+                    <div class="slide-track">
+                        <div class="slide-button" id="slideButton">
+                            <span>החלק כדי להמשיך</span>
+                            <div class="arrow">→</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <button class="nav-btn next-btn" onclick="nextSection()"></button>
-        </section>
+        </div>
 
-        <!-- Section 4: Calculator -->
-        <section class="section" id="section4">
-            <div class="section-content">
+        <!-- Screen 3: הצעת ערך -->
+        <div class="screen" id="screen3">
+            <div class="svg-container">
+                <img src="other-screens-bg.svg" alt="Background" class="background-svg">
+            </div>
+            <div class="content">
+                <h1>הצעת ערך</h1>
+                <button class="next-button" onclick="nextScreen()">הבא</button>
+            </div>
+        </div>
+
+        <!-- Screen 4: מחשבון הורים -->
+        <div class="screen" id="screen4">
+            <div class="svg-container">
+                <img src="other-screens-bg.svg" alt="Background" class="background-svg">
+            </div>
+            <div class="content">
                 <h1>מחשבון הורים</h1>
+                <button class="next-button" onclick="nextScreen()">הבא</button>
             </div>
-            <button class="nav-btn next-btn" onclick="nextSection()"></button>
-        </section>
+        </div>
 
-        <!-- Section 5: Challenge -->
-        <section class="section" id="section5">
-            <div class="section-content">
-                <h1>האתגר</h1>
+        <!-- Screen 5: אנימציה -->
+        <div class="screen" id="screen5">
+            <div class="svg-container">
+                <img src="other-screens-bg.svg" alt="Background" class="background-svg">
             </div>
-            <button class="nav-btn next-btn" onclick="nextSection()"></button>
-        </section>
-
-        <!-- Section 6: Registration -->
-        <section class="section" id="section6">
-            <div class="section-content">
-                <h1>הרשמה</h1>
+            <div class="content">
+                <h1>אנימציה</h1>
+                <div class="animation-container">
+                    <div class="animated-element"></div>
+                </div>
+                <button class="next-button" onclick="nextScreen()">הבא</button>
             </div>
-            <button class="nav-btn next-btn" onclick="submitDemo()"></button>
-        </section>
+        </div>
 
-        <!-- Section 7: Research -->
-        <section class="section" id="section7">
-            <div class="section-content">
-                <h1>מחקרים ועדויות</h1>
+        <!-- Screen 6: הזנת פרטים -->
+        <div class="screen" id="screen6">
+            <div class="svg-container">
+                <img src="other-screens-bg.svg" alt="Background" class="background-svg">
             </div>
-        </section>
+            <div class="content">
+                <h1>הזנת פרטים</h1>
+                <form class="details-form">
+                    <input type="text" placeholder="שם" required>
+                    <input type="email" placeholder="אימייל" required>
+                    <input type="tel" placeholder="טלפון" required>
+                </form>
+                <button class="next-button" onclick="nextScreen()">הבא</button>
+            </div>
+        </div>
 
+        <!-- Screen 7: מחקרים ועובדות -->
+        <div class="screen" id="screen7">
+            <div class="svg-container">
+                <img src="other-screens-bg.svg" alt="Background" class="background-svg">
+            </div>
+            <div class="content">
+                <h1>מחקרים ועובדות</h1>
+                <div class="research-content">
+                    <p>כאן יופיעו מחקרים ועובדות רלוונטיים</p>
+                </div>
+                <button class="next-button" onclick="restartApp()">התחל מחדש</button>
+            </div>
+        </div>
     </div>
 
-    <script src="scripts/mobile.js"></script>
+    <script src="mobile.js"></script>
 </body>
 </html>
