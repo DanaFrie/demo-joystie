@@ -13,11 +13,6 @@
             <div class="svg-background">
                 <img src="assets/images/splash1-bg.svg" alt="Background" />
             </div>
-            <div class="content">
-                <div class="logo-content">
-                    <!-- Logo content here -->
-                </div>
-            </div>
         </div>
 
         <!-- Screen 2: בעיה -->
@@ -25,15 +20,15 @@
             <div class="svg-background">
                 <img src="assets/images/other-screens-bg.svg" alt="Background" />
             </div>
-            <div class="content">
-                <h1>בעיה</h1>
-                <div class="slide-container">
+            <div class="screen-content">
+                <h1 class="screen-title">בעיה</h1>
+                <div class="slide-to-unlock" id="slideToUnlock2">
                     <div class="slide-track">
-                        <div class="slide-button" id="slideButton">
-                            <span>החלק כדי להמשיך</span>
-                            <div class="arrow">→</div>
+                        <div class="slide-thumb" id="slideThumb2">
+                            <div class="slide-icon">→</div>
                         </div>
                     </div>
+                    <span class="slide-text">החלק כדי להמשיך</span>
                 </div>
             </div>
         </div>
@@ -43,15 +38,15 @@
             <div class="svg-background">
                 <img src="assets/images/other-screens-bg.svg" alt="Background" />
             </div>
-            <div class="content">
-                <h1>הצעת ערך</h1>
-                <div class="slide-container">
+            <div class="screen-content">
+                <h1 class="screen-title">הצעת ערך</h1>
+                <div class="slide-to-unlock" id="slideToUnlock3">
                     <div class="slide-track">
-                        <div class="slide-button" id="slideButton3">
-                            <span>החלק כדי להמשיך</span>
-                            <div class="arrow">→</div>
+                        <div class="slide-thumb" id="slideThumb3">
+                            <div class="slide-icon">→</div>
                         </div>
                     </div>
+                    <span class="slide-text">החלק כדי להמשיך</span>
                 </div>
             </div>
         </div>
@@ -61,15 +56,15 @@
             <div class="svg-background">
                 <img src="assets/images/other-screens-bg.svg" alt="Background" />
             </div>
-            <div class="content">
-                <h1>מחשבון הורים</h1>
-                <div class="slide-container">
+            <div class="screen-content">
+                <h1 class="screen-title">מחשבון הורים</h1>
+                <div class="slide-to-unlock" id="slideToUnlock4">
                     <div class="slide-track">
-                        <div class="slide-button" id="slideButton4">
-                            <span>החלק כדי להמשיך</span>
-                            <div class="arrow">→</div>
+                        <div class="slide-thumb" id="slideThumb4">
+                            <div class="slide-icon">→</div>
                         </div>
                     </div>
+                    <span class="slide-text">החלק כדי להמשיך</span>
                 </div>
             </div>
         </div>
@@ -79,18 +74,18 @@
             <div class="svg-background">
                 <img src="assets/images/other-screens-bg.svg" alt="Background" />
             </div>
-            <div class="content">
-                <h1>אנימציה</h1>
+            <div class="screen-content">
+                <h1 class="screen-title">אנימציה</h1>
                 <div class="animation-container">
                     <div class="animated-element"></div>
                 </div>
-                <div class="slide-container">
+                <div class="slide-to-unlock" id="slideToUnlock5">
                     <div class="slide-track">
-                        <div class="slide-button" id="slideButton5">
-                            <span>החלק כדי להמשיך</span>
-                            <div class="arrow">→</div>
+                        <div class="slide-thumb" id="slideThumb5">
+                            <div class="slide-icon">→</div>
                         </div>
                     </div>
+                    <span class="slide-text">החלק כדי להמשיך</span>
                 </div>
             </div>
         </div>
@@ -100,20 +95,20 @@
             <div class="svg-background">
                 <img src="assets/images/other-screens-bg.svg" alt="Background" />
             </div>
-            <div class="content">
-                <h1>הזנת פרטים</h1>
+            <div class="screen-content">
+                <h1 class="screen-title">הזנת פרטים</h1>
                 <form class="details-form">
-                    <input type="text" placeholder="שם" required>
-                    <input type="email" placeholder="אימייל" required>
-                    <input type="tel" placeholder="טלפון" required>
+                    <input type="text" placeholder="שם מלא" required>
+                    <input type="email" placeholder="כתובת אימייל" required>
+                    <input type="tel" placeholder="מספר טלפון" required>
                 </form>
-                <div class="slide-container">
+                <div class="slide-to-unlock" id="slideToUnlock6">
                     <div class="slide-track">
-                        <div class="slide-button" id="slideButton6">
-                            <span>החלק כדי להמשיך</span>
-                            <div class="arrow">→</div>
+                        <div class="slide-thumb" id="slideThumb6">
+                            <div class="slide-icon">→</div>
                         </div>
                     </div>
+                    <span class="slide-text">החלק כדי להמשיך</span>
                 </div>
             </div>
         </div>
@@ -123,18 +118,25 @@
             <div class="svg-background">
                 <img src="assets/images/other-screens-bg.svg" alt="Background" />
             </div>
-            <div class="content">
-                <h1>מחקרים ועובדות</h1>
+            <div class="screen-content">
+                <h1 class="screen-title">מחקרים ועובדות</h1>
                 <div class="research-content">
-                    <p>כאן יופיעו מחקרים ועובדות רלוונטיים</p>
+                    <div class="research-item">
+                        <h3>מחקר ראשון</h3>
+                        <p>תוכן מחקר ראשון עם עובדות חשובות</p>
+                    </div>
+                    <div class="research-item">
+                        <h3>מחקר שני</h3>
+                        <p>תוכן מחקר שני עם עובדות נוספות</p>
+                    </div>
                 </div>
-                <div class="slide-container">
+                <div class="slide-to-unlock" id="slideToUnlock7">
                     <div class="slide-track">
-                        <div class="slide-button" id="slideButton7">
-                            <span>החלק להתחלה מחדש</span>
-                            <div class="arrow">→</div>
+                        <div class="slide-thumb" id="slideThumb7">
+                            <div class="slide-icon">↻</div>
                         </div>
                     </div>
+                    <span class="slide-text">החלק להתחיל מחדש</span>
                 </div>
             </div>
         </div>
