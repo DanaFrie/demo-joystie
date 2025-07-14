@@ -61,13 +61,21 @@ body {
     flex-shrink: 0; /* Prevent sections from shrinking */
 }
 
+/* Color Palette Variables */
+:root {
+    --color-cream: #FFFCF8;
+    --color-lime: #E6F19A;
+    --color-sky: #BBE9FD;
+    --color-navy: #273143;
+}
+
 /* Section Backgrounds - Different for splash vs other screens */
 #section1 { 
     background: transparent;
 }
 
 #section2, #section3, #section4, #section5, #section6, #section7 { 
-    background: transparent;
+    background: var(--color-cream);
 }
 
 /* Splash screen (section1) background */
@@ -171,42 +179,54 @@ body {
 .section-content h1 {
     font-size: 2.5rem;
     font-weight: 700;
-    color: white;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-    padding: 0 20px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 15px;
-    padding: 20px 30px;
-    backdrop-filter: blur(10px);
+    color: var(--color-navy);
+    text-shadow: none;
+    padding: 30px 40px;
+    background: var(--color-lime);
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(39, 49, 67, 0.15);
+    border: 3px solid var(--color-sky);
 }
 
 /* Navigation Buttons */
 .nav-btn {
-    background: rgba(255, 255, 255, 0.9);
-    border: none;
-    border-radius: 25px;
-    padding: 12px 20px;
+    width: 60px;
+    height: 60px;
+    background: var(--color-sky);
+    border: 3px solid var(--color-navy);
+    border-radius: 50%;
     font-family: inherit;
-    font-size: 16px;
-    font-weight: 600;
-    color: #333;
+    font-size: 0; /* Hide text */
     cursor: pointer;
     transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    min-width: 100px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    margin: 0 auto;
+    margin: 0 auto 30px auto;
     display: block;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(39, 49, 67, 0.2);
+}
+
+/* Arrow shape using CSS */
+.nav-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 45%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 12px solid var(--color-navy);
 }
 
 .nav-btn:hover {
-    background: white;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    background: var(--color-lime);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(39, 49, 67, 0.3);
 }
 
 .nav-btn:active {
-    transform: translateY(0);
+    transform: translateY(-1px) scale(1.02);
 }
 
 /* Final message styling */
