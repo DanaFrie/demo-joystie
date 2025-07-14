@@ -10,15 +10,20 @@
     <div class="mobile-container">
         <!-- Screen 1: Logo with fade out -->
         <div class="screen active" id="screen1">
-            <div class="svg-container">
-                <img src="splash1-bg.svg" alt="Splash Background" class="background-svg">
+            <div class="svg-background">
+                <img src="assets/images/splash1-bg.svg" alt="Background" />
+            </div>
+            <div class="content">
+                <div class="logo-content">
+                    <!-- Logo content here -->
+                </div>
             </div>
         </div>
 
         <!-- Screen 2: בעיה -->
         <div class="screen" id="screen2">
-            <div class="svg-container">
-                <img src="other-screens-bg.svg" alt="Background" class="background-svg">
+            <div class="svg-background">
+                <img src="assets/images/other-screens-bg.svg" alt="Background" />
             </div>
             <div class="content">
                 <h1>בעיה</h1>
@@ -35,44 +40,65 @@
 
         <!-- Screen 3: הצעת ערך -->
         <div class="screen" id="screen3">
-            <div class="svg-container">
-                <img src="other-screens-bg.svg" alt="Background" class="background-svg">
+            <div class="svg-background">
+                <img src="assets/images/other-screens-bg.svg" alt="Background" />
             </div>
             <div class="content">
                 <h1>הצעת ערך</h1>
-                <button class="next-button" onclick="nextScreen()">הבא</button>
+                <div class="slide-container">
+                    <div class="slide-track">
+                        <div class="slide-button" id="slideButton3">
+                            <span>החלק כדי להמשיך</span>
+                            <div class="arrow">→</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Screen 4: מחשבון הורים -->
         <div class="screen" id="screen4">
-            <div class="svg-container">
-                <img src="other-screens-bg.svg" alt="Background" class="background-svg">
+            <div class="svg-background">
+                <img src="assets/images/other-screens-bg.svg" alt="Background" />
             </div>
             <div class="content">
                 <h1>מחשבון הורים</h1>
-                <button class="next-button" onclick="nextScreen()">הבא</button>
+                <div class="slide-container">
+                    <div class="slide-track">
+                        <div class="slide-button" id="slideButton4">
+                            <span>החלק כדי להמשיך</span>
+                            <div class="arrow">→</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Screen 5: אנימציה -->
         <div class="screen" id="screen5">
-            <div class="svg-container">
-                <img src="other-screens-bg.svg" alt="Background" class="background-svg">
+            <div class="svg-background">
+                <img src="assets/images/other-screens-bg.svg" alt="Background" />
             </div>
             <div class="content">
                 <h1>אנימציה</h1>
                 <div class="animation-container">
                     <div class="animated-element"></div>
                 </div>
-                <button class="next-button" onclick="nextScreen()">הבא</button>
+                <div class="slide-container">
+                    <div class="slide-track">
+                        <div class="slide-button" id="slideButton5">
+                            <span>החלק כדי להמשיך</span>
+                            <div class="arrow">→</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Screen 6: הזנת פרטים -->
         <div class="screen" id="screen6">
-            <div class="svg-container">
-                <img src="other-screens-bg.svg" alt="Background" class="background-svg">
+            <div class="svg-background">
+                <img src="assets/images/other-screens-bg.svg" alt="Background" />
             </div>
             <div class="content">
                 <h1>הזנת פרטים</h1>
@@ -81,21 +107,35 @@
                     <input type="email" placeholder="אימייל" required>
                     <input type="tel" placeholder="טלפון" required>
                 </form>
-                <button class="next-button" onclick="nextScreen()">הבא</button>
+                <div class="slide-container">
+                    <div class="slide-track">
+                        <div class="slide-button" id="slideButton6">
+                            <span>החלק כדי להמשיך</span>
+                            <div class="arrow">→</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Screen 7: מחקרים ועובדות -->
         <div class="screen" id="screen7">
-            <div class="svg-container">
-                <img src="other-screens-bg.svg" alt="Background" class="background-svg">
+            <div class="svg-background">
+                <img src="assets/images/other-screens-bg.svg" alt="Background" />
             </div>
             <div class="content">
                 <h1>מחקרים ועובדות</h1>
                 <div class="research-content">
                     <p>כאן יופיעו מחקרים ועובדות רלוונטיים</p>
                 </div>
-                <button class="next-button" onclick="restartApp()">התחל מחדש</button>
+                <div class="slide-container">
+                    <div class="slide-track">
+                        <div class="slide-button" id="slideButton7">
+                            <span>החלק להתחלה מחדש</span>
+                            <div class="arrow">→</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

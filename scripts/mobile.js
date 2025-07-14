@@ -15,50 +15,55 @@ document.addEventListener('DOMContentLoaded', function() {
 // Slide button functionality
 let isSliding = false;
 let slideStartX = 0;
-let slideButton = null;
-let slideContainer = null;
+let currentSlideButton = null;
+let currentSlideContainer = null;
 
-// Initialize slide button
+// Initialize slide button for current screen
 function initSlideButton() {
-    slideButton = document.getElementById('slideButton');
-    slideContainer = document.querySelector('.slide-container');
+    const slideButtonId = `slideButton${currentScreen === 2 ? '' : currentScreen}`;
+    currentSlideButton = document.getElementById(slideButtonId);
+    currentSlideContainer = currentSlideButton ? currentSlideButton.closest('.slide-container') : null;
     
-    if (slideButton && slideContainer) {
+    if (currentSlideButton && currentSlideContainer) {
+        // Reset button position
+        currentSlideButton.style.right = '0px';
+        currentSlideButton.classList.remove('completed', 'sliding');
+        
         // Mouse events
-        slideButton.addEventListener('mousedown', startSlide);
+        currentSlideButton.addEventListener('mousedown', startSlide);
         document.addEventListener('mousemove', handleSlide);
         document.addEventListener('mouseup', endSlide);
         
         // Touch events
-        slideButton.addEventListener('touchstart', startSlide);
+        currentSlideButton.addEventListener('touchstart', startSlide);
         document.addEventListener('touchmove', handleSlide);
         document.addEventListener('touchend', endSlide);
     }
 }
 
 function startSlide(e) {
-    if (currentScreen !== 2) return;
+    if (!currentSlideButton) return;
     
     isSliding = true;
     slideStartX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
-    slideButton.classList.add('sliding');
+    currentSlideButton.classList.add('sliding');
     e.preventDefault();
 }
 
 function handleSlide(e) {
-    if (!isSliding || currentScreen !== 2) return;
+    if (!isSliding || !currentSlideButton || !currentSlideContainer) return;
     
     const currentX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
     const deltaX = currentX - slideStartX;
-    const containerWidth = slideContainer.offsetWidth;
-    const buttonWidth = slideButton.offsetWidth;
+    const containerWidth = currentSlideContainer.offsetWidth;
+    const buttonWidth = currentSlideButton.offsetWidth;
     const maxSlide = containerWidth - buttonWidth - 10;
     
     // Calculate slide position (right to left for RTL)
     let slidePosition = Math.max(0, Math.min(maxSlide, -deltaX));
     
     // Apply position
-    slideButton.style.right = slidePosition + 'px';
+    currentSlideButton.style.right = slidePosition + 'px';
     
     // Check if slide is complete (80% of the way)
     if (slidePosition >= maxSlide * 0.8) {
@@ -69,41 +74,45 @@ function handleSlide(e) {
 }
 
 function endSlide() {
-    if (!isSliding || currentScreen !== 2) return;
+    if (!isSliding || !currentSlideButton || !currentSlideContainer) return;
     
     isSliding = false;
-    slideButton.classList.remove('sliding');
+    currentSlideButton.classList.remove('sliding');
     
     // If not completed, snap back
-    const containerWidth = slideContainer.offsetWidth;
-    const buttonWidth = slideButton.offsetWidth;
+    const containerWidth = currentSlideContainer.offsetWidth;
+    const buttonWidth = currentSlideButton.offsetWidth;
     const maxSlide = containerWidth - buttonWidth - 10;
-    const currentPosition = parseInt(slideButton.style.right) || 0;
+    const currentPosition = parseInt(currentSlideButton.style.right) || 0;
     
     if (currentPosition < maxSlide * 0.8) {
-        slideButton.style.transition = 'right 0.3s ease';
-        slideButton.style.right = '0px';
+        currentSlideButton.style.transition = 'right 0.3s ease';
+        currentSlideButton.style.right = '0px';
         
         setTimeout(() => {
-            slideButton.style.transition = 'none';
+            currentSlideButton.style.transition = 'none';
         }, 300);
     }
 }
 
 function completeSlide() {
-    if (currentScreen !== 2) return;
+    if (!currentSlideButton || !currentSlideContainer) return;
     
     isSliding = false;
-    slideButton.classList.add('completed');
-    slideButton.style.right = (slideContainer.offsetWidth - slideButton.offsetWidth - 10) + 'px';
+    currentSlideButton.classList.add('completed');
+    currentSlideButton.style.right = (currentSlideContainer.offsetWidth - currentSlideButton.offsetWidth - 10) + 'px';
     
-    // Proceed to next screen after short delay
+    // Proceed to next screen or restart
     setTimeout(() => {
-        nextScreen();
+        if (currentScreen === 7) {
+            restartApp();
+        } else {
+            nextScreen();
+        }
     }, 300);
 }
 
-// Initialize slide button when screen 2 is shown
+// Initialize slide button when any screen is shown
 function showScreen(screenNumber) {
     // Hide all screens
     const screens = document.querySelectorAll('.screen');
@@ -117,8 +126,8 @@ function showScreen(screenNumber) {
         targetScreen.classList.add('active');
         currentScreen = screenNumber;
         
-        // Initialize slide button for screen 2
-        if (screenNumber === 2) {
+        // Initialize slide button for screens 2-7
+        if (screenNumber >= 2) {
             setTimeout(() => {
                 initSlideButton();
             }, 100);
@@ -151,13 +160,13 @@ function nextScreen() {
 
 // Restart app
 function restartApp() {
-    // Reset slide button
-    const slideBtn = document.getElementById('slideButton');
-    if (slideBtn) {
-        slideBtn.classList.remove('completed', 'sliding');
-        slideBtn.style.right = '0px';
-        slideBtn.style.transition = 'none';
-    }
+    // Reset all slide buttons
+    const slideButtons = document.querySelectorAll('[id^="slideButton"]');
+    slideButtons.forEach(btn => {
+        btn.classList.remove('completed', 'sliding');
+        btn.style.right = '0px';
+        btn.style.transition = 'none';
+    });
     
     showScreen(1);
     
