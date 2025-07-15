@@ -7,7 +7,7 @@
   ],
   "functions": {
     "api/submit.js": {
-      "runtime": "@vercel/node"
+      "runtime": "@vercel/node@18.x"
     }
   }
 }
