@@ -30,6 +30,12 @@ document.addEventListener('DOMContentLoaded', function() {
 // Navigation
 function nextScreen() {
     if (currentScreen < totalScreens) {
+        // Track button click
+        if (window.eventTracker) {
+            const buttonText = event.target.textContent;
+            window.eventTracker.trackButtonClick(buttonText, currentScreen);
+        }
+        
         // Hide current screen
         const currentScreenEl = document.getElementById(`screen${currentScreen}`);
         if (currentScreenEl) {
@@ -38,6 +44,21 @@ function nextScreen() {
         
         // Move to next screen
         currentScreen++;
+        
+        // Track screen visit
+        if (window.eventTracker) {
+            window.eventTracker.trackScreenVisit(currentScreen);
+            
+            // Special tracking for screen 6
+            if (currentScreen === 6) {
+                window.eventTracker.trackScreen6Visit();
+            }
+            
+            // Track app completion
+            if (currentScreen === 7) {
+                window.eventTracker.trackAppComplete();
+            }
+        }
         
         // Show new screen
         const nextScreenEl = document.getElementById(`screen${currentScreen}`);
@@ -87,82 +108,15 @@ function updateProgress() {
     document.documentElement.style.setProperty('--progress-width', `${percentage}%`);
 }
 
-// Form Handling
+// Form Handling - Removed (now in registration.js)
 function setupForm() {
-    const form = document.getElementById('registrationForm');
-    if (form) {
-        form.addEventListener('submit', handleFormSubmit);
-    }
+    // Form logic moved to registration.js
+    console.log('Form setup handled by registration.js');
 }
 
 async function handleFormSubmit(e) {
-    e.preventDefault();
-    
-    const submitBtn = document.getElementById('submitBtn');
-    const submitText = document.getElementById('submitText');
-    const loading = document.getElementById('loading');
-    
-    // Get form data
-    const formData = {
-        name: document.getElementById('name').value.trim(),
-        phone: document.getElementById('phone').value.trim(),
-        email: document.getElementById('email').value.trim(),
-        timestamp: new Date().toLocaleString('he-IL', {
-            timeZone: 'Asia/Jerusalem'
-        })
-    };
-    
-    // Validate
-    if (!formData.name || !formData.phone || !formData.email) {
-        alert('אנא מלא את כל השדות');
-        return;
-    }
-    
-    // Show loading
-    submitBtn.disabled = true;
-    submitText.style.display = 'none';
-    loading.style.display = 'flex';
-    
-    try {
-        // Submit to API
-        const response = await fetch('/api/submit', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData)
-        });
-        
-        const result = await response.json();
-        
-        if (response.ok && result.success) {
-            console.log('✅ Registration successful:', result);
-            
-            // Show success and move to next screen
-            submitText.textContent = 'נשלח בהצלחה!';
-            submitText.style.display = 'block';
-            loading.style.display = 'none';
-            
-            setTimeout(() => {
-                nextScreen(); // Move to screen 7
-            }, 1000);
-            
-        } else {
-            throw new Error(result.error || 'שגיאה לא ידועה');
-        }
-        
-    } catch (error) {
-        console.error('❌ Registration error:', error);
-        
-        // Show error
-        alert(`שגיאה בשליחה: ${error.message}`);
-        
-        // Reset button
-        submitBtn.disabled = false;
-        submitText.textContent = 'שלח';
-        submitText.style.display = 'block';
-        loading.style.display = 'none';
-    }
+    // Form handling moved to registration.js
+    console.log('Form handling moved to registration.js');
 }
 
 // Touch/Swipe Support

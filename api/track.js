@@ -17,12 +17,12 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { name, phone, email, timestamp } = req.body;
+    const { event, screen, userAgent, ip, timestamp, sessionId } = req.body;
 
     // Validate input
-    if (!name || !phone || !email) {
+    if (!event || !screen) {
       return res.status(400).json({ 
-        error: 'Missing required fields: name, phone, email' 
+        error: 'Missing required fields: event, screen' 
       });
     }
 
@@ -62,39 +62,45 @@ export default async function handler(req, res) {
 
     const rowData = [
       timestamp || israelTime,
-      name,
-      phone,
-      email,
-      req.headers['user-agent'] || 'Unknown',
-      req.headers['x-forwarded-for'] || req.connection?.remoteAddress || 'Unknown'
+      event,
+      screen,
+      sessionId || generateSessionId(),
+      userAgent || req.headers['user-agent'] || 'Unknown',
+      ip || req.headers['x-forwarded-for'] || req.connection?.remoteAddress || 'Unknown',
+      req.headers['referer'] || 'Direct'
     ];
 
-    // Append to registrations sheet
+    // Append to events6 sheet
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      range: 'registrations!A:F', // Registrations sheet
+      range: 'events6!A:G', // Events sheet
       valueInputOption: 'RAW',
       requestBody: {
         values: [rowData]
       }
     });
 
-    console.log(`✅ Registration saved: ${email} at ${israelTime}`);
+    console.log(`📊 Event tracked: ${event} on screen ${screen} at ${israelTime}`);
 
     return res.status(200).json({
       success: true,
-      message: 'נשמר בהצלחה',
+      message: 'Event tracked successfully',
       timestamp: israelTime,
       updatedRows: response.data.updates.updatedRows
     });
 
   } catch (error) {
-    console.error('❌ Google Sheets error:', error.message);
+    console.error('❌ Event tracking error:', error.message);
     
     return res.status(500).json({
       success: false,
-      error: 'שגיאה בשמירה',
+      error: 'Error tracking event',
       details: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
+}
+
+// Helper function to generate session ID
+function generateSessionId() {
+  return 'session_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
 }
