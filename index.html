@@ -28,26 +28,29 @@
         <!-- Screen 2 -->
         <div class="screen" id="screen2">
             <div class="screen-content">
-                <h1>מסך 2</h1>
-                <p>זיהוי הכאב</p>
+                <h1>הילד לא מפסיק להיות במסך?</h1>
+                <p>ניסית כבר הכל וכלום לא עובד?<br>
+                את/ה לא לבד!</p>
             </div>
-            <button class="btn-next" onclick="nextScreen()">המשך</button>
+            <button class="btn-next" onclick="nextScreen()">בוא/י תגל/י מה ניתן לעשות...</button>
         </div>
 
         <!-- Screen 3 -->
         <div class="screen" id="screen3">
             <div class="screen-content">
-                <h1>מסך 3</h1>
-                <p>הצעת הערך</p>
+                <h1>הזדמנות חדשה</h1>
+                <p>אנחנו מזמינים אותך להשתמש בדמי כיס לילד/ה בצורה שלא הכרת</p>
+                <p>בעזרת סכום דמי כיס שאתה תקבע,<br>
+                נראה לך איך אתה והילד/ה מרוויחים יותר יחד</p>
             </div>
-            <button class="btn-next" onclick="nextScreen()">המשך</button>
+            <button class="btn-next" onclick="nextScreen()">מעניין, תמשיכו</button>
         </div>
 
         <!-- Screen 4 -->
         <div class="screen" id="screen4">
             <div class="screen-content">
-                <h1>מסך 4</h1>
-                <p>מחשבון הורים</p>
+                <h1>מחשבון מסכים</h1>
+                <p>כאן יופיע מחשבון אינטראקטיבי</p>
             </div>
             <button class="btn-next" onclick="nextScreen()">המשך</button>
         </div>
@@ -55,8 +58,8 @@
         <!-- Screen 5 -->
         <div class="screen" id="screen5">
             <div class="screen-content">
-                <h1>מסך 5</h1>
-                <p>האתגר</p>
+                <h1>אנימציה</h1>
+                <p>כאן תופיע אנימציה מעניינת</p>
             </div>
             <button class="btn-next" onclick="nextScreen()">המשך</button>
         </div>
@@ -64,8 +67,9 @@
         <!-- Screen 6 - Form -->
         <div class="screen" id="screen6">
             <div class="screen-content">
-                <h1>מסך 6</h1>
-                <p>הרשמה</p>
+                <h1>רוצ/ה לסיים את החופש הגדול בטוב?</h1>
+                <p>כנסו איתנו לאתגר, ואולי תקבלו כלים להמשך השנה:</p>
+                <p><strong>השאירו פרטים:</strong></p>
                 
                 <form class="registration-form" id="registrationForm">
                     <div class="form-group">
@@ -74,17 +78,17 @@
                     </div>
                     
                     <div class="form-group">
-                        <label>טלפון:</label>
+                        <label>מספר טלפון:</label>
                         <input type="tel" id="phone" required>
                     </div>
                     
                     <div class="form-group">
-                        <label>אימייל:</label>
+                        <label>מייל:</label>
                         <input type="email" id="email" required>
                     </div>
                     
                     <button type="submit" class="btn-submit" id="submitBtn">
-                        <span id="submitText">שלח</span>
+                        <span id="submitText">רוצה לשמוע עוד</span>
                         <div class="loading" id="loading" style="display: none;">
                             <div class="spinner"></div>
                         </div>
@@ -96,9 +100,29 @@
         <!-- Screen 7 -->
         <div class="screen" id="screen7">
             <div class="screen-content">
-                <h1>מסך 7</h1>
-                <p>תודה על ההרשמה!</p>
+                <h1>ממש בקרוב איתכם!</h1>
+                <p>תודה על ההרשמה</p>
                 <div class="success-icon">✓</div>
+                
+                <!-- Research Cards -->
+                <div class="research-cards">
+                    <div class="research-card">
+                        <p>כשהמחשבות שלנו נודדות, או כשאנחנו משועממים, רשת "ברירת המחדל" שלנו מתעוררת לחיים. שעמום הוא אינו תקלה, אלא הזדמנות</p>
+                        <span class="source">פודקאסט Digital Social Hour - ד"ר ארתור ברוקס</span>
+                    </div>
+                    
+                    <div class="research-card">
+                        <p>גיל מתן טלפון חכם בישראל הוא 6.7 שנים</p>
+                    </div>
+                    
+                    <div class="research-card">
+                        <p>בשנת 2023, בני הנוער בילו מול המסך 12.1 שעות בממוצע ליום</p>
+                    </div>
+                    
+                    <div class="research-card">
+                        <p>43% מבני הנוער מעידים שהיו רוצים להגביל את זמן המסך שלהם, אך הם לא מצליחים</p>
+                    </div>
+                </div>
             </div>
         </div>
 
