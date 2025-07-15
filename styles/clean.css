@@ -9,7 +9,7 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     direction: rtl;
     overflow: hidden;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #FFFCF8;
     min-height: 100vh;
 }
 
@@ -20,8 +20,7 @@ body {
     left: 0;
     right: 0;
     z-index: 100;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
+    background: #273143;
     padding: 15px;
     display: flex;
     justify-content: space-between;
@@ -31,7 +30,7 @@ body {
 .progress-bar {
     flex: 1;
     height: 4px;
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(230, 241, 154, 0.3);
     border-radius: 2px;
     margin-left: 15px;
     overflow: hidden;
@@ -41,14 +40,14 @@ body {
     content: '';
     display: block;
     height: 100%;
-    background: #fff;
+    background: #E6F19A;
     width: var(--progress-width, 14.28%);
     border-radius: 2px;
     transition: width 0.3s ease;
 }
 
 .progress-text {
-    color: white;
+    color: #E6F19A;
     font-weight: 600;
     font-size: 14px;
     white-space: nowrap;
@@ -96,21 +95,22 @@ body {
 
 .screen-content h1 {
     font-size: 2.5rem;
-    color: white;
+    color: #273143;
     margin-bottom: 10px;
     font-weight: 700;
 }
 
 .screen-content p {
     font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: #273143;
+    opacity: 0.7;
     margin-bottom: 30px;
 }
 
 /* Buttons */
 .btn-next, .btn-submit {
-    background: white;
-    color: #667eea;
+    background: #273143;
+    color: #FFFCF8;
     border: none;
     padding: 15px 30px;
     border-radius: 25px;
@@ -119,12 +119,14 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     min-width: 120px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(39, 49, 67, 0.2);
 }
 
 .btn-next:hover, .btn-submit:hover {
+    background: #E6F19A;
+    color: #273143;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 20px rgba(39, 49, 67, 0.3);
 }
 
 .btn-next:active, .btn-submit:active {
@@ -144,7 +146,7 @@ body {
 
 .form-group label {
     display: block;
-    color: white;
+    color: #273143;
     font-weight: 600;
     margin-bottom: 8px;
     font-size: 1rem;
@@ -153,18 +155,19 @@ body {
 .form-group input {
     width: 100%;
     padding: 12px 15px;
-    border: none;
+    border: 2px solid #E6F19A;
     border-radius: 10px;
     font-size: 1rem;
-    background: rgba(255, 255, 255, 0.9);
+    background: #FFFCF8;
     direction: rtl;
     text-align: right;
+    color: #273143;
 }
 
 .form-group input:focus {
     outline: none;
-    background: white;
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+    border-color: #273143;
+    box-shadow: 0 0 0 3px rgba(230, 241, 154, 0.3);
 }
 
 .form-group input::placeholder {
