@@ -30,12 +30,6 @@ document.addEventListener('DOMContentLoaded', function() {
 // Navigation
 function nextScreen() {
     if (currentScreen < totalScreens) {
-        // Track button click
-        if (window.eventTracker) {
-            const buttonText = event.target.textContent;
-            window.eventTracker.trackButtonClick(buttonText, currentScreen);
-        }
-        
         // Hide current screen
         const currentScreenEl = document.getElementById(`screen${currentScreen}`);
         if (currentScreenEl) {
@@ -45,19 +39,9 @@ function nextScreen() {
         // Move to next screen
         currentScreen++;
         
-        // Track screen visit
-        if (window.eventTracker) {
-            window.eventTracker.trackScreenVisit(currentScreen);
-            
-            // Special tracking for screen 6
-            if (currentScreen === 6) {
-                window.eventTracker.trackScreen6Visit();
-            }
-            
-            // Track app completion
-            if (currentScreen === 7) {
-                window.eventTracker.trackAppComplete();
-            }
+        // Track screen 6 visit specifically
+        if (currentScreen === 6 && window.eventTracker) {
+            window.eventTracker.trackScreen6Visit();
         }
         
         // Show new screen

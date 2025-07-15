@@ -17,14 +17,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { event, screen, userAgent, ip, timestamp, sessionId } = req.body;
-
-    // Validate input
-    if (!event || !screen) {
-      return res.status(400).json({ 
-        error: 'Missing required fields: event, screen' 
-      });
-    }
+    const { timestamp, sessionId } = req.body;
 
     // Google service account credentials
     const credentials = {
@@ -62,39 +55,37 @@ export default async function handler(req, res) {
 
     const rowData = [
       timestamp || israelTime,
-      event,
-      screen,
       sessionId || generateSessionId(),
-      userAgent || req.headers['user-agent'] || 'Unknown',
-      ip || req.headers['x-forwarded-for'] || req.connection?.remoteAddress || 'Unknown',
+      req.headers['user-agent'] || 'Unknown',
+      req.headers['x-forwarded-for'] || req.connection?.remoteAddress || 'Unknown',
       req.headers['referer'] || 'Direct'
     ];
 
     // Append to events6 sheet
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      range: 'events6!A:G', // Events sheet
+      range: 'events6!A:E', // Simplified structure
       valueInputOption: 'RAW',
       requestBody: {
         values: [rowData]
       }
     });
 
-    console.log(`📊 Event tracked: ${event} on screen ${screen} at ${israelTime}`);
+    console.log(`📊 Screen 6 visit tracked at ${israelTime}`);
 
     return res.status(200).json({
       success: true,
-      message: 'Event tracked successfully',
+      message: 'Screen 6 visit tracked',
       timestamp: israelTime,
       updatedRows: response.data.updates.updatedRows
     });
 
   } catch (error) {
-    console.error('❌ Event tracking error:', error.message);
+    console.error('❌ Screen 6 tracking error:', error.message);
     
     return res.status(500).json({
       success: false,
-      error: 'Error tracking event',
+      error: 'Error tracking screen 6 visit',
       details: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
