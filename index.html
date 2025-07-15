@@ -3,95 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>7 סקשנים - מובייל</title>
-    <link rel="stylesheet" href="styles/mobile.css">
+    <title>7 מסכים</title>
+    <link rel="stylesheet" href="styles/clean.css">
 </head>
 <body>
-    <!-- Progress Dots -->
-    <div class="progress-dots">
-        <div class="dot active" data-section="0"></div>
-        <div class="dot" data-section="1"></div>
-        <div class="dot" data-section="2"></div>
-        <div class="dot" data-section="3"></div>
-        <div class="dot" data-section="4"></div>
-        <div class="dot" data-section="5"></div>
-        <div class="dot" data-section="6"></div>
+    <!-- Progress Indicator -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="progress-text" id="progressText">1 / 7</div>
     </div>
 
-    <!-- Sections Container -->
-    <div class="sections-container" id="sectionsContainer">
+    <!-- Screens Container -->
+    <div class="app-container" id="appContainer">
         
-        <!-- Section 1: Logo -->
-        <section class="section" id="section1">
-            <div class="section-content">
-                <h1>ברוכים הבאים</h1>
-                <button class="nav-btn" onclick="nextSection()">
-                    התחל
-                </button>
+        <!-- Screen 1 -->
+        <div class="screen active" id="screen1">
+            <div class="screen-content">
+                <h1>מסך 1</h1>
+                <p>מסך פתיחה</p>
             </div>
-        </section>
+            <button class="btn-next" onclick="nextScreen()">המשך</button>
+        </div>
 
-        <!-- Section 2: Pain Identification -->
-        <section class="section" id="section2">
-            <div class="section-content">
-                <h1>זיהוי הכאב</h1>
-                <button class="nav-btn" onclick="nextSection()">
-                    המשך
-                </button>
+        <!-- Screen 2 -->
+        <div class="screen" id="screen2">
+            <div class="screen-content">
+                <h1>מסך 2</h1>
+                <p>זיהוי הכאב</p>
             </div>
-        </section>
+            <button class="btn-next" onclick="nextScreen()">המשך</button>
+        </div>
 
-        <!-- Section 3: Value Proposition -->
-        <section class="section" id="section3">
-            <div class="section-content">
-                <h1>הצעת הערך</h1>
-                <button class="nav-btn" onclick="nextSection()">
-                    המשך
-                </button>
+        <!-- Screen 3 -->
+        <div class="screen" id="screen3">
+            <div class="screen-content">
+                <h1>מסך 3</h1>
+                <p>הצעת הערך</p>
             </div>
-        </section>
+            <button class="btn-next" onclick="nextScreen()">המשך</button>
+        </div>
 
-        <!-- Section 4: Calculator -->
-        <section class="section" id="section4">
-            <div class="section-content">
-                <h1>מחשבון הורים</h1>
-                <button class="nav-btn" onclick="nextSection()">
-                    המשך
-                </button>
+        <!-- Screen 4 -->
+        <div class="screen" id="screen4">
+            <div class="screen-content">
+                <h1>מסך 4</h1>
+                <p>מחשבון הורים</p>
             </div>
-        </section>
+            <button class="btn-next" onclick="nextScreen()">המשך</button>
+        </div>
 
-        <!-- Section 5: Challenge -->
-        <section class="section" id="section5">
-            <div class="section-content">
-                <h1>האתגר</h1>
-                <button class="nav-btn" onclick="nextSection()">
-                    המשך
-                </button>
+        <!-- Screen 5 -->
+        <div class="screen" id="screen5">
+            <div class="screen-content">
+                <h1>מסך 5</h1>
+                <p>האתגר</p>
             </div>
-        </section>
+            <button class="btn-next" onclick="nextScreen()">המשך</button>
+        </div>
 
-        <!-- Section 6: Registration -->
-        <section class="section" id="section6">
-            <div class="section-content">
-                <h1>הרשמה</h1>
-                <button class="nav-btn" onclick="submitDemo()">
-                    שלח הרשמה
-                </button>
+        <!-- Screen 6 - Form -->
+        <div class="screen" id="screen6">
+            <div class="screen-content">
+                <h1>מסך 6</h1>
+                <p>הרשמה</p>
+                
+                <form class="registration-form" id="registrationForm">
+                    <div class="form-group">
+                        <label>שם מלא:</label>
+                        <input type="text" id="name" required placeholder="הכנס שם מלא">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>טלפון:</label>
+                        <input type="tel" id="phone" required placeholder="050-1234567">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>אימייל:</label>
+                        <input type="email" id="email" required placeholder="example@gmail.com">
+                    </div>
+                    
+                    <button type="submit" class="btn-submit" id="submitBtn">
+                        <span id="submitText">שלח</span>
+                        <div class="loading" id="loading" style="display: none;">
+                            <div class="spinner"></div>
+                        </div>
+                    </button>
+                </form>
             </div>
-        </section>
-        <!-- Section 7: Research -->
-        <section class="section" id="section7">
-            <div class="section-content">
-                <h1>מחקרים ועדויות</h1>
-                <div class="final-message">
-                    <p>תודה על ההרשמה!</p>
-                </div>
+        </div>
+
+        <!-- Screen 7 -->
+        <div class="screen" id="screen7">
+            <div class="screen-content">
+                <h1>מסך 7</h1>
+                <p>תודה על ההרשמה!</p>
+                <div class="success-icon">✓</div>
             </div>
-        </section>
+        </div>
 
     </div>
 
-    <script src="scripts/mobile.js"></script>
+    <script src="scripts/clean.js"></script>
 </body>
 </html>
