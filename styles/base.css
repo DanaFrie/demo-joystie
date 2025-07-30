@@ -1,3 +1,8 @@
+/* styles/base.css - Shared styles for all screens */
+
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;600;700&display=swap');
+
 /* Reset & Base */
 * {
     margin: 0;
@@ -6,7 +11,7 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Montserrat Alternates', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     direction: rtl;
     overflow: hidden;
     background: #FFFCF8;
@@ -20,7 +25,7 @@ body {
     left: 0;
     right: 0;
     z-index: 100;
-    background: #273143;
+    background: rgba(39, 49, 67, 0.9);
     padding: 15px;
     display: flex;
     justify-content: space-between;
@@ -30,7 +35,7 @@ body {
 .progress-bar {
     flex: 1;
     height: 4px;
-    background: rgba(230, 241, 154, 0.3);
+    background: rgba(255, 252, 248, 0.3);
     border-radius: 2px;
     margin-left: 15px;
     overflow: hidden;
@@ -40,28 +45,28 @@ body {
     content: '';
     display: block;
     height: 100%;
-    background: #E6F19A;
+    background: #FFFCF8;
     width: var(--progress-width, 14.28%);
     border-radius: 2px;
     transition: width 0.3s ease;
 }
 
 .progress-text {
-    color: #E6F19A;
+    color: #FFFCF8;
     font-weight: 600;
     font-size: 14px;
     white-space: nowrap;
 }
 
-/* App Container - Show only one screen at a time */
+/* App Container */
 .app-container {
     width: 100vw;
     height: 100vh;
     position: relative;
-    padding-top: 60px; /* Space for progress bar */
+    padding-top: 60px;
 }
 
-/* Individual Screen - Full screen overlay */
+/* Screen Base - All screens start here */
 .screen {
     position: absolute;
     top: 60px;
@@ -76,24 +81,27 @@ body {
     opacity: 0;
     visibility: hidden;
     transition: all 0.4s ease;
-    transform: translateX(100vw); /* Start off-screen */
+    transform: translateX(100vw);
+    background: #FFFCF8; /* Default background */
 }
 
-/* Active screen */
 .screen.active {
     opacity: 1;
     visibility: visible;
     transform: translateX(0);
 }
 
+/* Default Screen Content */
 .screen-content {
     text-align: center;
     max-width: 400px;
     width: 100%;
     margin-bottom: 40px;
+    z-index: 10;
 }
 
 .screen-content h1 {
+    font-family: 'Montserrat Alternates';
     font-size: 2.5rem;
     color: #273143;
     margin-bottom: 10px;
@@ -101,14 +109,17 @@ body {
 }
 
 .screen-content p {
+    font-family: 'Montserrat Alternates';
     font-size: 1.2rem;
     color: #273143;
     opacity: 0.7;
     margin-bottom: 30px;
+    line-height: 1.4;
 }
 
-/* Buttons */
-.btn-next, .btn-submit {
+/* Buttons - Shared styling */
+.btn-next, 
+.btn-submit {
     background: #273143;
     color: #FFFCF8;
     border: none;
@@ -120,20 +131,23 @@ body {
     transition: all 0.3s ease;
     min-width: 120px;
     box-shadow: 0 4px 15px rgba(39, 49, 67, 0.2);
+    font-family: 'Montserrat Alternates';
 }
 
-.btn-next:hover, .btn-submit:hover {
-    background: #E6F19A;
+.btn-next:hover, 
+.btn-submit:hover {
+    background: #FFFCF8;
     color: #273143;
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(39, 49, 67, 0.3);
 }
 
-.btn-next:active, .btn-submit:active {
+.btn-next:active, 
+.btn-submit:active {
     transform: translateY(0);
 }
 
-/* Form Styling */
+/* Form Styling - Shared for all forms */
 .registration-form {
     width: 100%;
     max-width: 350px;
@@ -150,6 +164,7 @@ body {
     font-weight: 600;
     margin-bottom: 8px;
     font-size: 1rem;
+    font-family: 'Montserrat Alternates';
 }
 
 .form-group input {
@@ -162,6 +177,7 @@ body {
     direction: rtl;
     text-align: right;
     color: #273143;
+    font-family: 'Montserrat Alternates';
 }
 
 .form-group input:focus {
@@ -174,23 +190,13 @@ body {
     color: #999;
 }
 
-/* Submit Button */
-.btn-submit {
-    width: 100%;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 30px;
-}
-
+/* Loading & Success States */
 .btn-submit:disabled {
     opacity: 0.7;
     cursor: not-allowed;
     transform: none;
 }
 
-/* Loading Spinner */
 .loading {
     display: flex;
     align-items: center;
@@ -211,10 +217,9 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-/* Success Icon */
 .success-icon {
     font-size: 4rem;
-    color: white;
+    color: #273143;
     margin-top: 20px;
     animation: bounce 0.6s ease;
 }
@@ -231,38 +236,7 @@ body {
     }
 }
 
-/* Research Cards */
-.research-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin-top: 30px;
-    max-width: 600px;
-}
-
-.research-card {
-    background: rgba(39, 49, 67, 0.1);
-    border: 1px solid #E6F19A;
-    border-radius: 12px;
-    padding: 15px;
-    text-align: right;
-}
-
-.research-card p {
-    font-size: 0.9rem;
-    color: #273143;
-    margin-bottom: 8px;
-    line-height: 1.4;
-}
-
-.research-card .source {
-    font-size: 0.8rem;
-    color: #273143;
-    opacity: 0.7;
-    font-style: italic;
-}
-
-/* Mobile Responsive */
+/* Mobile Responsive - Base */
 @media (max-width: 480px) {
     .screen {
         padding: 30px 15px;
@@ -283,18 +257,5 @@ body {
     
     .form-group input {
         padding: 10px 12px;
-    }
-    
-    .research-cards {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-    
-    .research-card {
-        padding: 12px;
-    }
-    
-    .research-card p {
-        font-size: 0.85rem;
     }
 }

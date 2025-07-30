@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Joystie</title>
-    <link rel="stylesheet" href="styles/clean.css">
+    <!-- Base styles - shared across all screens -->
+    <link rel="stylesheet" href="styles/base.css">
+    <!-- Screen specific styles -->
+    <link rel="stylesheet" href="styles/screen1.css">
+    <!-- Add other screen CSS files as we create them -->
 </head>
 <body>
     <!-- Progress Indicator -->
@@ -16,13 +20,13 @@
     <!-- Screens Container -->
     <div class="app-container" id="appContainer">
         
-        <!-- Screen 1 -->
+        <!-- Screen 1 - Updated with Figma Design -->
         <div class="screen active" id="screen1">
-            <div class="screen-content">
-                <h1>Joystie</h1>
-                <p>מסך פתיחה</p>
+            <div class="logo-section">
+                <h1 class="logo-title">Joystie</h1>
+                <div class="logo-underline"></div>
+                <p class="subtitle">Break free from digital dependency</p>
             </div>
-            <button class="btn-next" onclick="nextScreen()">המשך</button>
         </div>
 
         <!-- Screen 2 -->
