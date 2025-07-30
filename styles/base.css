@@ -18,7 +18,7 @@ body {
     min-height: 100vh;
 }
 
-/* Progress Indicator */
+/* Progress Indicator - Hidden on Screen 1 */
 .progress-container {
     position: fixed;
     top: 0;
@@ -30,6 +30,14 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.progress-container.show {
+    opacity: 1;
+    visibility: visible;
 }
 
 .progress-bar {

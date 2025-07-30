@@ -1,0 +1,255 @@
+/* styles/screen2.css - Screen 2 Specific Styles */
+
+/* Screen 2 - Main Container */
+#screen2 {
+    background: url('../assets/Screenshot 2025-06-03 at 22.39.18.png') center/cover;
+    position: relative;
+    padding: 0;
+    background-color: #273143; /* Fallback */
+}
+
+/* Top Logo Section - Smaller for Screen 2 */
+#screen2 .top-logo {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 10;
+}
+
+#screen2 .top-logo .logo-title {
+    font-family: 'Montserrat Alternates';
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 1.21;
+    color: #FFFCF8;
+    margin-bottom: 8px;
+}
+
+#screen2 .top-logo .logo-underline {
+    width: 39px;
+    height: 2px;
+    background: #FFFCF8;
+    margin: 0 auto;
+    border-radius: 2px;
+    border: 2px solid #FFFCF8;
+    transform: rotate(1deg);
+}
+
+/* Progress Dots - Custom for Screen 2 */
+#screen2 .progress-dots {
+    position: absolute;
+    top: 129px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 5.5px;
+    z-index: 10;
+}
+
+#screen2 .progress-dot {
+    width: 36px;
+    height: 4px;
+    border-radius: 35px;
+    background: #FFFCF8;
+}
+
+#screen2 .progress-dot.active {
+    background: #E6F19A;
+}
+
+/* Base Card - White Background Section */
+#screen2 .base-card {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 800px;
+    background: url('../assets/app_icon_1024x1024.png') center/cover;
+    filter: drop-shadow(1px 4px 8px rgba(0, 0, 0, 0.05));
+    border-radius: 20px 20px 0 0;
+    z-index: 5;
+}
+
+/* Main Content Container */
+#screen2 .main-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10;
+    width: 100%;
+    max-width: 400px;
+    padding: 0 20px;
+}
+
+/* Main Question */
+#screen2 .main-question {
+    font-family: 'Varela Round', sans-serif;
+    font-weight: 400;
+    font-size: clamp(20px, 5.5vw, 24px);
+    line-height: 1.5;
+    color: #FFFCF8;
+    margin-bottom: 30px;
+    width: 100%;
+    max-width: 324px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Sub Question */
+#screen2 .sub-question {
+    font-family: 'Varela Round', sans-serif;
+    font-weight: 400;
+    font-size: clamp(18px, 5vw, 24px);
+    line-height: 1.5;
+    color: #FFFCF8;
+    margin-bottom: 20px;
+    max-width: 235px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Emoji */
+#screen2 .emoji {
+    font-family: 'Varela Round', sans-serif;
+    font-size: 30px;
+    color: #FFFCF8;
+    margin-bottom: 30px;
+    display: block;
+}
+
+/* Encouraging Text */
+#screen2 .encouraging-text {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 600;
+    font-size: clamp(35px, 8vw, 48px);
+    line-height: 1.2;
+    color: #E6F19A;
+    margin-bottom: 40px;
+    max-width: 345px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Custom Button for Screen 2 */
+#screen2 .btn-screen2 {
+    background: #E6F19A;
+    color: #282743;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-family: 'Varela Round', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    max-width: 343px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+#screen2 .btn-screen2:hover {
+    background: #d4e085;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Arrow Icon in Button */
+#screen2 .btn-screen2::before {
+    content: '';
+    position: absolute;
+    right: 19px;
+    top: 50%;
+    transform: translateY(-50%) rotate(180deg);
+    width: 34px;
+    height: 11px;
+    background-image: 
+        linear-gradient(90deg, #282743 0px, #282743 6px, transparent 6px, transparent 8px),
+        linear-gradient(90deg, #9FA8A8 8px, #9FA8A8 14px, transparent 14px, transparent 16px),
+        linear-gradient(90deg, #717D7B 16px, #717D7B 22px, transparent 22px);
+    background-size: 34px 11px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+/* Override default screen content for screen 2 */
+#screen2 .screen-content {
+    position: static;
+    background: transparent;
+    margin: 0;
+    max-width: none;
+    width: 100%;
+}
+
+/* Hide default content, use custom layout */
+#screen2 .screen-content > * {
+    display: none;
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    #screen2 .top-logo .logo-title {
+        font-size: 22px;
+    }
+    
+    #screen2 .top-logo .logo-underline {
+        width: 30px;
+    }
+    
+    #screen2 .base-card {
+        height: 700px;
+    }
+    
+    #screen2 .main-content {
+        padding: 0 15px;
+        max-width: 350px;
+    }
+    
+    #screen2 .main-question {
+        font-size: 18px;
+        max-width: 280px;
+    }
+    
+    #screen2 .sub-question {
+        font-size: 16px;
+        max-width: 200px;
+    }
+    
+    #screen2 .encouraging-text {
+        font-size: 28px;
+        max-width: 280px;
+    }
+    
+    #screen2 .btn-screen2 {
+        font-size: 16px;
+        max-width: 300px;
+        height: 45px;
+    }
+    
+    #screen2 .progress-dots {
+        top: 110px;
+    }
+    
+    #screen2 .progress-dot {
+        width: 30px;
+        height: 3px;
+    }
+}
+
+@media (max-width: 360px) {
+    #screen2 .encouraging-text {
+        font-size: 24px;
+    }
+    
+    #screen2 .btn-screen2 {
+        font-size: 14px;
+        max-width: 280px;
+    }
+}

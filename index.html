@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="styles/base.css">
     <!-- Screen specific styles -->
     <link rel="stylesheet" href="styles/screen1.css">
-    <!-- Add other screen CSS files as we create them -->
+    <link rel="stylesheet" href="styles/screen2.css">
 </head>
 <body>
     <!-- Progress Indicator -->
@@ -29,14 +29,42 @@
             </div>
         </div>
 
-        <!-- Screen 2 -->
+        <!-- Screen 2 - Updated with Figma Design -->
         <div class="screen" id="screen2">
+            <!-- Top Logo -->
+            <div class="top-logo">
+                <h1 class="logo-title">Joystie</h1>
+                <div class="logo-underline"></div>
+            </div>
+            
+            <!-- Progress Dots -->
+            <div class="progress-dots">
+                <div class="progress-dot active"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+            </div>
+            
+            <!-- Base Card Background -->
+            <div class="base-card"></div>
+            
+            <!-- Main Content -->
+            <div class="main-content">
+                <h1 class="main-question">הילד לא מפסיק להיות במסך?</h1>
+                <p class="sub-question">ניסית כבר הכל וכלום לא עובד?</p>
+                <span class="emoji">😟</span>
+                <h2 class="encouraging-text">את לא לבד!</h2>
+                <button class="btn-screen2" onclick="nextScreen()">בוא/י גלה/י מה אפשר לעשות</button>
+            </div>
+            
+            <!-- Hidden default content -->
             <div class="screen-content">
                 <h1>הילד לא מפסיק להיות במסך?</h1>
                 <p>ניסית כבר הכל וכלום לא עובד?<br>
                 את/ה לא לבד!</p>
             </div>
-            <button class="btn-next" onclick="nextScreen()">בוא/י תגל/י מה ניתן לעשות...</button>
         </div>
 
         <!-- Screen 3 -->
