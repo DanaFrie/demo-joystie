@@ -50,14 +50,6 @@ function nextScreen() {
             nextScreenEl.classList.add('active');
         }
         
-        // Show progress bar starting from screen 2
-        if (currentScreen >= 2) {
-            const progressContainer = document.querySelector('.progress-container');
-            if (progressContainer) {
-                progressContainer.classList.add('show');
-            }
-        }
-        
         updateProgress();
         console.log(`Moved to screen ${currentScreen}`);
     }
@@ -77,16 +69,6 @@ function moveToScreen() {
     if (currentScreenEl) {
         currentScreenEl.classList.add('active');
     }
-    
-    // Show/hide progress bar based on current screen
-    const progressContainer = document.querySelector('.progress-container');
-    if (progressContainer) {
-        if (currentScreen >= 2) {
-            progressContainer.classList.add('show');
-        } else {
-            progressContainer.classList.remove('show');
-        }
-    }
 }
 
 function updateProgress() {
@@ -94,10 +76,7 @@ function updateProgress() {
                       document.querySelector('.progress-bar');
     const progressText = document.getElementById('progressText');
     
-    // Progress calculation starts from screen 2 (screen 1 is splash, doesn't count)
-    const progressScreen = Math.max(1, currentScreen - 1);
-    const progressTotal = totalScreens - 1; // 6 total progress screens
-    const percentage = (progressScreen / progressTotal) * 100;
+    const percentage = (currentScreen / totalScreens) * 100;
     
     // Update progress bar
     if (progressBar) {
@@ -106,7 +85,7 @@ function updateProgress() {
     
     // Update text
     if (progressText) {
-        progressText.textContent = `${progressScreen} / ${progressTotal}`;
+        progressText.textContent = `${currentScreen} / ${totalScreens}`;
     }
     
     // Update CSS custom property for progress bar
