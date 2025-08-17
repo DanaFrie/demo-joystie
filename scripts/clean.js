@@ -50,11 +50,12 @@ function nextScreen() {
             nextScreenEl.classList.add('active');
         }
         
-        updateProgress();
+        // קריאה לפונקציית בר ההתקדמות החדשה עם מספר המסך המעודכן
+        window.updateProgressBar(currentScreen);
+        
         console.log(`Moved to screen ${currentScreen}`);
     }
 }
-
 function moveToScreen() {
     // Hide all screens
     for (let i = 1; i <= totalScreens; i++) {

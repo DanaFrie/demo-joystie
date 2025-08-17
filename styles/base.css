@@ -1,7 +1,7 @@
 /* styles/base.css - Shared styles for all screens */
 
 /* Google Fonts Import */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;600;700&family=Rubik:wght@600&family=Varela+Round&display=swap');
 
 /* Reset & Base */
 * {
@@ -19,43 +19,30 @@ body {
 }
 
 /* Progress Indicator */
+/* --- New Progress Bar Styles --- */
 .progress-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    background: rgba(39, 49, 67, 0.9);
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    position: fixed; /* מקבע את הבר לחלק העליון של המסך */
+    top: 85px;       /* מרווח מהחלק העליון (אפשר לשנות) */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 300px;
+    display: flex; /* מסדר את המקטעים בשורה */
+    gap: 8px;      /* רווח קבוע בין המקטעים */
+    z-index: 10;   /* מוודא שהבר תמיד מעל התוכן */
+    direction: ltr; /* חשוב! כדי שהבר יתמלא משמאל לימין */
 }
 
-.progress-bar {
-    flex: 1;
-    height: 4px;
-    background: rgba(255, 252, 248, 0.3);
+.progress-segment {
+    height: 4px; /* גובה הקו */
+    flex-grow: 1; /* גורם לכל המקטעים להיות באותו רוחב */
+    background-color: rgba(255, 255, 255, 0.5); /* צבע ברירת מחדל (לבן שקוף) */
     border-radius: 2px;
-    margin-left: 15px;
-    overflow: hidden;
+    transition: background-color 0.4s ease; /* אנימציה למעבר צבע */
 }
 
-.progress-bar::before {
-    content: '';
-    display: block;
-    height: 100%;
-    background: #FFFCF8;
-    width: var(--progress-width, 14.28%);
-    border-radius: 2px;
-    transition: width 0.3s ease;
-}
-
-.progress-text {
-    color: #FFFCF8;
-    font-weight: 600;
-    font-size: 14px;
-    white-space: nowrap;
+.progress-segment.active {
+    background-color: #E6F19A; /* צבע המקטע הפעיל (הצהבהב מהעיצוב) */
 }
 
 /* App Container */
