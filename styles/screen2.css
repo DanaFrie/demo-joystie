@@ -1,0 +1,56 @@
+/* =================================================   
+   עיצוב מסך 2 - גרסה מתוקנת
+================================================== */
+
+/* עיצוב כללי למסך */
+#screen2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    background-image: url('../images/screen2-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* עיצוב פסקאות הפתיחה */
+#screen2 .s2-intro-text {
+    font-family: 'Varela Round', sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    color: #FFFCF8;
+    text-align: center;
+    line-height: 1.4;
+}
+
+/* עיצוב הכותרת המרכזית */
+#screen2 .s2-main-headline {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 600;
+    font-size: 48px;
+    color: #E6F19A;
+    text-align: center;
+}
+
+/* עיצוב הכפתור הספציפי של מסך 2 */
+#screen2 .btn-next {
+    /* נתונים מה-Figma */
+    background-color: #E6F19A;
+    border-radius: 0px;
+
+    /* נתוני הטקסט מה-Figma */
+    font-family: 'Varela Round', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    color: #282743;
+
+    /* מאפיינים נוספים לכפתור טוב */
+    border: none;
+    padding: 18px 30px;
+    width: 90%;
+    max-width: 400px;
+    cursor: pointer;
+    text-align: center;
+}
