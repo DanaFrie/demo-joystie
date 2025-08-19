@@ -1,24 +1,25 @@
 #screen2 {
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* This is the key change */
+    justify-content: space-between;
     align-items: center;
-    padding:5vh 20px;
-    background-image: url('../images/bg.png'); /* Make sure this path is correct */
+    padding: 5vh 20px; /* Use viewport height for top/bottom padding */
+    background-image: url('../images/bg.png');
     background-size: cover;
     background-position: center;
-    height: 100%; /* Ensures the container fills the available height */
+    height: 100%;
 }
-
 .s2-base-overlay {
-    top:  16%;
+    position: absolute;
+    /* Let's use percentages for the overlay's position */
+    top: 16%; /* Approx 156px on a 956px tall screen */
+    bottom: 0;
     left: 0;
-    width: 100%;
-    height: 800px;
-    background-image: url('../images/base-overlay.png'); /* Make sure this path is correct */
+    right: 0;
+    z-index: 1;
+    background-image: url('../images/base-overlay.png');
     background-size: cover;
     background-position: center;
-    z-index: 1;
 }
 
 /* Ensure the content is layered on top of the overlay */
@@ -43,9 +44,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3vh; /* רווח בין הטקסטים */
+    gap: 3vh; /* Use viewport height for the gap between text lines */
     width: 100%;
-    margin-top: -50px; /* דוחף את התוכן קצת למעלה למרכוז טוב יותר */
 }
 
 /* עיצוב טקסטים */
