@@ -297,20 +297,22 @@ window.debugApp = {
 };
 
 function updateProgressBar(screenIndex) {
-    // המספר 6 מייצג את כמות המסכים שיש להם מחוון התקדמות (מסך 2 עד 7)
-    const totalSegments = 6; 
+    const totalSegments = 6; // Total screens with a progress bar (2 through 7)
 
-    // 1. מאפס את כל המחוונים בכל המסכים
+    // 1. Reset all segments across all screens
     document.querySelectorAll('.progress-segment').forEach(segment => {
         segment.classList.remove('active');
     });
 
-    // 2. מפעיל את המחוון הנכון רק במסך הנוכחי
-    if (screenIndex > 1) { // רק אם אנחנו אחרי מסך הפתיחה
+    // 2. Activate the correct segment on the current screen
+    if (screenIndex > 1) {
         const screenElement = document.getElementById(`screen${screenIndex}`);
         if (screenElement) {
-            // המחוון הפעיל הוא screenIndex פחות 1 (כי מסך 2 הוא המחוון הראשון)
-            const activeSegment = screenElement.querySelector(`.progress-segment:nth-child(${screenIndex - 1})`);
+            // --- THIS IS THE LINE TO CHANGE ---
+            // Calculate the correct segment index for RTL
+            const segmentIndexForRTL = totalSegments - (screenIndex - 2);
+            const activeSegment = screenElement.querySelector(`.progress-segment:nth-child(${segmentIndexForRTL})`);
+            
             if (activeSegment) {
                 activeSegment.classList.add('active');
             }

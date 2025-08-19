@@ -242,3 +242,28 @@ body {
         padding: 10px 12px;
     }
 }
+
+/* Styles for the desktop frame */
+@media (min-width: 500px) {
+    body {
+        /* A neutral background for the desktop view */
+        background-color: #e9e9e9;
+    }
+
+    .desktop-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 40px 0;
+    }
+
+    .app-container {
+        max-width: 440px; /* The width from your Figma design */
+        height: 956px;    /* The height from your Figma design */
+        max-height: 90vh; /* Prevents it from being too tall on some screens */
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        overflow: hidden; /* This is crucial */
+    }
+}
