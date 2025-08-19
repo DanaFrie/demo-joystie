@@ -31,7 +31,7 @@
     height: 3px; /* קרוב ל-border 2.28px */
     background: #FFFCF8;
     margin: 5px auto 0;
-    border-radius: 2px;
+    border-radius: 0 0 10px 10px; 
 }
 
 /* תוכן מרכזי */

@@ -95,7 +95,7 @@
     height: 3px;
     background: #FFFCF8;
     margin: 0 auto 30px;
-    border-radius: 2px;
+    border-radius: 0 0 10px 10px; 
     animation: expandWidth 0.8s ease 0.5s both;
 }
 
