@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: space-between; /* This is the key change */
     align-items: center;
-    padding: 20px;
+    padding:5vh 20px;
     background-image: url('../images/bg.png'); /* Make sure this path is correct */
     background-size: cover;
     background-position: center;
@@ -11,8 +11,7 @@
 }
 
 .s2-base-overlay {
-    position: absolute;
-    top: 156px;
+    top:  16%;
     left: 0;
     width: 100%;
     height: 800px;
@@ -30,9 +29,7 @@
 }
 
 .screen-header {
-    width: 100%;
-    text-align: center;
-    padding-top: 40px;
+    padding-top: 0;
 
 }
 
@@ -46,7 +43,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px; /* רווח בין הטקסטים */
+    gap: 3vh; /* רווח בין הטקסטים */
     width: 100%;
     margin-top: -50px; /* דוחף את התוכן קצת למעלה למרכוז טוב יותר */
 }
@@ -54,8 +51,8 @@
 /* עיצוב טקסטים */
 .s2-intro-text {
     font-family: 'Varela Round', sans-serif;
-    font-weight: 400;
-    font-size: 24px;
+    font-size: 1.5rem; /* Use rem for scalable text */
+    /* font-size: clamp(1rem, 4vw, 1.5rem); */ /* Alternative using clamp for more control */
     color: #FFFCF8;
     text-align: center;
     line-height: 1.5;
@@ -64,11 +61,10 @@
 
 .s2-main-headline {
     font-family: 'Rubik', sans-serif;
-    font-weight: 600;
-    font-size: 48px;
+    font-size: 3rem; /* Use rem for scalable text */
+    /* font-size: clamp(2rem, 8vw, 3.5rem); */ /* Alternative using clamp */
     color: #E6F19A;
     text-align: center;
-    margin-top: 30px; /* מרווח מהטקסט שלפניו */
 }
 
 /* Footer - כפתור */
@@ -77,20 +73,19 @@
     display: flex;
     justify-content: center;
     padding: 0 20px;
-    margin-bottom: 50px; /* קרוב ל-top: 804px בפיגמה */
 }
 
 .s2-btn-next {
     width: 100%;
-    max-width: 343px; /* רוחב מהפיגמה */
-    height: 50px;
+    max-width: 343px;
+    height: 50px; /* Buttons often have a fixed height for usability */
     background: #E6F19A;
     color: #282743;
     font-family: 'Varela Round', sans-serif;
-    font-size: 18px;
-    border-radius: 8px; /* מהפיגמה */
-    border: 1px solid #000000; /* מהפיגמה */
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); /* מהפיגמה */
+    font-size: 1.1rem; /* Use rem for scalable text */
+    border-radius: 8px;
+    border: 1px solid #000000;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     cursor: pointer;
     display: flex;
     justify-content: center;
