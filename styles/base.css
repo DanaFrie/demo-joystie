@@ -18,36 +18,31 @@ body {
     min-height: 100vh;
 }
 
-/* Progress Indicator - Updated with visibility control */
+/* Progress Indicator */
+/* --- New Progress Bar Styles --- */
 .progress-container {
-    position: fixed;
-    top: 85px;
+    position: fixed; /* מקבע את הבר לחלק העליון של המסך */
+    top: 85px;       /* מרווח מהחלק העליון (אפשר לשנות) */
     left: 50%;
     transform: translateX(-50%);
     width: 80%;
     max-width: 300px;
-    display: flex;
-    gap: 8px;
-    z-index: 10;
-    direction: ltr;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.progress-container.visible {
-    opacity: 1;
+    display: flex; /* מסדר את המקטעים בשורה */
+    gap: 8px;      /* רווח קבוע בין המקטעים */
+    z-index: 10;   /* מוודא שהבר תמיד מעל התוכן */
+    direction: ltr; /* חשוב! כדי שהבר יתמלא משמאל לימין */
 }
 
 .progress-segment {
-    height: 4px;
-    flex-grow: 1;
-    background-color: rgba(255, 255, 255, 0.5);
+    height: 4px; /* גובה הקו */
+    flex-grow: 1; /* גורם לכל המקטעים להיות באותו רוחב */
+    background-color: rgba(255, 255, 255, 0.5); /* צבע ברירת מחדל (לבן שקוף) */
     border-radius: 2px;
-    transition: background-color 0.4s ease;
+    transition: background-color 0.4s ease; /* אנימציה למעבר צבע */
 }
 
 .progress-segment.active {
-    background-color: #E6F19A;
+    background-color: #E6F19A; /* צבע המקטע הפעיל (הצהבהב מהעיצוב) */
 }
 
 /* App Container */
@@ -55,15 +50,16 @@ body {
     width: 100vw;
     height: 100vh;
     position: relative;
+    padding-top: 60px;
 }
 
-/* Screen Base - Updated for better transitions */
+/* Screen Base - All screens start here */
 .screen {
     position: absolute;
-    top: 0;
+    top: 60px;
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 60px);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -71,13 +67,15 @@ body {
     padding: 40px 20px;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.6s ease, visibility 0.6s ease;
-    background: #FFFCF8;
+    transition: all 0.4s ease;
+    transform: translateX(100vw);
+    background: #FFFCF8; /* Default background */
 }
 
 .screen.active {
     opacity: 1;
     visibility: visible;
+    transform: translateX(0);
 }
 
 /* Default Screen Content */
@@ -95,14 +93,6 @@ body {
     color: #273143;
     margin-bottom: 10px;
     font-weight: 700;
-}
-
-.screen-content h2 {
-    font-family: 'Montserrat Alternates';
-    font-size: 2rem;
-    color: #273143;
-    margin-bottom: 10px;
-    font-weight: 600;
 }
 
 .screen-content p {
@@ -233,45 +223,6 @@ body {
     }
 }
 
-/* Global Animation Classes */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideInFromRight {
-    from {
-        opacity: 0;
-        transform: translateX(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes scaleIn {
-    from {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
 /* Mobile Responsive - Base */
 @media (max-width: 480px) {
     .screen {
@@ -280,10 +231,6 @@ body {
     
     .screen-content h1 {
         font-size: 1.8rem;
-    }
-    
-    .screen-content h2 {
-        font-size: 1.5rem;
     }
     
     .screen-content p {
@@ -297,10 +244,5 @@ body {
     
     .form-group input {
         padding: 10px 12px;
-    }
-    
-    .progress-container {
-        top: 60px;
-        width: 85%;
     }
 }
