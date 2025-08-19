@@ -1,15 +1,32 @@
-/* עיצוב כללי למסך 2 */
 #screen2 {
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* דוחף את הכותרת למעלה ואת הכפתור למטה */
+    justify-content: space-between; /* This is the key change */
     align-items: center;
     padding: 20px;
-    background-image: url('../images/bg.png');
+    background-image: url('../images/bg.png'); /* Make sure this path is correct */
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-    height: 100%; /* חשוב כדי ש-space-between יעבוד */
+    height: 100%; /* Ensures the container fills the available height */
+}
+
+.s2-base-overlay {
+    position: absolute;
+    top: 156px;
+    left: 0;
+    width: 100%;
+    height: 800px;
+    background-image: url('../images/base-overlay.png'); /* Make sure this path is correct */
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+/* Ensure the content is layered on top of the overlay */
+.screen-header, .screen-progress-bar, .s2-content, .s2-footer {
+    position: relative;
+    z-index: 2;
+    width: 100%; /* Ensures content stretches to align center */
 }
 
 .screen-header {
@@ -83,21 +100,3 @@
     align-items: center;
 }
 
-.s2-base-overlay {
-    position: absolute;
-    top: 156px;
-    left: 0;
-    width: 100%; /* Use 100% to be responsive */
-    height: 800px;
-    background-image: url('../images/base-overlay.png'); /* The PNG you just exported */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: 1; /* Puts it above the main background but below the content */
-}
-
-/* Make sure your content is above the overlay */
-.s2-header, .s2-content, .s2-footer {
-    position: relative; /* This is important */
-    z-index: 2;
-}
