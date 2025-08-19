@@ -4,7 +4,7 @@
 #screen1 {
     background: #273143;
     /* Replace with your actual background image */
-    background-image: url('../assets/Screenshot 2025-06-03 at 22.39.18.png');
+    background-image: url('../images/bg.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -78,25 +78,10 @@
     }
 }
 
-/* Main Logo Title */
-.logo-title {
-    font-family: 'Montserrat Alternates';
-    font-weight: 600;
-    font-size: clamp(32px, 8vw, 40px);
-    line-height: 1.21;
-    color: #FFFCF8;
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-/* Decorative Underline with Animation */
-.logo-underline {
-    width: 55px;
-    height: 3px;
-    background: #FFFCF8;
-    margin: 0 auto 30px;
-    border-radius: 0 0 10px 10px; 
-    animation: expandWidth 0.8s ease 0.5s both;
+.s1-logo-img {
+    width: 187px; /* Width of the logo from Figma */
+    height: auto;
+    margin-bottom: 25px;
 }
 
 @keyframes expandWidth {

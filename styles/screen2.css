@@ -5,33 +5,26 @@
     justify-content: space-between; /* דוחף את הכותרת למעלה ואת הכפתור למטה */
     align-items: center;
     padding: 20px;
-    background-image: url('../assets/Screenshot 2025-06-03 at 22.39.18.png');
+    background-image: url('../images/bg.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     height: 100%; /* חשוב כדי ש-space-between יעבוד */
 }
 
-/* Header - לוגו */
-.s2-header {
-    margin-top: 20px; /* קרוב ל-top: 83px בפיגמה */
-}
-
-.s2-logo-title {
-    font-family: 'Montserrat Alternates', sans-serif;
-    font-weight: 600;
-    font-size: 28px; /* קרוב ל-27.94px בפיגמה */
-    color: #FFFCF8;
+.screen-header {
+    /* This container holds the small logo at the top of the screen */
+    width: 100%;
     text-align: center;
-    margin: 0;
+    padding-top: 20px;
+    position: absolute; /* Positions it at the top */
+    top: 0;
+    left: 0;
 }
 
-.s2-logo-underline {
-    width: 39px; /* קרוב ל-38.85px */
-    height: 3px; /* קרוב ל-border 2.28px */
-    background: #FFFCF8;
-    margin: 5px auto 0;
-    border-radius: 0 0 10px 10px; 
+.small-logo-img {
+    width: 131px; /* Width of the small logo from Figma */
+    height: auto;
 }
 
 /* תוכן מרכזי */
@@ -88,4 +81,23 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.s2-base-overlay {
+    position: absolute;
+    top: 156px;
+    left: 0;
+    width: 100%; /* Use 100% to be responsive */
+    height: 800px;
+    background-image: url('../images/base-overlay.png'); /* The PNG you just exported */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 1; /* Puts it above the main background but below the content */
+}
+
+/* Make sure your content is above the overlay */
+.s2-header, .s2-content, .s2-footer {
+    position: relative; /* This is important */
+    z-index: 2;
 }
