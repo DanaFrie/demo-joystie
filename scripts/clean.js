@@ -296,6 +296,29 @@ window.debugApp = {
     }
 };
 
+function updateProgressBar(screenIndex) {
+    // המספר 6 מייצג את כמות המסכים שיש להם מחוון התקדמות (מסך 2 עד 7)
+    const totalSegments = 6; 
+
+    // 1. מאפס את כל המחוונים בכל המסכים
+    document.querySelectorAll('.progress-segment').forEach(segment => {
+        segment.classList.remove('active');
+    });
+
+    // 2. מפעיל את המחוון הנכון רק במסך הנוכחי
+    if (screenIndex > 1) { // רק אם אנחנו אחרי מסך הפתיחה
+        const screenElement = document.getElementById(`screen${screenIndex}`);
+        if (screenElement) {
+            // המחוון הפעיל הוא screenIndex פחות 1 (כי מסך 2 הוא המחוון הראשון)
+            const activeSegment = screenElement.querySelector(`.progress-segment:nth-child(${screenIndex - 1})`);
+            if (activeSegment) {
+                activeSegment.classList.add('active');
+            }
+        }
+    }
+}
+
+
 // Export functions for use in other scripts
 window.nextScreen = nextScreen;
 window.previousScreen = previousScreen;

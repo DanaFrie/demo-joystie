@@ -1,56 +1,91 @@
-/* =================================================   
-   עיצוב מסך 2 - גרסה מתוקנת
-================================================== */
-
-/* עיצוב כללי למסך */
+/* עיצוב כללי למסך 2 */
 #screen2 {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between; /* דוחף את הכותרת למעלה ואת הכפתור למטה */
     align-items: center;
     padding: 20px;
-    background-image:url('../assets/Screenshot 2025-06-03 at 22.39.18.png');
+    background-image: url('../assets/Screenshot 2025-06-03 at 22.39.18.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    height: 100%; /* חשוב כדי ש-space-between יעבוד */
 }
 
-/* עיצוב פסקאות הפתיחה */
-#screen2 .s2-intro-text {
+/* Header - לוגו */
+.s2-header {
+    margin-top: 20px; /* קרוב ל-top: 83px בפיגמה */
+}
+
+.s2-logo-title {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-weight: 600;
+    font-size: 28px; /* קרוב ל-27.94px בפיגמה */
+    color: #FFFCF8;
+    text-align: center;
+    margin: 0;
+}
+
+.s2-logo-underline {
+    width: 39px; /* קרוב ל-38.85px */
+    height: 3px; /* קרוב ל-border 2.28px */
+    background: #FFFCF8;
+    margin: 5px auto 0;
+    border-radius: 2px;
+}
+
+/* תוכן מרכזי */
+.s2-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* רווח בין הטקסטים */
+    width: 100%;
+    margin-top: -50px; /* דוחף את התוכן קצת למעלה למרכוז טוב יותר */
+}
+
+/* עיצוב טקסטים */
+.s2-intro-text {
     font-family: 'Varela Round', sans-serif;
     font-weight: 400;
     font-size: 24px;
     color: #FFFCF8;
     text-align: center;
-    line-height: 1.4;
+    line-height: 1.5;
+    margin: 0;
 }
 
-/* עיצוב הכותרת המרכזית */
-#screen2 .s2-main-headline {
+.s2-main-headline {
     font-family: 'Rubik', sans-serif;
     font-weight: 600;
     font-size: 48px;
     color: #E6F19A;
     text-align: center;
+    margin-top: 30px; /* מרווח מהטקסט שלפניו */
 }
 
-/* עיצוב הכפתור הספציפי של מסך 2 */
-#screen2 .btn-next {
-    /* נתונים מה-Figma */
-    background-color: #E6F19A;
-    border-radius: 0px;
+/* Footer - כפתור */
+.s2-footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0 20px;
+    margin-bottom: 50px; /* קרוב ל-top: 804px בפיגמה */
+}
 
-    /* נתוני הטקסט מה-Figma */
-    font-family: 'Varela Round', sans-serif;
-    font-weight: 400;
-    font-size: 18px;
+.s2-btn-next {
+    width: 100%;
+    max-width: 343px; /* רוחב מהפיגמה */
+    height: 50px;
+    background: #E6F19A;
     color: #282743;
-
-    /* מאפיינים נוספים לכפתור טוב */
-    border: none;
-    padding: 18px 30px;
-    width: 90%;
-    max-width: 400px;
+    font-family: 'Varela Round', sans-serif;
+    font-size: 18px;
+    border-radius: 8px; /* מהפיגמה */
+    border: 1px solid #000000; /* מהפיגמה */
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); /* מהפיגמה */
     cursor: pointer;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

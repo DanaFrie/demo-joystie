@@ -20,10 +20,10 @@
 
 </head>
 <body>
-    <!-- Progress Indicator - New Structure -->
+    <!-- Progress Indicator - New Structure
     <div class="progress-container" id="progressContainer">
-    <!-- המקטעים ייווצרו כאן באופן דינמי על ידי JavaScript -->
-    </div>
+   המקטעים ייווצרו כאן באופן דינמי על ידי JavaScript 
+    </div> -->
     <!-- Screens Container -->
     <div class="app-container" id="appContainer">
         
@@ -37,14 +37,32 @@
         </div>
 
         <!-- Screen 2 -->
-        <div class="screen" id="screen2">
-            <div class="screen-content">
-                <p class="s2-intro-text">עדיין רבים עם הילד על המסך?</p>
-                <p class="s2-intro-text">ניסיתם כבר הכל וכלום לא עובד?!😕</p>
-                <h2 class="s2-main-headline">אתם לא לבד!</h2>
+       <div class="screen" id="screen2">
+        <div class="s2-header">
+            <div class="s2-logo">
+                <h1 class="s2-logo-title">Joystie</h1>
+                <div class="s2-logo-underline"></div>
             </div>
-            <button class="btn-next" onclick="nextScreen()">בואו לגלות מה ניתן לעשות...</button>
         </div>
+        
+        <div class="s2-content">
+            <div class="screen-progress-bar">
+                <div class="progress-segment active"></div>
+                <div class="progress-segment"></div>
+                <div class="progress-segment"></div>
+                <div class="progress-segment"></div>
+                <div class="progress-segment"></div>
+                <div class="progress-segment"></div>
+            </div>
+            <p class="s2-intro-text">הילד לא מפסיק להיות במסך?</p>
+            <p class="s2-intro-text">ניסית כבר הכל וכלום לא עובד? 😟</p>
+            <h2 class="s2-main-headline">את לא לבד!</h2>
+        </div>
+
+        <div class="s2-footer">
+            <button class="s2-btn-next" onclick="nextScreen()">בוא/י גלה/י מה אפשר לעשות</button>
+        </div>
+       </div>
 
         <!-- Screen 3 -->
         <div class="screen" id="screen3">
@@ -138,7 +156,7 @@
         </div>
 
     </div>
-    <script src="scripts/progress.js"></script> 
+    <!-- <script src="scripts/progress.js"></script>  -->
 
     <script src="scripts/clean.js"></script>
     <script src="scripts/tracking.js"></script>

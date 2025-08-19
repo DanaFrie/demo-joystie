@@ -18,31 +18,25 @@ body {
     min-height: 100vh;
 }
 
-/* Progress Indicator */
-/* --- New Progress Bar Styles --- */
-.progress-container {
-    position: fixed; /* מקבע את הבר לחלק העליון של המסך */
-    top: 85px;       /* מרווח מהחלק העליון (אפשר לשנות) */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-    max-width: 300px;
-    display: flex; /* מסדר את המקטעים בשורה */
-    gap: 8px;      /* רווח קבוע בין המקטעים */
-    z-index: 10;   /* מוודא שהבר תמיד מעל התוכן */
-    direction: ltr; /* חשוב! כדי שהבר יתמלא משמאל לימין */
+/* --- Screen Progress Bar (Unified Style) --- */
+.screen-progress-bar {
+    display: flex;
+    justify-content: center;
+    gap: 5.5px;
+    width: 100%;
+    margin-bottom: 60px; /* רווח מהתוכן שמתחת */
 }
 
 .progress-segment {
-    height: 4px; /* גובה הקו */
-    flex-grow: 1; /* גורם לכל המקטעים להיות באותו רוחב */
-    background-color: rgba(255, 255, 255, 0.5); /* צבע ברירת מחדל (לבן שקוף) */
-    border-radius: 2px;
-    transition: background-color 0.4s ease; /* אנימציה למעבר צבע */
+    width: 36px;
+    height: 4px;
+    background-color: rgba(255, 252, 248, 0.4); /* צבע ברירת מחדל */
+    border-radius: 35px;
+    transition: background-color 0.4s ease;
 }
 
 .progress-segment.active {
-    background-color: #E6F19A; /* צבע המקטע הפעיל (הצהבהב מהעיצוב) */
+    background-color: #E6F19A; /* צבע פעיל */
 }
 
 /* App Container */
