@@ -242,3 +242,36 @@ body {
         padding: 10px 12px;
     }
 }
+
+/* styles/base.css */
+
+/* --- Final Responsive Layout --- */
+body {
+    /* צבע רקע כללי שיוצג מחוץ למסגרת האפליקציה בדסקטופ */
+    background-color: #e9e9e9;
+}
+
+.app-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh; /* יחידה מודרנית שעובדת טוב יותר במובייל */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem; /* רווח קטן מהקצוות */
+}
+
+.app-container {
+    width: 100%;
+    max-width: 440px; /* הרוחב המקסימלי מהעיצוב */
+
+    /* --- זה הקסם --- */
+    aspect-ratio: 440 / 956;
+
+    position: relative; /* חשוב למיקום האלמנטים הפנימיים */
+    overflow: hidden; /* חותך כל מה שגולש מהמסגרת */
+
+    /* עיצוב המסגרת */
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
