@@ -1,10 +1,26 @@
+// scripts/clean.js - Main navigation (aligned with separate progress.js)
+
 // App State
 let currentScreen = 1;
 const totalScreens = 7;
+let autoTransitionTimeout;
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
-    // Make sure only screen 1 is visible
+    setupScreens();
+    startAutoTransition();
+    setupTouchSupport();
+    setupKeyboardSupport();
+    setupForm();
+    
+    // Initial progress update (progress.js handles initialization)
+    if (window.updateProgressBar) {
+        window.updateProgressBar(1);
+    }
+});
+
+// Setup initial screens state
+function setupScreens() {
     for (let i = 1; i <= totalScreens; i++) {
         const screen = document.getElementById(`screen${i}`);
         if (screen) {
@@ -15,21 +31,54 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
-    
-    updateProgress();
-    setupForm();
-    
-    // Auto advance from screen 1 after 3 seconds
-    setTimeout(() => {
+}
+
+// Auto transition from screen 1 to screen 2 after 3 seconds
+function startAutoTransition() {
+    autoTransitionTimeout = setTimeout(() => {
         if (currentScreen === 1) {
-            nextScreen();
+            transitionToScreen2();
         }
     }, 3000);
-});
+}
 
-// Navigation
+// Special fade transition for screen 1 to screen 2
+function transitionToScreen2() {
+    const screen1 = document.getElementById('screen1');
+    const screen2 = document.getElementById('screen2');
+    const progressContainer = document.getElementById('progressContainer');
+    
+    // Start fade out of screen 1
+    screen1.style.opacity = '0';
+    
+    setTimeout(() => {
+        screen1.classList.remove('active');
+        screen2.classList.add('active');
+        currentScreen = 2;
+        
+        // Update progress using your progress.js function
+        if (window.updateProgressBar) {
+            window.updateProgressBar(currentScreen);
+        }
+        
+        // Show progress bar after leaving screen 1
+        progressContainer.classList.add('visible');
+        
+        // Track screen 2 visit if tracking is enabled
+        if (window.eventTracker && window.eventTracker.trackScreenView) {
+            window.eventTracker.trackScreenView(2);
+        }
+    }, 600);
+}
+
+// Main navigation function
 function nextScreen() {
     if (currentScreen < totalScreens) {
+        // Clear any pending auto transitions
+        if (autoTransitionTimeout) {
+            clearTimeout(autoTransitionTimeout);
+        }
+        
         // Hide current screen
         const currentScreenEl = document.getElementById(`screen${currentScreen}`);
         if (currentScreenEl) {
@@ -39,110 +88,216 @@ function nextScreen() {
         // Move to next screen
         currentScreen++;
         
-        // Track screen 6 visit specifically
-        if (currentScreen === 6 && window.eventTracker) {
+        // Track screen 6 visit specifically if it exists
+        if (currentScreen === 6 && window.eventTracker && window.eventTracker.trackScreen6Visit) {
             window.eventTracker.trackScreen6Visit();
         }
         
-        // Show new screen
+        // Show new screen with slight delay for smooth transition
         const nextScreenEl = document.getElementById(`screen${currentScreen}`);
         if (nextScreenEl) {
-            nextScreenEl.classList.add('active');
+            setTimeout(() => {
+                nextScreenEl.classList.add('active');
+            }, 100);
         }
         
-        // קריאה לפונקציית בר ההתקדמות החדשה עם מספר המסך המעודכן
-        window.updateProgressBar(currentScreen);
+        // Update progress using your progress.js function
+        if (window.updateProgressBar) {
+            window.updateProgressBar(currentScreen);
+        }
+        
+        // Track general screen view if tracking is enabled
+        if (window.eventTracker && window.eventTracker.trackScreenView) {
+            window.eventTracker.trackScreenView(currentScreen);
+        }
         
         console.log(`Moved to screen ${currentScreen}`);
     }
 }
-function moveToScreen() {
-    // Hide all screens
-    for (let i = 1; i <= totalScreens; i++) {
-        const screen = document.getElementById(`screen${i}`);
-        if (screen) {
-            screen.classList.remove('active');
+
+// Previous screen navigation (optional)
+function previousScreen() {
+    if (currentScreen > 1) {
+        // Don't go back to splash screen
+        if (currentScreen === 2) return;
+        
+        // Hide current screen
+        const currentScreenEl = document.getElementById(`screen${currentScreen}`);
+        if (currentScreenEl) {
+            currentScreenEl.classList.remove('active');
+        }
+        
+        // Move to previous screen
+        currentScreen--;
+        
+        // Show previous screen
+        const prevScreenEl = document.getElementById(`screen${currentScreen}`);
+        if (prevScreenEl) {
+            prevScreenEl.classList.add('active');
+        }
+        
+        // Update progress using your progress.js function
+        if (window.updateProgressBar) {
+            window.updateProgressBar(currentScreen);
         }
     }
-    
-    // Show current screen
-    const currentScreenEl = document.getElementById(`screen${currentScreen}`);
-    if (currentScreenEl) {
-        currentScreenEl.classList.add('active');
-    }
 }
 
-function updateProgress() {
-    const progressBar = document.querySelector('.progress-bar::before') || 
-                      document.querySelector('.progress-bar');
-    const progressText = document.getElementById('progressText');
-    
-    const percentage = (currentScreen / totalScreens) * 100;
-    
-    // Update progress bar
-    if (progressBar) {
-        progressBar.style.setProperty('--progress', `${percentage}%`);
+// Move to specific screen
+function moveToScreen(screenNumber) {
+    if (screenNumber >= 1 && screenNumber <= totalScreens) {
+        // Clear auto transition
+        if (autoTransitionTimeout) {
+            clearTimeout(autoTransitionTimeout);
+        }
+        
+        // Hide all screens
+        for (let i = 1; i <= totalScreens; i++) {
+            const screen = document.getElementById(`screen${i}`);
+            if (screen) {
+                screen.classList.remove('active');
+            }
+        }
+        
+        // Update current screen
+        currentScreen = screenNumber;
+        
+        // Show target screen
+        const targetScreen = document.getElementById(`screen${currentScreen}`);
+        if (targetScreen) {
+            targetScreen.classList.add('active');
+        }
+        
+        // Update progress using your progress.js function
+        if (window.updateProgressBar) {
+            window.updateProgressBar(currentScreen);
+        }
+        
+        // Show progress bar if past screen 1
+        if (screenNumber > 1) {
+            const progressContainer = document.getElementById('progressContainer');
+            if (progressContainer) {
+                progressContainer.classList.add('visible');
+            }
+        }
     }
-    
-    // Update text
-    if (progressText) {
-        progressText.textContent = `${currentScreen} / ${totalScreens}`;
-    }
-    
-    // Update CSS custom property for progress bar
-    document.documentElement.style.setProperty('--progress-width', `${percentage}%`);
-}
-
-// Form Handling - Removed (now in registration.js)
-function setupForm() {
-    // Form logic moved to registration.js
-    console.log('Form setup handled by registration.js');
-}
-
-async function handleFormSubmit(e) {
-    // Form handling moved to registration.js
-    console.log('Form handling moved to registration.js');
 }
 
 // Touch/Swipe Support
-let startX = 0;
-let startY = 0;
-
-document.addEventListener('touchstart', function(e) {
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-});
-
-document.addEventListener('touchend', function(e) {
-    const endX = e.changedTouches[0].clientX;
-    const endY = e.changedTouches[0].clientY;
+function setupTouchSupport() {
+    let startX = 0;
+    let startY = 0;
     
-    const diffX = startX - endX;
-    const diffY = startY - endY;
+    document.addEventListener('touchstart', function(e) {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+    }, { passive: true });
     
-    // Swipe left (next screen)
-    if (Math.abs(diffX) > Math.abs(diffY) && diffX > 50) {
-        if (currentScreen < 6) { // Don't swipe past form screen
-            nextScreen();
+    document.addEventListener('touchend', function(e) {
+        const endX = e.changedTouches[0].clientX;
+        const endY = e.changedTouches[0].clientY;
+        
+        const diffX = startX - endX;
+        const diffY = startY - endY;
+        
+        // Check if horizontal swipe is more significant than vertical
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+            // Swipe left (next screen)
+            if (diffX > 50 && currentScreen < totalScreens) {
+                nextScreen();
+            }
+            // Swipe right (previous screen)
+            else if (diffX < -50 && currentScreen > 2) {
+                previousScreen();
+            }
         }
-    }
-});
+    }, { passive: true });
+}
 
 // Keyboard Support
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'ArrowLeft' || e.key === 'Space') {
-        if (currentScreen < 6) { // Don't skip form
+function setupKeyboardSupport() {
+    document.addEventListener('keydown', function(e) {
+        // Arrow left or Space for next screen
+        if ((e.key === 'ArrowLeft' || e.key === ' ') && currentScreen < totalScreens) {
+            e.preventDefault();
             nextScreen();
         }
-    }
-});
+        // Arrow right for previous screen
+        else if (e.key === 'ArrowRight' && currentScreen > 2) {
+            e.preventDefault();
+            previousScreen();
+        }
+    });
+}
 
-// Debug function
-window.getCurrentScreen = () => currentScreen;
-window.goToScreen = (screen) => {
-    if (screen >= 1 && screen <= totalScreens) {
-        currentScreen = screen;
-        moveToScreen();
-        updateProgress();
+// Form Handling Setup
+function setupForm() {
+    const form = document.getElementById('registrationForm');
+    if (form) {
+        form.addEventListener('submit', handleFormSubmit);
+    }
+}
+
+// Form submission handler
+async function handleFormSubmit(e) {
+    e.preventDefault();
+    
+    const submitBtn = document.getElementById('submitBtn');
+    const submitText = document.getElementById('submitText');
+    const loading = document.getElementById('loading');
+    
+    // Get form values
+    const formData = {
+        name: document.getElementById('name')?.value,
+        phone: document.getElementById('phone')?.value,
+        email: document.getElementById('email')?.value
+    };
+    
+    // Show loading state
+    if (submitBtn) submitBtn.disabled = true;
+    if (submitText) submitText.style.display = 'none';
+    if (loading) loading.style.display = 'flex';
+    
+    // Simulate form submission (replace with actual API call)
+    try {
+        // Track form submission if tracking is available
+        if (window.eventTracker && window.eventTracker.trackFormSubmit) {
+            window.eventTracker.trackFormSubmit(formData);
+        }
+        
+        // Simulate API delay
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        // Success - move to next screen
+        nextScreen();
+    } catch (error) {
+        console.error('Form submission error:', error);
+        // Handle error - show message to user
+        alert('אירעה שגיאה, נסה שוב');
+    } finally {
+        // Reset button state
+        if (submitBtn) submitBtn.disabled = false;
+        if (submitText) submitText.style.display = 'inline';
+        if (loading) loading.style.display = 'none';
+    }
+}
+
+// Debug functions - available in console
+window.debugApp = {
+    getCurrentScreen: () => currentScreen,
+    goToScreen: moveToScreen,
+    nextScreen: nextScreen,
+    previousScreen: previousScreen,
+    getTotalScreens: () => totalScreens,
+    resetApp: () => {
+        currentScreen = 1;
+        moveToScreen(1);
+        startAutoTransition();
     }
 };
+
+// Export functions for use in other scripts
+window.nextScreen = nextScreen;
+window.previousScreen = previousScreen;
+window.moveToScreen = moveToScreen;
+window.getCurrentScreen = () => currentScreen;

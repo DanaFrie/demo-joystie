@@ -1,14 +1,19 @@
 /* styles/screen1.css - Splash Screen Specific Styles */
 
-/* Screen 1 - Splash Design */
+/* Screen 1 - Full Resolution Splash Design */
 #screen1 {
-    background: url('../assets/Screenshot 2025-06-03 at 22.39.18.png') center/cover;
+    background: #273143;
+    /* Replace with your actual background image */
+    background-image: url('../assets/Screenshot 2025-06-03 at 22.39.18.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     position: relative;
     padding: 0;
-    background-color: #273143; /* Fallback if image doesn't load */
+    transition: opacity 0.8s ease; /* Slower fade for screen1 */
 }
 
-/* Decorative Ellipses - Background Elements */
+/* Decorative Ellipses - Background Elements with Float Animation */
 #screen1::before {
     content: '';
     position: absolute;
@@ -16,9 +21,10 @@
     height: 359px;
     left: -98px;
     top: -74px;
-    background: radial-gradient(circle, rgba(255, 252, 248, 0.1) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255, 252, 248, 0.15) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
+    animation: float 6s ease-in-out infinite;
 }
 
 #screen1::after {
@@ -28,9 +34,20 @@
     height: 437px;
     left: -76px;
     bottom: -200px;
-    background: radial-gradient(circle, rgba(255, 252, 248, 0.1) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255, 252, 248, 0.12) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
+    animation: float 8s ease-in-out infinite reverse;
+}
+
+/* Float Animation for Background Elements */
+@keyframes float {
+    0%, 100% { 
+        transform: translate(0, 0); 
+    }
+    50% { 
+        transform: translate(10px, -10px); 
+    }
 }
 
 /* Logo Section - Centered Content */
@@ -44,6 +61,19 @@
     width: 100%;
     max-width: 400px;
     padding: 0 20px;
+    animation: logoFadeInUp 1s ease;
+}
+
+/* Logo Section Animation */
+@keyframes logoFadeInUp {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -40%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
 }
 
 /* Main Logo Title */
@@ -57,15 +87,23 @@
     text-align: center;
 }
 
-/* Decorative Underline */
+/* Decorative Underline with Animation */
 .logo-underline {
     width: 55px;
     height: 3px;
     background: #FFFCF8;
     margin: 0 auto 30px;
     border-radius: 2px;
-    transform: rotate(1deg);
-    border: 3px solid #FFFCF8;
+    animation: expandWidth 0.8s ease 0.5s both;
+}
+
+@keyframes expandWidth {
+    from { 
+        width: 0; 
+    }
+    to { 
+        width: 55px; 
+    }
 }
 
 /* Subtitle Text */
@@ -78,9 +116,19 @@
     max-width: 326px;
     margin: 0 auto;
     text-align: center;
+    animation: subtitleFadeIn 0.8s ease 0.8s both;
 }
 
-/* Screen 1 specific content styling */
+@keyframes subtitleFadeIn {
+    from { 
+        opacity: 0; 
+    }
+    to { 
+        opacity: 1; 
+    }
+}
+
+/* Screen 1 specific content styling override */
 #screen1 .screen-content {
     position: static;
     background: transparent;
