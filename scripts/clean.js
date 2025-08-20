@@ -96,6 +96,23 @@ function updateProgressBar(screenIndex) {
     }
 }
 
+// --- Sliders (FIXED Alignment & NEW Dependency) ---
+function setupSliders() {
+    const sliders = document.querySelectorAll('.interactive-slider');
+
+    sliders.forEach(slider => {
+        updateSliderVisuals(slider); // Set initial state
+        
+        slider.addEventListener('input', (event) => {
+            const changedSlider = event.target;
+            updateSliderVisuals(changedSlider);
+            // **NEW:** Handle the dependency between sliders
+            handleSliderDependency(changedSlider);
+        });
+    });
+}
+
+
 function updateSlider(slider) { // Or updateSliderVisuals(slider)
     const valueId = slider.dataset.valueId;
     const valueElement = document.getElementById(valueId);
@@ -113,30 +130,6 @@ function updateSlider(slider) { // Or updateSliderVisuals(slider)
 
     // **FIX:** Change "to right" to "to left" to reverse the fill direction.
     const colorStop = `linear-gradient(to left, #E6F19A ${percentage}%, rgba(0, 0, 0, 0.1) ${percentage}%)`;
-    slider.style.background = colorStop;
-}
-
-function updateSliderVisuals(slider) {
-    const valueElement = document.getElementById(slider.dataset.valueId);
-    if (!valueElement) return;
-
-    const currentValue = parseFloat(slider.value);
-    const min = parseFloat(slider.min);
-    const max = parseFloat(slider.max);
-    
-    // 1. Update the text in the value bubble
-    valueElement.innerText = Math.round(currentValue);
-
-    // **FIX:** This new calculation perfectly centers the bubble over the thumb
-    const thumbWidth = 28; // As defined in your CSS
-    const trackWidth = slider.offsetWidth;
-    const percentage = (currentValue - min) / (max - min);
-    const thumbPosition = percentage * (trackWidth - thumbWidth) + (thumbWidth / 2);
-    valueElement.style.left = `${thumbPosition}px`;
-
-    // 3. Update the background "fill" of the slider track
-    const fillPercentage = percentage * 100;
-    const colorStop = `linear-gradient(to right, #E6F19A ${fillPercentage}%, rgba(0, 0, 0, 0.1) ${fillPercentage}%)`;
     slider.style.background = colorStop;
 }
 
