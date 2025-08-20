@@ -157,11 +157,33 @@
 
             <!-- Screen 5 -->
             <div class="screen" id="screen5">
-                <div class="screen-content">
-                    <h1>אנימציה</h1>
-                    <p>כאן תופיע אנימציה מעניינת</p>
+                <div class="screen-base-overlay"></div>
+                
+                <div class="screen-header">
+                    <img src="images/logo-joystie.png" alt="Joystie Logo" class="small-logo-img">
                 </div>
-                <button class="btn-next" onclick="nextScreen()">המשך</button>
+                
+                <div class="screen-progress-bar">
+                    <div class="progress-segment"></div>
+                    <div class="progress-segment"></div>
+                    <div class="progress-segment"></div>
+                    <div class="progress-segment"></div>
+                    <div class="progress-segment"></div>
+                    <div class="progress-segment"></div>
+                </div>
+
+                <div class="s5-content">
+                    <div class="daily-challenge-card">
+                        <video autoplay loop muted playsinline class="animation-video">
+                            <source src="images/daily-challenge.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+
+                <div class="s5-footer">
+                    <button class="screen-btn-next" onclick="nextScreen()">הבנתי, ממשיכים</button>
+                </div>
             </div>
 
             <!-- Screen 6 - Form -->

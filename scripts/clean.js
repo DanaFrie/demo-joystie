@@ -1,4 +1,4 @@
-// scripts/clean.js - FINAL VERSION
+
 
 // --- App State (No Changes) ---
 let currentScreen = 1;
@@ -75,9 +75,9 @@ function moveToScreen(screenNumber) {
 }
 
 
+// --- Progress Bar Update (FIXED for RTL) ---
 function updateProgressBar(screenIndex) {
-    // This function is now corrected for RTL
-    const totalSegments = 6; 
+    const totalSegments = 6; // Screens 2 through 7 have a progress bar
 
     document.querySelectorAll('.progress-segment').forEach(segment => {
         segment.classList.remove('active');
@@ -86,8 +86,7 @@ function updateProgressBar(screenIndex) {
     if (screenIndex > 1) {
         const screenElement = document.getElementById(`screen${screenIndex}`);
         if (screenElement) {
-            // **FIX:** This is the correct logic. It selects the Nth child,
-            // and the CSS (dir="rtl") correctly places it visually.
+            // **FIX:** This logic correctly selects the segment for RTL layouts
             const activeSegment = screenElement.querySelector(`.progress-segment:nth-child(${screenIndex - 1})`);
             if (activeSegment) {
                 activeSegment.classList.add('active');
@@ -95,6 +94,7 @@ function updateProgressBar(screenIndex) {
         }
     }
 }
+
 
 // --- Sliders (FIXED Alignment & NEW Dependency) ---
 function setupSliders() {
@@ -112,24 +112,27 @@ function setupSliders() {
     });
 }
 
-
-function updateSlider(slider) { // Or updateSliderVisuals(slider)
-    const valueId = slider.dataset.valueId;
-    const valueElement = document.getElementById(valueId);
-    
+function updateSliderVisuals(slider) {
+    const valueElement = document.getElementById(slider.dataset.valueId);
     if (!valueElement) return;
 
-    const currentValue = slider.value;
-    const min = slider.min;
-    const max = slider.max;
+    const currentValue = parseFloat(slider.value);
+    const min = parseFloat(slider.min);
+    const max = parseFloat(slider.max);
     
-    // ... (the code for updating the text and bubble position remains the same) ...
-    valueElement.innerText = currentValue;
-    const percentage = ((currentValue - min) / (max - min)) * 100;
-    valueElement.style.left = `${percentage}%`;
+    // 1. Update the text in the value bubble
+    valueElement.innerText = Math.round(currentValue);
 
-    // **FIX:** Change "to right" to "to left" to reverse the fill direction.
-    const colorStop = `linear-gradient(to left, #E6F19A ${percentage}%, rgba(0, 0, 0, 0.1) ${percentage}%)`;
+    // **FIX:** This new calculation perfectly centers the bubble over the thumb
+    const thumbWidth = 28; // As defined in your CSS
+    const trackWidth = slider.offsetWidth;
+    const percentage = (currentValue - min) / (max - min);
+    const thumbPosition = percentage * (trackWidth - thumbWidth) + (thumbWidth / 2);
+    valueElement.style.left = `${thumbPosition}px`;
+
+    // 3. Update the background "fill" of the slider track
+    const fillPercentage = percentage * 100;
+    const colorStop = `linear-gradient(to right, #E6F19A ${fillPercentage}%, rgba(0, 0, 0, 0.1) ${fillPercentage}%)`;
     slider.style.background = colorStop;
 }
 

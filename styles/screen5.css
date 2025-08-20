@@ -1,0 +1,49 @@
+/* styles/screen5.css */
+
+#screen5 {
+    justify-content: space-between;
+    background-image: url('../images/bg.png');
+    background-size: cover;
+    background-position: center;
+}
+
+/* Main content container */
+.s5-content {
+    flex-grow: 1; /* Allows the card to take up available space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* The main card element from the Figma design */
+.daily-challenge-card {
+    width: 100%;
+    max-width: 330px; /* Based on Figma (left: 60px, right: 50px) */
+    height: 484px;
+    max-height: 60vh; /* Make height responsive */
+    background: #E6F19A;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 18px;
+    
+    /* Centering placeholder content inside the card */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Rubik', sans-serif;
+    color: #282743;
+    font-size: 1.5rem;
+}
+
+/* Footer styling */
+.s5-footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.animation-video {
+    width: 100%;
+    height: auto;
+    border-radius: 18px; /* Match the card's border-radius */
+}
