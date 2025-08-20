@@ -75,9 +75,9 @@ function moveToScreen(screenNumber) {
 }
 
 
-// --- Progress Bar Update (FIXED for RTL) ---
 function updateProgressBar(screenIndex) {
-    const totalSegments = 6; // Screens 2 through 7 have a progress bar
+    // This function is now corrected for RTL
+    const totalSegments = 6; 
 
     document.querySelectorAll('.progress-segment').forEach(segment => {
         segment.classList.remove('active');
@@ -86,7 +86,8 @@ function updateProgressBar(screenIndex) {
     if (screenIndex > 1) {
         const screenElement = document.getElementById(`screen${screenIndex}`);
         if (screenElement) {
-            // **FIX:** This logic correctly selects the segment for RTL layouts
+            // **FIX:** This is the correct logic. It selects the Nth child,
+            // and the CSS (dir="rtl") correctly places it visually.
             const activeSegment = screenElement.querySelector(`.progress-segment:nth-child(${screenIndex - 1})`);
             if (activeSegment) {
                 activeSegment.classList.add('active');
@@ -95,21 +96,24 @@ function updateProgressBar(screenIndex) {
     }
 }
 
+function updateSlider(slider) { // Or updateSliderVisuals(slider)
+    const valueId = slider.dataset.valueId;
+    const valueElement = document.getElementById(valueId);
+    
+    if (!valueElement) return;
 
-// --- Sliders (FIXED Alignment & NEW Dependency) ---
-function setupSliders() {
-    const sliders = document.querySelectorAll('.interactive-slider');
+    const currentValue = slider.value;
+    const min = slider.min;
+    const max = slider.max;
+    
+    // ... (the code for updating the text and bubble position remains the same) ...
+    valueElement.innerText = currentValue;
+    const percentage = ((currentValue - min) / (max - min)) * 100;
+    valueElement.style.left = `${percentage}%`;
 
-    sliders.forEach(slider => {
-        updateSliderVisuals(slider); // Set initial state
-        
-        slider.addEventListener('input', (event) => {
-            const changedSlider = event.target;
-            updateSliderVisuals(changedSlider);
-            // **NEW:** Handle the dependency between sliders
-            handleSliderDependency(changedSlider);
-        });
-    });
+    // **FIX:** Change "to right" to "to left" to reverse the fill direction.
+    const colorStop = `linear-gradient(to left, #E6F19A ${percentage}%, rgba(0, 0, 0, 0.1) ${percentage}%)`;
+    slider.style.background = colorStop;
 }
 
 function updateSliderVisuals(slider) {
@@ -160,9 +164,6 @@ function handleSliderDependency(changedSlider) {
     }
 }
 
-
-// --- Touch, Keyboard, and Form Support (No Changes) ---
-// (The existing functions for setupTouchSupport, setupKeyboardSupport, and handleFormSubmit remain the same)
 
 function setupTouchSupport() {
     let startX = 0;
