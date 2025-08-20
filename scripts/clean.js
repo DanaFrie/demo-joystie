@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupTouchSupport();
     setupKeyboardSupport();
     setupForm();
+     setupSliders();
     
     // Initial progress update (progress.js handles initialization)
     if (window.updateProgressBar) {
@@ -318,6 +319,42 @@ function updateProgressBar(screenIndex) {
     }
 }
 
+
+function setupSliders() {
+    const sliders = document.querySelectorAll('.interactive-slider');
+
+    sliders.forEach(slider => {
+        // Set initial state on page load
+        updateSlider(slider); 
+
+        // Add event listener for when the user interacts with the slider
+        slider.addEventListener('input', (event) => {
+            updateSlider(event.target);
+        });
+    });
+}
+
+function updateSlider(slider) {
+    const valueId = slider.dataset.valueId;
+    const valueElement = document.getElementById(valueId);
+    
+    if (!valueElement) return;
+
+    const currentValue = slider.value;
+    const min = slider.min;
+    const max = slider.max;
+    
+    // 1. Update the text in the value bubble
+    valueElement.innerText = currentValue;
+
+    // 2. Update the position of the value bubble to follow the thumb
+    const percentage = ((currentValue - min) / (max - min)) * 100;
+    valueElement.style.left = `${percentage}%`;
+
+    // 3. Update the background "fill" of the slider track
+    const colorStop = `linear-gradient(to right, #E6F19A ${percentage}%, rgba(0, 0, 0, 0.1) ${percentage}%)`;
+    slider.style.background = colorStop;
+}
 
 // Export functions for use in other scripts
 window.nextScreen = nextScreen;
