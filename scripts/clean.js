@@ -1,30 +1,30 @@
-
-
-// --- App State (No Changes) ---
+// --- App State ---
 let currentScreen = 1;
 const totalScreens = 7;
 let autoTransitionTimeout;
 
-// --- Main Initializer (No Changes) ---
+// --- Main Initializer ---
 document.addEventListener('DOMContentLoaded', function() {
-    // Note: We are removing obsolete references to a global 'progressContainer'
     setupScreens();
     startAutoTransition();
     setupTouchSupport();
     setupKeyboardSupport();
-    setupForm();
     setupSliders(); 
     setupCarousel();
+    
+    // Initialize the registration form logic from registration.js
+    if (window.registrationManager) {
+        window.registrationManager.init();
+    }
     
     updateProgressBar(1);
 });
 
-// --- Screen Setup (No Changes) ---
+// --- Screen Setup ---
 function setupScreens() {
     for (let i = 1; i <= totalScreens; i++) {
         const screen = document.getElementById(`screen${i}`);
         if (screen) {
-            screen.classList.add('screen-transition'); // Helper class for transitions
             if (i === 1) {
                 screen.classList.add('active');
             }
@@ -32,7 +32,7 @@ function setupScreens() {
     }
 }
 
-// --- Navigation Functions (Simplified) ---
+// --- Navigation Functions ---
 function startAutoTransition() {
     autoTransitionTimeout = setTimeout(() => {
         if (currentScreen === 1) {
@@ -48,7 +48,6 @@ function nextScreen() {
 }
 
 function previousScreen() {
-    // We don't allow going back from screen 2 to the splash screen
     if (currentScreen > 2) {
         moveToScreen(currentScreen - 1);
     }
@@ -71,14 +70,11 @@ function moveToScreen(screenNumber) {
     }
 
     updateProgressBar(currentScreen);
-    
-    // Optional: Add tracking logic here if needed
 }
 
-
-// --- Progress Bar Update (FIXED for RTL) ---
+// --- Progress Bar Update ---
 function updateProgressBar(screenIndex) {
-    const totalSegments = 6; // Screens 2 through 7 have a progress bar
+    const totalSegments = 6; 
 
     document.querySelectorAll('.progress-segment').forEach(segment => {
         segment.classList.remove('active');
@@ -87,7 +83,6 @@ function updateProgressBar(screenIndex) {
     if (screenIndex > 1) {
         const screenElement = document.getElementById(`screen${screenIndex}`);
         if (screenElement) {
-            // **FIX:** This logic correctly selects the segment for RTL layouts
             const activeSegment = screenElement.querySelector(`.progress-segment:nth-child(${screenIndex - 1})`);
             if (activeSegment) {
                 activeSegment.classList.add('active');
@@ -96,18 +91,14 @@ function updateProgressBar(screenIndex) {
     }
 }
 
-
-// --- Sliders (FIXED Alignment & NEW Dependency) ---
+// --- Sliders ---
 function setupSliders() {
     const sliders = document.querySelectorAll('.interactive-slider');
-
     sliders.forEach(slider => {
-        updateSliderVisuals(slider); // Set initial state
-        
+        updateSliderVisuals(slider);
         slider.addEventListener('input', (event) => {
             const changedSlider = event.target;
             updateSliderVisuals(changedSlider);
-            // **NEW:** Handle the dependency between sliders
             handleSliderDependency(changedSlider);
         });
     });
@@ -121,47 +112,78 @@ function updateSliderVisuals(slider) {
     const min = parseFloat(slider.min);
     const max = parseFloat(slider.max);
     
-    // 1. Update the text in the value bubble
     valueElement.innerText = Math.round(currentValue);
 
-    // **FIX:** This new calculation perfectly centers the bubble over the thumb
-    const thumbWidth = 28; // As defined in your CSS
+    const thumbWidth = 28;
     const trackWidth = slider.offsetWidth;
     const percentage = (currentValue - min) / (max - min);
     const thumbPosition = percentage * (trackWidth - thumbWidth) + (thumbWidth / 2);
     valueElement.style.left = `${thumbPosition}px`;
 
-    // 3. Update the background "fill" of the slider track
-    const fillPercentage = percentage * 100;
-    const colorStop = `linear-gradient(to right, #E6F19A ${fillPercentage}%, rgba(0, 0, 0, 0.1) ${fillPercentage}%)`;
+    const colorStop = `linear-gradient(to right, #E6F19A ${percentage * 100}%, rgba(0, 0, 0, 0.1) ${percentage * 100}%)`;
     slider.style.background = colorStop;
 }
 
-// **NEW:** This function creates the negative dependency
 function handleSliderDependency(changedSlider) {
     const pocketMoneySlider = document.getElementById('pocketMoney');
     const screenTimeSlider = document.getElementById('screenTime');
-
     if (!pocketMoneySlider || !screenTimeSlider) return;
 
-    // Calculate the inverse percentage
     const changedPercentage = (changedSlider.value - changedSlider.min) / (changedSlider.max - changedSlider.min);
     const inversePercentage = 1 - changedPercentage;
 
     if (changedSlider.id === 'pocketMoney') {
-        // Update the screen time slider
         const newScreenTime = inversePercentage * (screenTimeSlider.max - screenTimeSlider.min);
         screenTimeSlider.value = newScreenTime;
         updateSliderVisuals(screenTimeSlider);
     } else if (changedSlider.id === 'screenTime') {
-        // Update the pocket money slider
         const newPocketMoney = inversePercentage * (pocketMoneySlider.max - pocketMoneySlider.min);
         pocketMoneySlider.value = newPocketMoney;
         updateSliderVisuals(pocketMoneySlider);
     }
 }
 
+// --- Carousel ---
+function setupCarousel() {
+    const track = document.querySelector('.s7-carousel-track');
+    if (!track) return;
 
+    let currentIndex = 0;
+    let startX = 0;
+    let currentTranslate = 0;
+    let prevTranslate = 0;
+
+    const touchStart = (event) => {
+        startX = event.touches[0].clientX;
+        prevTranslate = -currentIndex * track.offsetWidth;
+    };
+
+    const touchMove = (event) => {
+        const currentX = event.touches[0].clientX;
+        const diff = currentX - startX;
+        currentTranslate = prevTranslate + diff;
+        track.style.transform = `translateX(${currentTranslate}px)`;
+    };
+
+    const touchEnd = () => {
+        const movedBy = currentTranslate - prevTranslate;
+        if (movedBy < -75 && currentIndex < track.children.length - 1) {
+            currentIndex++;
+        }
+        if (movedBy > 75 && currentIndex > 0) {
+            currentIndex--;
+        }
+        currentTranslate = -currentIndex * track.offsetWidth;
+        track.style.transition = 'transform 0.4s ease-in-out';
+        track.style.transform = `translateX(${currentTranslate}px)`;
+    };
+
+    track.addEventListener('touchstart', touchStart, { passive: true });
+    track.addEventListener('touchmove', touchMove, { passive: true });
+    track.addEventListener('touchend', touchEnd);
+}
+
+// --- Touch & Keyboard Support ---
 function setupTouchSupport() {
     let startX = 0;
     document.addEventListener('touchstart', e => startX = e.touches[0].clientX, { passive: true });
@@ -179,81 +201,7 @@ function setupKeyboardSupport() {
     });
 }
 
-function setupForm() {
-    const form = document.getElementById('registrationForm');
-    if (form) form.addEventListener('submit', handleFormSubmit);
-}
-
-async function handleFormSubmit(e) {
-    e.preventDefault();
-    const submitBtn = document.getElementById('submitBtn');
-    submitBtn.disabled = true;
-    // Add loading visuals...
-    
-    await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate API call
-    
-    nextScreen(); // Move to success screen
-    
-    submitBtn.disabled = false;
-    // Remove loading visuals...
-}
-
-
-function setupCarousel() {
-    const track = document.querySelector('.s7-carousel-track');
-    if (!track) return;
-
-    const cards = Array.from(track.children);
-    let currentIndex = 0;
-    let startX = 0;
-    let currentTranslate = 0;
-    let prevTranslate = 0;
-
-    function setCardPosition() {
-        track.style.transform = `translateX(${currentTranslate}px)`;
-    }
-
-    function touchStart(event) {
-        startX = event.touches[0].clientX;
-        prevTranslate = -currentIndex * track.offsetWidth;
-    }
-
-    function touchMove(event) {
-        const currentX = event.touches[0].clientX;
-        const diff = currentX - startX;
-        currentTranslate = prevTranslate + diff;
-        setCardPosition();
-    }
-
-    function touchEnd() {
-        const movedBy = currentTranslate - prevTranslate;
-
-        // Swipe right (previous card)
-        if (movedBy > 75 && currentIndex > 0) {
-            currentIndex -= 1;
-        }
-
-        // Swipe left (next card)
-        if (movedBy < -75 && currentIndex < cards.length - 1) {
-            currentIndex += 1;
-        }
-
-        currentTranslate = -currentIndex * track.offsetWidth;
-        track.style.transition = 'transform 0.4s ease-in-out';
-        setCardPosition();
-    }
-
-    track.addEventListener('touchstart', touchStart, { passive: true });
-    track.addEventListener('touchmove', touchMove, { passive: true });
-    track.addEventListener('touchend', touchEnd);
-}
-
-// A placeholder function for the final button
-function finishFlow() {
-    // You can replace this with a redirect or another action
-}
-
-// --- Global Functions for Debugging (No Changes) ---
+// --- Global Functions ---
 window.nextScreen = nextScreen;
 window.previousScreen = previousScreen;
 window.moveToScreen = moveToScreen;

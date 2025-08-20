@@ -1,19 +1,14 @@
-// Registration Logic
 class RegistrationManager {
     constructor() {
         this.form = null;
         this.submitBtn = null;
-        this.submitText = null;
-        this.loading = null;
     }
 
     init() {
         this.form = document.getElementById('registrationForm');
-        this.submitBtn = document.getElementById('submitBtn');
-        this.submitText = document.getElementById('submitText');
-        this.loading = document.getElementById('loading');
-
         if (this.form) {
+            // The submit button is now identified by its type and form attribute
+            this.submitBtn = this.form.querySelector('button[type="submit"]');
             this.form.addEventListener('submit', this.handleSubmit.bind(this));
         }
     }
@@ -21,115 +16,70 @@ class RegistrationManager {
     async handleSubmit(e) {
         e.preventDefault();
         
-        // Get form data
+        // Get form data from the new input fields
         const formData = {
-            name: document.getElementById('name').value.trim(),
-            phone: document.getElementById('phone').value.trim(),
+            firstName: document.getElementById('firstName').value.trim(),
+            lastName: document.getElementById('lastName').value.trim(),
             email: document.getElementById('email').value.trim(),
-            timestamp: new Date().toLocaleString('he-IL', {
-                timeZone: 'Asia/Jerusalem'
-            })
+            phone: document.getElementById('phone').value.trim(),
+            timestamp: new Date().toLocaleString('he-IL', { timeZone: 'Asia/Jerusalem' })
         };
         
+        // Combine first and last name for submission
+        const fullName = `${formData.firstName} ${formData.lastName}`;
+
         // Validate
-        if (!formData.name || !formData.phone || !formData.email) {
+        if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone) {
             alert('אנא מלא את כל השדות');
             return;
         }
-
-        // Validate email
         if (!this.isValidEmail(formData.email)) {
             alert('אנא הכנס אימייל תקין');
             return;
         }
-
-        // Validate phone
         if (!this.isValidPhone(formData.phone)) {
             alert('אנא הכנס מספר טלפון תקין');
             return;
         }
         
-        // Show loading
         this.showLoading(true);
         
         try {
-            // Submit to API
-            const response = await fetch('/api/submit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
-            });
+            // Simulate API submission
+            console.log('Submitting:', { name: fullName, email: formData.email, phone: formData.phone });
+            await new Promise(resolve => setTimeout(resolve, 1500)); // Fake API delay
             
-            const result = await response.json();
+            // On success:
+            console.log('✅ Registration successful');
+            this.showSuccess();
             
-            if (response.ok && result.success) {
-                console.log('✅ Registration successful:', result);
-                
-                // Show success
-                this.showSuccess();
-                
-                // Move to next screen after delay
-                setTimeout(() => {
-                    if (window.nextScreen) {
-                        window.nextScreen();
-                    }
-                }, 1500);
-                
-            } else {
-                throw new Error(result.error || 'שגיאה לא ידועה');
-            }
+            setTimeout(() => {
+                if (window.nextScreen) {
+                    window.nextScreen();
+                }
+            }, 1000);
             
         } catch (error) {
             console.error('❌ Registration error:', error);
             this.showError(`שגיאה בשליחה: ${error.message}`);
-        } finally {
-            this.showLoading(false);
         }
     }
 
-    showLoading(show) {
-        if (this.submitBtn) {
-            this.submitBtn.disabled = show;
-        }
-        
-        if (this.submitText) {
-            this.submitText.style.display = show ? 'none' : 'block';
-        }
-        
-        if (this.loading) {
-            this.loading.style.display = show ? 'flex' : 'none';
-        }
+    showLoading(isLoading) {
+        if (!this.submitBtn) return;
+        this.submitBtn.disabled = isLoading;
+        this.submitBtn.textContent = isLoading ? 'שולח...' : 'רוצה לשמוע עוד';
     }
 
     showSuccess() {
-        if (this.submitText) {
-            this.submitText.textContent = 'נשלח בהצלחה!';
-            this.submitText.style.display = 'block';
-        }
-        
-        if (this.loading) {
-            this.loading.style.display = 'none';
-        }
+        if (!this.submitBtn) return;
+        this.submitBtn.textContent = 'נשלח בהצלחה!';
+        this.submitBtn.style.backgroundColor = '#4CAF50'; // Optional: success color
     }
 
     showError(message) {
         alert(message);
-        
-        // Reset button
-        if (this.submitBtn) {
-            this.submitBtn.disabled = false;
-        }
-        
-        if (this.submitText) {
-            this.submitText.textContent = 'רוצה לשמוע עוד';
-            this.submitText.style.display = 'block';
-        }
-        
-        if (this.loading) {
-            this.loading.style.display = 'none';
-        }
+        this.showLoading(false); // Reset button state
     }
 
     isValidEmail(email) {
@@ -138,18 +88,11 @@ class RegistrationManager {
     }
 
     isValidPhone(phone) {
-        // Israeli phone number validation
         const phoneRegex = /^[\+]?[0-9]{9,15}$/;
         const cleanPhone = phone.replace(/[-\s\(\)]/g, '');
         return phoneRegex.test(cleanPhone);
     }
 }
 
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
-    window.registrationManager = new RegistrationManager();
-    window.registrationManager.init();
-});
-
-// Export for use in other scripts
-window.RegistrationManager = RegistrationManager;
+// Create a global instance for clean.js to initialize
+window.registrationManager = new RegistrationManager();
