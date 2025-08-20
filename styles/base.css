@@ -1,21 +1,5 @@
-/* styles/base.css - Shared styles for all screens */
-
 /* Google Fonts Import */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;600;700&family=Rubik:wght@600&family=Varela+Round&display=swap');
-
-.screen-top, .screen-footer {
-    flex-shrink: 0; /* Prevents the top and bottom from shrinking */
-    width: 100%;
-}
-
-.screen-main {
-    flex-grow: 1; /* This is the key: it makes the main content fill all available space */
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 
 /* Reset & Base */
 * {
@@ -29,244 +13,83 @@ body {
     direction: rtl;
     overflow: hidden;
     background: #FFFCF8;
-    min-height: 100vh;
 }
-
-/* --- Screen Progress Bar (Unified Style) --- */
-.screen-progress-bar {
-    display: flex;
-    justify-content: center;
-    gap: 5.5px;
-    width: 100%;
-    margin-bottom: 60px; /* רווח מהתוכן שמתחת */
-}
-
-.progress-segment {
-    width: 36px;
-    height: 4px;
-    background-color: rgba(255, 252, 248, 0.4); /* צבע ברירת מחדל */
-    border-radius: 35px;
-    transition: background-color 0.4s ease;
-}
-
-.progress-segment.active {
-    background-color: #E6F19A; /* צבע פעיל */
-}
-
 
 .app-container {
     width: 100%;
-    height: 100vh; /* Make it fill the full viewport height */
+    height: 100vh;
+    height: 100dvh; /* More reliable on mobile */
     position: relative;
-    /* REMOVE padding-top: 60px; */
 }
 
-
+/* --- Main Screen Layout (THE KEY FIX) --- */
 .screen {
     width: 100%;
     height: 100%;
-    display: none; /* Screens are hidden by default */
+    padding: 1.5rem;
+    
+    display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between; /* Pushes top/footer to edges */
     align-items: center;
-    padding: 40px 20px;
-    background: #FFFCF8; /* Default background */
 
-    /* These properties for transitions are now handled by the display property */
-    position: absolute; /* Keep absolute to allow screens to stack */
+    position: absolute;
     top: 0;
     left: 0;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.5s ease-in-out;
+    overflow: hidden;
 }
 
 .screen.active {
-    display: flex;
     opacity: 1;
     visibility: visible;
     z-index: 2;
 }
 
-/* Default Screen Content */
-.screen-content {
-    text-align: center;
-    max-width: 400px;
+/* --- Unified Structure Rules --- */
+.screen-top, .screen-footer {
+    flex-shrink: 0; /* Prevents top/footer from shrinking */
     width: 100%;
-    margin-bottom: 40px;
-    z-index: 10;
-}
-
-.screen-content h1 {
-    font-family: 'Montserrat Alternates';
-    font-size: 2.5rem;
-    color: #273143;
-    margin-bottom: 10px;
-    font-weight: 700;
-}
-
-.screen-content p {
-    font-family: 'Montserrat Alternates';
-    font-size: 1.2rem;
-    color: #273143;
-    opacity: 0.7;
-    margin-bottom: 30px;
-    line-height: 1.4;
-}
-
-/* Buttons - Shared styling */
-.btn-next, 
-.btn-submit {
-    background: #273143;
-    color: #FFFCF8;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 25px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: 120px;
-    box-shadow: 0 4px 15px rgba(39, 49, 67, 0.2);
-    font-family: 'Montserrat Alternates';
-}
-
-.btn-next:hover, 
-.btn-submit:hover {
-    background: #FFFCF8;
-    color: #273143;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(39, 49, 67, 0.3);
-}
-
-.btn-next:active, 
-.btn-submit:active {
-    transform: translateY(0);
-}
-
-/* Form Styling - Shared for all forms */
-.registration-form {
-    width: 100%;
-    max-width: 350px;
-}
-
-.form-group {
-    margin-bottom: 20px;
-    text-align: right;
-}
-
-.form-group label {
-    display: block;
-    color: #273143;
-    font-weight: 600;
-    margin-bottom: 8px;
-    font-size: 1rem;
-    font-family: 'Montserrat Alternates';
-}
-
-.form-group input {
-    width: 100%;
-    padding: 12px 15px;
-    border: 2px solid #E6F19A;
-    border-radius: 10px;
-    font-size: 1rem;
-    background: #FFFCF8;
-    direction: rtl;
-    text-align: right;
-    color: #273143;
-    font-family: 'Montserrat Alternates';
-}
-
-.form-group input:focus {
-    outline: none;
-    border-color: #273143;
-    box-shadow: 0 0 0 3px rgba(230, 241, 154, 0.3);
-}
-
-.form-group input::placeholder {
-    color: #999;
-}
-
-/* Loading & Success States */
-.btn-submit:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-    transform: none;
-}
-
-.loading {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 10px;
 }
 
-.spinner {
-    width: 20px;
-    height: 20px;
-    border: 2px solid transparent;
-    border-top: 2px solid #667eea;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.success-icon {
-    font-size: 4rem;
-    color: #273143;
-    margin-top: 20px;
-    animation: bounce 0.6s ease;
-}
-
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-    }
-    40% {
-        transform: translateY(-20px);
-    }
-    60% {
-        transform: translateY(-10px);
-    }
-}
-
-/* Mobile Responsive - Base */
-@media (max-width: 480px) {
-    .screen {
-        padding: 30px 15px;
-    }
-    
-    .screen-content h1 {
-        font-size: 1.8rem;
-    }
-    
-    .screen-content p {
-        font-size: 1rem;
-    }
-    
-    .btn-next, .btn-submit {
-        padding: 12px 25px;
-        font-size: 1rem;
-    }
-    
-    .form-group input {
-        padding: 10px 12px;
-    }
-}
-
-body {
-    background-color: #FFFCF8; /* Or your preferred default */
-}
-
-/* Revert to this simple rule */
-.app-container {
+.screen-main {
+    flex-grow: 1; /* Allows main content to fill the space */
     width: 100%;
-    height: 100vh;
-    height: 100dvh; /* Use dynamic viewport height */
-    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto; /* Allows scrolling only for main content if it gets too long */
+}
+
+/* --- Reusable Components --- */
+.small-logo-img {
+    width: 131px;
+    height: auto;
+}
+
+.screen-progress-bar {
+    display: flex;
+    justify-content: center;
+    gap: 5.5px;
+    width: 100%;
+    margin-top: 1.5rem;
+}
+
+.progress-segment {
+    width: 36px;
+    height: 4px;
+    background-color: rgba(255, 252, 248, 0.4);
+    border-radius: 35px;
+    transition: background-color 0.4s ease;
+}
+
+.progress-segment.active {
+    background-color: #E6F19A;
 }
 
 .screen-base-overlay {
@@ -296,4 +119,72 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* --- Form & Other Specific Component Styles --- */
+/* (These styles are for screens 6 & 7 which have a unique layout) */
+
+.screen-content {
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    z-index: 10;
+}
+
+.screen-content h1 {
+    font-family: 'Montserrat Alternates';
+    font-size: 2.5rem;
+    color: #273143;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.screen-content p {
+    font-family: 'Montserrat Alternates';
+    font-size: 1.2rem;
+    color: #273143;
+    opacity: 0.7;
+    margin-bottom: 30px;
+    line-height: 1.4;
+}
+
+.registration-form {
+    width: 100%;
+    max-width: 350px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.form-group label {
+    display: block;
+    color: #273143;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #E6F19A;
+    border-radius: 10px;
+    font-size: 1rem;
+    background: #FFFCF8;
+    color: #273143;
+}
+
+.btn-submit {
+    background: #273143;
+    color: #FFFCF8;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    min-width: 120px;
+    box-shadow: 0 4px 15px rgba(39, 49, 67, 0.2);
 }

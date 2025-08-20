@@ -1,13 +1,9 @@
-/* styles/screen5.css */
-
 #screen5 {
-    /* This rule is now much simpler */
     background-image: url('../images/bg.png');
     background-size: cover;
     background-position: center;
 }
 
-/* The card no longer needs complex sizing, it just sits in the centered main area */
 .daily-challenge-card {
     width: 100%;
     max-width: 330px;

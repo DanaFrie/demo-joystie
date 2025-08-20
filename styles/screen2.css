@@ -1,32 +1,18 @@
-/* styles/screen2.css */
-
 #screen2 {
-    /* This tells the flex container to distribute space between elements */
-    justify-content: space-between;
     background-image: url('../images/bg.png');
     background-size: cover;
     background-position: center;
 }
 
-/* Main Content (Text) Styling */
 .s2-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem; /* Scalable gap */
+    gap: 1.5rem;
 }
 
-/* Footer (Button) Styling */
-.s2-footer {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-/* --- Font and Text Styling (using fluid typography) --- */
 .s2-intro-text {
     font-family: 'Varela Round', sans-serif;
-    /* This makes the font size fluid: min 1rem, grows with screen width, max 1.5rem */
     font-size: clamp(1rem, 4vw, 1.5rem); 
     color: #FFFCF8;
     text-align: center;

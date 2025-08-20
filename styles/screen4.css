@@ -1,13 +1,11 @@
 /* styles/screen4.css */
 
 #screen4 {
-    justify-content: space-between;
     background-image: url('../images/bg.png');
     background-size: cover;
     background-position: center;
 }
 
-/* --- Content & Text Styling --- */
 .s4-content {
     display: flex;
     flex-direction: column;
