@@ -1,50 +1,27 @@
 /* styles/screen5.css */
 
 #screen5 {
-    justify-content: space-between;
+    /* This rule is now much simpler */
     background-image: url('../images/bg.png');
     background-size: cover;
     background-position: center;
 }
 
-/* Main content container */
-.s5-content {
-    flex-grow: 1; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    overflow: hidden; /* Prevents content from spilling out */
-}
-
-/* The main card element */
+/* The card no longer needs complex sizing, it just sits in the centered main area */
 .daily-challenge-card {
     width: 100%;
     max-width: 330px;
-    height: 60vh; /* **FIX 1:** Use a responsive viewport height */
-    max-height: 484px; /* Set a maximum pixel height */
-    
+    height: 60vh;
+    max-height: 484px;
     background: #E6F19A;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 18px;
-    
-    /* This is important for the video inside */
     display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden; /* Hide parts of the video that don't fit */
+    overflow: hidden;
 }
 
-/* **FIX 2:** New rules for the video element */
 .animation-video {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* This makes the video fill the container without distortion */
-}
-
-/* Footer styling */
-.s5-footer {
-    width: 100%;
-    display: flex;
-    justify-content: center;
+    object-fit: cover;
 }

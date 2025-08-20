@@ -3,6 +3,20 @@
 /* Google Fonts Import */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;600;700&family=Rubik:wght@600&family=Varela+Round&display=swap');
 
+.screen-top, .screen-footer {
+    flex-shrink: 0; /* Prevents the top and bottom from shrinking */
+    width: 100%;
+}
+
+.screen-main {
+    flex-grow: 1; /* This is the key: it makes the main content fill all available space */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 /* Reset & Base */
 * {
     margin: 0;
