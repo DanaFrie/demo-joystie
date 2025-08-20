@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupKeyboardSupport();
     setupForm();
     setupSliders(); 
+    setupCarousel();
     
     updateProgressBar(1);
 });
@@ -195,6 +196,61 @@ async function handleFormSubmit(e) {
     
     submitBtn.disabled = false;
     // Remove loading visuals...
+}
+
+
+function setupCarousel() {
+    const track = document.querySelector('.s7-carousel-track');
+    if (!track) return;
+
+    const cards = Array.from(track.children);
+    let currentIndex = 0;
+    let startX = 0;
+    let currentTranslate = 0;
+    let prevTranslate = 0;
+
+    function setCardPosition() {
+        track.style.transform = `translateX(${currentTranslate}px)`;
+    }
+
+    function touchStart(event) {
+        startX = event.touches[0].clientX;
+        prevTranslate = -currentIndex * track.offsetWidth;
+    }
+
+    function touchMove(event) {
+        const currentX = event.touches[0].clientX;
+        const diff = currentX - startX;
+        currentTranslate = prevTranslate + diff;
+        setCardPosition();
+    }
+
+    function touchEnd() {
+        const movedBy = currentTranslate - prevTranslate;
+
+        // Swipe right (previous card)
+        if (movedBy > 75 && currentIndex > 0) {
+            currentIndex -= 1;
+        }
+
+        // Swipe left (next card)
+        if (movedBy < -75 && currentIndex < cards.length - 1) {
+            currentIndex += 1;
+        }
+
+        currentTranslate = -currentIndex * track.offsetWidth;
+        track.style.transition = 'transform 0.4s ease-in-out';
+        setCardPosition();
+    }
+
+    track.addEventListener('touchstart', touchStart, { passive: true });
+    track.addEventListener('touchmove', touchMove, { passive: true });
+    track.addEventListener('touchend', touchEnd);
+}
+
+// A placeholder function for the final button
+function finishFlow() {
+    // You can replace this with a redirect or another action
 }
 
 // --- Global Functions for Debugging (No Changes) ---
