@@ -1,0 +1,61 @@
+/* styles/screen6.css */
+
+#screen6 {
+    background-image: url('../images/bg.png');
+    background-size: cover;
+    background-position: center;
+}
+
+/* Form container */
+.s6-form {
+    width: 100%;
+    max-width: 345px; /* Based on Figma layout */
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* For side-by-side inputs */
+.s6-form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Styling for each input and its label */
+.s6-input-group {
+    flex-grow: 1; /* Allows inputs in a row to share space */
+    width: 100%;
+}
+
+.s6-input-group label {
+    display: block;
+    font-family: 'Varela Round', sans-serif;
+    font-size: 0.8rem;
+    color: #FFFCF8;
+    margin-bottom: 0.5rem;
+    text-align: right;
+}
+
+.s6-input-group input {
+    width: 100%;
+    height: 48px;
+    padding: 0 15px;
+    background: #FFFFFF;
+    border: 1px solid #EDF1F3;
+    box-shadow: 0px 1px 2px rgba(228, 229, 231, 0.24);
+    border-radius: 10px;
+    
+    font-family: 'Varela', sans-serif;
+    font-size: 1rem;
+    color: #1A1C1E;
+    text-align: right;
+}
+
+.s6-input-group input::placeholder {
+    color: #A9A9A9;
+}
+
+.s6-input-group input:focus {
+    outline: none;
+    border-color: #E6F19A;
+}
