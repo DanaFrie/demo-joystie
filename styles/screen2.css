@@ -1,88 +1,67 @@
+/* styles/screen2.css */
+
 #screen2 {
-    display: flex;
-    flex-direction: column;
+    /* This tells the flex container to distribute space between elements */
     justify-content: space-between;
-    align-items: center;
-    padding: 5vh 20px; /* Use viewport height for top/bottom padding */
     background-image: url('../images/bg.png');
     background-size: cover;
     background-position: center;
-    height: 100%;
 }
+
 .s2-base-overlay {
     position: absolute;
-    /* Let's use percentages for the overlay's position */
-    top: 16%; /* Approx 156px on a 956px tall screen */
+    top: 16%; 
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 1;
+    z-index: -1; /* Place it behind the content */
     background-image: url('../images/base-overlay.png');
     background-size: cover;
     background-position: center;
 }
 
-/* Ensure the content is layered on top of the overlay */
-.screen-header, .screen-progress-bar, .s2-content, .s2-footer {
-    position: relative;
-    z-index: 2;
-    width: 100%; /* Ensures content stretches to align center */
-}
 
-.screen-header {
-    padding-top: 0;
-
-}
-
-.small-logo-img {
-    width: 131px; /* Width of the small logo from Figma */
-    height: auto;
-}
-
-/* תוכן מרכזי */
+/* Main Content (Text) Styling */
 .s2-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3vh; /* Use viewport height for the gap between text lines */
-    width: 100%;
+    gap: 1.5rem; /* Scalable gap */
 }
 
-/* עיצוב טקסטים */
-.s2-intro-text {
-    font-family: 'Varela Round', sans-serif;
-    font-size: 1.5rem; /* Use rem for scalable text */
-    /* font-size: clamp(1rem, 4vw, 1.5rem); */ /* Alternative using clamp for more control */
-    color: #FFFCF8;
-    text-align: center;
-    line-height: 1.5;
-    margin: 0;
-}
-
-.s2-main-headline {
-    font-family: 'Rubik', sans-serif;
-    font-size: 3rem; /* Use rem for scalable text */
-    /* font-size: clamp(2rem, 8vw, 3.5rem); */ /* Alternative using clamp */
-    color: #E6F19A;
-    text-align: center;
-}
-
-/* Footer - כפתור */
+/* Footer (Button) Styling */
 .s2-footer {
     width: 100%;
     display: flex;
     justify-content: center;
-    padding: 0 20px;
+}
+
+/* --- Font and Text Styling (using fluid typography) --- */
+.s2-intro-text {
+    font-family: 'Varela Round', sans-serif;
+    /* This makes the font size fluid: min 1rem, grows with screen width, max 1.5rem */
+    font-size: clamp(1rem, 4vw, 1.5rem); 
+    color: #FFFCF8;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.s2-main-headline {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 600;
+    font-size: clamp(2.5rem, 8vw, 3.5rem);
+    color: #E6F19A;
+    text-align: center;
 }
 
 .s2-btn-next {
     width: 100%;
     max-width: 343px;
-    height: 50px; /* Buttons often have a fixed height for usability */
+    height: 50px;
     background: #E6F19A;
     color: #282743;
     font-family: 'Varela Round', sans-serif;
-    font-size: 1.1rem; /* Use rem for scalable text */
+    font-size: 1.1rem;
     border-radius: 8px;
     border: 1px solid #000000;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -91,4 +70,3 @@
     justify-content: center;
     align-items: center;
 }
-
