@@ -9,30 +9,37 @@
 
 /* Main content container */
 .s5-content {
-    flex-grow: 1; /* Allows the card to take up available space */
+    flex-grow: 1; 
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
+    overflow: hidden; /* Prevents content from spilling out */
 }
 
-/* The main card element from the Figma design */
+/* The main card element */
 .daily-challenge-card {
     width: 100%;
-    max-width: 330px; /* Based on Figma (left: 60px, right: 50px) */
-    height: 484px;
-    max-height: 60vh; /* Make height responsive */
+    max-width: 330px;
+    height: 60vh; /* **FIX 1:** Use a responsive viewport height */
+    max-height: 484px; /* Set a maximum pixel height */
+    
     background: #E6F19A;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 18px;
     
-    /* Centering placeholder content inside the card */
+    /* This is important for the video inside */
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Rubik', sans-serif;
-    color: #282743;
-    font-size: 1.5rem;
+    overflow: hidden; /* Hide parts of the video that don't fit */
+}
+
+/* **FIX 2:** New rules for the video element */
+.animation-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This makes the video fill the container without distortion */
 }
 
 /* Footer styling */
@@ -40,10 +47,4 @@
     width: 100%;
     display: flex;
     justify-content: center;
-}
-
-.animation-video {
-    width: 100%;
-    height: auto;
-    border-radius: 18px; /* Match the card's border-radius */
 }
