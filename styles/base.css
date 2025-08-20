@@ -254,3 +254,32 @@ body {
     height: 100dvh; /* Use dynamic viewport height */
     position: relative;
 }
+
+.screen-base-overlay {
+    position: absolute;
+    top: 16%; 
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    background-image: url('../images/base-overlay.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.screen-btn-next {
+    width: 100%;
+    max-width: 343px;
+    height: 50px;
+    background: #E6F19A;
+    color: #282743;
+    font-family: 'Varela Round', sans-serif;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    border: 1px solid #000000;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

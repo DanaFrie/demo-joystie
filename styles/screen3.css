@@ -1,0 +1,56 @@
+/* styles/screen3.css */
+
+#screen3 {
+    justify-content: space-between;
+    background-image: url('../images/bg.png');
+    background-size: cover;
+    background-position: center;
+}
+
+/* Screen 3 specific content */
+.s3-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem; /* Small gap between text elements */
+}
+
+.s3-piggy-bank-img {
+    width: 50%;
+    max-width: 219px;
+    height: auto;
+    margin-top: 1rem;
+}
+
+/* --- Font and Text Styling --- */
+
+.s3-intro-text {
+    font-family: 'Varela Round', sans-serif;
+    font-size: clamp(1rem, 4vw, 1.5rem); 
+    color: #FFFCF8;
+    line-height: 1.5;
+    max-width: 285px;
+}
+
+.s3-sub-text {
+    font-family: 'Varela Round', sans-serif;
+    font-size: clamp(1rem, 4vw, 1.5rem); 
+    color: #FFFCF8;
+    line-height: 1.5;
+}
+
+.s3-main-headline {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.5rem, 6vw, 2rem);
+    color: #E6F19A;
+    line-height: 1.2;
+    margin-top: 1rem;
+}
+
+.s3-footer {
+     width: 100%;
+     display: flex;
+     justify-content: center;
+}

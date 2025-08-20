@@ -33,43 +33,66 @@
             </div>
 
             <!-- Screen 2 -->
-        <div class="screen" id="screen2">
+            <div class="screen" id="screen2">
 
-            <div class="s2-base-overlay"></div>
-            
-            <div class="screen-header">
-            <img src="images/logo-joystie.png" alt="Joystie Logo" class="small-logo-img">
-            </div>
-            
-            <div class="screen-progress-bar">
-                <div class="progress-segment active"></div>
-                <div class="progress-segment"></div>
-                <div class="progress-segment"></div>
-                <div class="progress-segment"></div>
-                <div class="progress-segment"></div>
-                <div class="progress-segment"></div>
-            </div>
+                <div class="screen-base-overlay"></div>
+                
+                <div class="screen-header">
+                <img src="images/logo-joystie.png" alt="Joystie Logo" class="small-logo-img">
+                </div>
+                
+                <div class="screen-progress-bar">
+                    <div class="progress-segment active"></div>
+                    <div class="progress-segment"></div>
+                    <div class="progress-segment"></div>
+                    <div class="progress-segment"></div>
+                    <div class="progress-segment"></div>
+                    <div class="progress-segment"></div>
+                </div>
 
-            <div class="s2-content">
-                <p class="s2-intro-text">עדיין רבים עם הילדים על זמן מסך?</p>
-                <p class="s2-intro-text">ניסיתם כבר הכל וכלום לא עובד? 😟</p>
-                <h2 class="s2-main-headline">אתם לא לבד!</h2>
-            </div>
+                <div class="s2-content">
+                    <p class="s2-intro-text">עדיין רבים עם הילדים על זמן מסך?</p>
+                    <p class="s2-intro-text">ניסיתם כבר הכל וכלום לא עובד? 😟</p>
+                    <h2 class="s2-main-headline">אתם לא לבד!</h2>
+                </div>
 
-            <div class="s2-footer">
-                <button class="s2-btn-next" onclick="nextScreen()">בואו גלו מה אפשר לעשות...</button>
+                <div class="s2-footer">
+                    <button class="screen-btn-next" onclick="nextScreen()">בואו גלו מה אפשר לעשות...</button>
+                </div>
             </div>
-        </div>
 
             <!-- Screen 3 -->
             <div class="screen" id="screen3">
-                <div class="screen-content">
-                    <h1>הזדמנות חדשה</h1>
-                    <p>אנחנו מזמינים אותך להשתמש בדמי כיס לילד/ה בצורה שלא הכרת</p>
-                    <p>בעזרת סכום דמי כיס שאתה תקבע,<br>
-                    נראה לך איך אתה והילד/ה מרוויחים יותר יחד</p>
+                <!-- Reusable overlay -->
+                <div class="screen-base-overlay"></div>
+                
+                <!-- Reusable header -->
+                <div class="screen-header">
+                    <img src="images/logo-joystie.png" alt="Joystie Logo" class="small-logo-img">
                 </div>
-                <button class="btn-next" onclick="nextScreen()">מעניין, תמשיכו</button>
+                
+                <!-- Reusable progress bar -->
+                <div class="screen-progress-bar">
+                    <div class="progress-segment"></div>
+                    <div class="progress-segment"></div>
+                    <div class="progress-segment"></div>
+                    <div class="progress-segment"></div>
+                    <div class="progress-segment"></div>
+                    <div class="progress-segment"></div>
+                </div>
+
+                <!-- Screen 3 specific content -->
+                <div class="s3-content">
+                    <p class="s3-intro-text">אנחנו מזמינים אותך להשתמש בדמי כיס בצורה שלא הכרת</p>
+                    <p class="s3-sub-text">בעזרת סכום דמי כיס שתקבע,</p>
+                    <h2 class="s3-main-headline">הילד ייזום איתך (!) שיחה על המסך🌟</h2>
+                    <img src="images/piggy-bank.png" alt="Piggy Bank" class="s3-piggy-bank-img">
+                </div>
+
+                <!-- Reusable footer with new text -->
+                <div class="s3-footer">
+                    <button class="screen-btn-next" onclick="nextScreen()">מעניין, תמשיכו</button>
+                </div>
             </div>
 
             <!-- Screen 4 -->
