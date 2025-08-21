@@ -11,7 +11,8 @@
     flex-direction: column;
     align-items: center;
     gap: 2rem;
-    width: 100%;
+    height: 100%;
+    justify-content: center;
 }
 
 .s7-final-headline {
@@ -23,26 +24,31 @@
     margin-bottom: 1rem;
 }
 
+/* Carousel container - this is the visible window */
 .s7-carousel {
     width: 100%;
-    overflow: hidden;
+    overflow: visible; /* Allow the next card to peek out */
 }
 
+/* Track that holds and moves all the cards */
 .s7-carousel-track {
     display: flex;
-    padding-right: calc(50% - 140px); /* 140px is half card width */
+    /* This padding centers the first card and creates the peek effect */
+    padding-right: calc(50% - 140px); /* 140px is half the card width */
     transition: transform 0.4s ease-in-out;
 }
 
+/* Individual fact card styling */
 .fact-card {
-    flex: 0 0 280px;
+    flex: 0 0 280px; /* Give cards a fixed width */
     width: 280px;
     height: 437px;
     background: #FFFCF8;
     border-radius: 32px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     padding: 2rem;
-    margin-left: 20px;
+    margin-left: 20px; /* Space between cards */
+    
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Joystie</title>
+    <!-- Base styles - shared across all screens -->
     <link rel="stylesheet" href="styles/base.css">
+    <!-- Screen specific styles -->
     <link rel="stylesheet" href="styles/screen1.css">
     <link rel="stylesheet" href="styles/screen2.css">
     <link rel="stylesheet" href="styles/screen3.css">
@@ -15,9 +17,10 @@
 </head>
 <body>
 
+    <!-- Screens Container -->
     <div class="app-container" id="appContainer">
         
-        <!-- Screen 1 (Unique Layout) -->
+        <!-- Screen 1 -->
         <div class="screen active" id="screen1">
             <div class="logo-section">
                 <img src="images/logo-joystie-s1.png" alt="Joystie Logo" class="s1-logo-img">
@@ -25,41 +28,45 @@
             </div>
         </div>
 
-        <!-- Screen 2 - FINAL STRUCTURE -->
+        <!-- Screen 2 - UNIFIED STRUCTURE -->
         <div class="screen" id="screen2">
-            <div class="screen-header">
-                <img src="images/logo-joystie.png" alt="Joystie Logo" class="small-logo-img">
-            </div>
             <div class="screen-base-overlay"></div>
-            <div class="screen-body">
+            
+            <div class="screen-top">
+                <div class="screen-header">
+                    <img src="images/logo-joystie.png" alt="Joystie Logo" class="small-logo-img">
+                </div>
                 <div class="screen-progress-bar">
-                    <div class="progress-segment"></div>
+                    <div class="progress-segment active"></div>
                     <div class="progress-segment"></div>
                     <div class="progress-segment"></div>
                     <div class="progress-segment"></div>
                     <div class="progress-segment"></div>
                     <div class="progress-segment"></div>
                 </div>
-                <div class="screen-main">
-                    <div class="s2-content">
-                        <p class="s2-intro-text">עדיין רבים עם הילדים על זמן מסך?</p>
-                        <p class="s2-intro-text">ניסיתם כבר הכל וכלום לא עובד? 😟</p>
-                        <h2 class="s2-main-headline">אתם לא לבד!</h2>
-                    </div>
+            </div>
+
+            <div class="screen-main">
+                <div class="s2-content">
+                    <p class="s2-intro-text">עדיין רבים עם הילדים על זמן מסך?</p>
+                    <p class="s2-intro-text">ניסיתם כבר הכל וכלום לא עובד? 😟</p>
+                    <h2 class="s2-main-headline">אתם לא לבד!</h2>
                 </div>
-                <div class="screen-footer">
-                    <button class="screen-btn-next" onclick="nextScreen()">בואו גלו מה אפשר לעשות...</button>
-                </div>
+            </div>
+
+            <div class="screen-footer">
+                <button class="screen-btn-next" onclick="nextScreen()">בואו גלו מה אפשר לעשות...</button>
             </div>
         </div>
 
-        <!-- Screen 3 - FINAL STRUCTURE -->
+        <!-- Screen 3 - UNIFIED STRUCTURE -->
         <div class="screen" id="screen3">
-            <div class="screen-header">
-                <img src="images/logo-joystie.png" alt="Joystie Logo" class="small-logo-img">
-            </div>
             <div class="screen-base-overlay"></div>
-            <div class="screen-body">
+            
+            <div class="screen-top">
+                <div class="screen-header">
+                    <img src="images/logo-joystie.png" alt="Joystie Logo" class="small-logo-img">
+                </div>
                 <div class="screen-progress-bar">
                     <div class="progress-segment"></div>
                     <div class="progress-segment"></div>
@@ -68,27 +75,30 @@
                     <div class="progress-segment"></div>
                     <div class="progress-segment"></div>
                 </div>
-                <div class="screen-main">
-                    <div class="s3-content">
-                        <p class="s3-intro-text">אנחנו מזמינים אותך להשתמש בדמי כיס בצורה שלא הכרת...</p>
-                        <p class="s3-sub-text">בעזרת סכום דמי כיס שתקבע!</p>
-                        <h2 class="s3-main-headline">הילד ייזום איתך (!) שיחה על המסך🌟</h2>
-                        <img src="images/piggy-bank.png" alt="Piggy Bank" class="s3-piggy-bank-img">
-                    </div>
+            </div>
+
+            <div class="screen-main">
+                <div class="s3-content">
+                    <p class="s3-intro-text">אנחנו מזמינים אותך להשתמש בדמי כיס בצורה שלא הכרת...</p>
+                    <p class="s3-sub-text">בעזרת סכום דמי כיס שתקבע!</p>
+                    <h2 class="s3-main-headline">הילד ייזום איתך (!) שיחה על המסך🌟</h2>
+                    <img src="images/piggy-bank.png" alt="Piggy Bank" class="s3-piggy-bank-img">
                 </div>
-                <div class="screen-footer">
-                    <button class="screen-btn-next" onclick="nextScreen()">מעניין, תמשיכו</button>
-                </div>
+            </div>
+
+            <div class="screen-footer">
+                <button class="screen-btn-next" onclick="nextScreen()">מעניין, תמשיכו</button>
             </div>
         </div>
 
-        <!-- Screen 4 - FINAL STRUCTURE -->
+        <!-- Screen 4 - UNIFIED STRUCTURE -->
         <div class="screen" id="screen4">
-            <div class="screen-header">
-                <img src="images/logo-joystie.png" alt="Joystie Logo" class="small-logo-img">
-            </div>
             <div class="screen-base-overlay"></div>
-            <div class="screen-body">
+            
+            <div class="screen-top">
+                <div class="screen-header">
+                    <img src="images/logo-joystie.png" alt="Joystie Logo" class="small-logo-img">
+                </div>
                 <div class="screen-progress-bar">
                     <div class="progress-segment"></div>
                     <div class="progress-segment"></div>
@@ -97,41 +107,53 @@
                     <div class="progress-segment"></div>
                     <div class="progress-segment"></div>
                 </div>
-                <div class="screen-main">
-                    <div class="s4-content">
-                        <p class="s4-intro-text">"מה ההבדל בין זה לבין לשחד ילדים?"<br>נותנים דמי כיס? יופי — עכשיו בואו תראו איך הם גם יקשיבו</p>
-                        <div class="slider-container">
-                            <label for="pocketMoney" class="s4-question">כמה דמי כיס בשבוע הילד שלך מקבל?</label>
-                            <div class="slider-wrapper">
-                                <span class="slider-value" id="pocketMoneyValue">30</span>
-                                <input type="range" id="pocketMoney" class="interactive-slider" min="0" max="200" value="30" data-value-id="pocketMoneyValue">
-                                <div class="slider-labels"><span>0</span><span>200</span></div>
+            </div>
+
+            <div class="screen-main">
+                <div class="s4-content">
+                    <p class="s4-intro-text">"מה ההבדל בין זה לבין לשחד ילדים?"<br>נותנים דמי כיס? יופי — עכשיו בואו תראו איך הם גם יקשיבו</p>
+                    
+                    <div class="slider-container">
+                        <label for="pocketMoney" class="s4-question">כמה דמי כיס בשבוע הילד שלך מקבל?</label>
+                        <div class="slider-wrapper">
+                            <span class="slider-value" id="pocketMoneyValue">30</span>
+                            <input type="range" id="pocketMoney" class="interactive-slider" min="0" max="200" value="30" data-value-id="pocketMoneyValue">
+                            <div class="slider-labels">
+                                <span>0</span>
+                                <span>200</span>
                             </div>
                         </div>
-                        <div class="slider-container">
-                            <label for="screenTime" class="s4-question">כמה זמן מסך יומי תרצה/י שהילד יקבל?</label>
-                            <div class="slider-wrapper">
-                                <span class="slider-value" id="screenTimeValue">60</span>
-                                <input type="range" id="screenTime" class="interactive-slider" min="0" max="180" value="60" data-value-id="screenTimeValue">
-                                <div class="slider-labels"><span>0 דק'</span><span>180 דק'</span></div>
-                            </div>
-                        </div>
-                        <h2 class="s4-main-headline">הם נהנים מהתגמול<br>ואתם נהנים מהקשר✨</h2>
                     </div>
+
+                    <div class="slider-container">
+                        <label for="screenTime" class="s4-question">כמה זמן מסך יומי תרצה/י שהילד יקבל?</label>
+                        <div class="slider-wrapper">
+                            <span class="slider-value" id="screenTimeValue">60</span>
+                            <input type="range" id="screenTime" class="interactive-slider" min="0" max="180" value="60" data-value-id="screenTimeValue">
+                            <div class="slider-labels">
+                                <span>0 דק'</span>
+                                <span>180 דק'</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 class="s4-main-headline">הם נהנים מהתגמול<br>ואתם נהנים מהקשר✨</h2>
                 </div>
-                <div class="screen-footer">
-                    <button class="screen-btn-next" onclick="nextScreen()">איך זה עובד?</button>
-                </div>
+            </div>
+
+            <div class="screen-footer">
+                <button class="screen-btn-next" onclick="nextScreen()">איך זה עובד?</button>
             </div>
         </div>
 
-        <!-- Screen 5 - FINAL STRUCTURE -->
+        <!-- Screen 5 - UNIFIED STRUCTURE -->
         <div class="screen" id="screen5">
-            <div class="screen-header">
-                <img src="images/logo-joystie.png" alt="Joystie Logo" class="small-logo-img">
-            </div>
             <div class="screen-base-overlay"></div>
-            <div class="screen-body">
+            
+            <div class="screen-top">
+                <div class="screen-header">
+                    <img src="images/logo-joystie.png" alt="Joystie Logo" class="small-logo-img">
+                </div>
                 <div class="screen-progress-bar">
                     <div class="progress-segment"></div>
                     <div class="progress-segment"></div>
@@ -140,26 +162,32 @@
                     <div class="progress-segment"></div>
                     <div class="progress-segment"></div>
                 </div>
-                <div class="screen-main">
-                    <div class="daily-challenge-card">
-                        <video loop muted playsinline class="animation-video">
-                            <source src="images/daily-challenge.mp4" type="video/mp4">
-                        </video>
-                    </div>
+            </div>
+
+            <div class="screen-main">
+                <div class="daily-challenge-card">
+                    <video autoplay loop muted playsinline class="animation-video">
+                        <source src="images/daily-challenge.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
-                <div class="screen-footer">
-                    <button class="screen-btn-next" onclick="nextScreen()">הבנתי, ממשיכים</button>
-                </div>
+            </div>
+
+            <div class="screen-footer">
+                <button class="screen-btn-next" onclick="nextScreen()">הבנתי, ממשיכים</button>
             </div>
         </div>
 
-        <!-- Screen 6 - FINAL STRUCTURE -->
+        <!-- Screen 6 -->
         <div class="screen" id="screen6">
-            <div class="screen-header">
-                <img src="images/logo-joystie.png" alt="Joystie Logo" class="small-logo-img">
-            </div>
+            <!-- Reusable overlay -->
             <div class="screen-base-overlay"></div>
-            <div class="screen-body">
+            
+            <!-- Reusable top section -->
+            <div class="screen-top">
+                <div class="screen-header">
+                    <img src="images/logo-joystie.png" alt="Joystie Logo" class="small-logo-img">
+                </div>
                 <div class="screen-progress-bar">
                     <div class="progress-segment"></div>
                     <div class="progress-segment"></div>
@@ -168,34 +196,52 @@
                     <div class="progress-segment"></div>
                     <div class="progress-segment"></div>
                 </div>
-                <div class="screen-main">
-                    <div class="s6-content">
-                        <p class="s6-intro-text">רוצה לפתוח את שנת הלימודים בטוב?</p>
-                        <p class="s6-intro-text">הצטרפו לאתגר הקרוב ויחד נאזן את הבית</p>
-                        <h2 class="s6-main-headline">👇 השאירו פרטים 👇</h2>
-                        <form class="s6-form" id="registrationForm">
-                            <div class="s6-form-row">
-                                <div class="s6-input-group"><label for="lastName">שם משפחה</label><input type="text" id="lastName" name="lastName" required></div>
-                                <div class="s6-input-group"><label for="firstName">שם פרטי</label><input type="text" id="firstName" name="firstName" required></div>
+            </div>
+
+            <!-- Screen 6 specific main content -->
+            <div class="screen-main">
+                <div class="s6-content">
+                    <p class="s6-intro-text">רוצה לפתוח את שנת הלימודים בטוב?</p>
+                    <p class="s6-intro-text">הצטרפו לאתגר הקרוב ויחד נאזן את הבית</p>
+                    <h2 class="s6-main-headline">👇 השאירו פרטים 👇</h2>
+                    
+                    <form class="s6-form" id="registrationForm">
+                        <div class="s6-form-row">
+                            <div class="s6-input-group">
+                                <label for="lastName">שם משפחה</label>
+                                <input type="text" id="lastName" name="lastName" required>
                             </div>
-                            <div class="s6-input-group"><label for="email">אימייל</label><input type="email" id="email" name="email" required></div>
-                            <div class="s6-input-group"><label for="phone">טלפון</label><input type="tel" id="phone" name="phone" required></div>
-                        </form>
-                    </div>
+                            <div class="s6-input-group">
+                                <label for="firstName">שם פרטי</label>
+                                <input type="text" id="firstName" name="firstName" required>
+                            </div>
+                        </div>
+                        <div class="s6-input-group">
+                            <label for="email">אימייל</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="s6-input-group">
+                            <label for="phone">טלפון</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                    </form>
                 </div>
-                <div class="screen-footer">
-                    <button type="submit" form="registrationForm" class="screen-btn-next">רוצה לשמוע עוד</button>
-                </div>
+            </div>
+
+            <!-- Reusable footer -->
+            <div class="screen-footer">
+                <button type="submit" form="registrationForm" class="screen-btn-next">רוצה לשמוע עוד</button>
             </div>
         </div>
 
-        <!-- Screen 7 - FINAL STRUCTURE -->
+        <!-- Screen 7 -->
         <div class="screen" id="screen7">
-            <div class="screen-header">
-                <img src="images/logo-joystie.png" alt="Joystie Logo" class="small-logo-img">
-            </div>
             <div class="screen-base-overlay"></div>
-            <div class="screen-body">
+            
+            <div class="screen-top">
+                <div class="screen-header">
+                    <img src="images/logo-joystie.png" alt="Joystie Logo" class="small-logo-img">
+                </div>
                 <div class="screen-progress-bar">
                     <div class="progress-segment"></div>
                     <div class="progress-segment"></div>
@@ -204,21 +250,49 @@
                     <div class="progress-segment"></div>
                     <div class="progress-segment"></div>
                 </div>
-                <div class="screen-main">
-                    <div class="s7-content">
-                        <h2 class="s7-final-headline">ממש בקרוב איתכם!</h2>
-                        <div class="s7-carousel">
-                            <div class="s7-carousel-track">
-                                <div class="fact-card"><div class="fact-card-content"><p class="fact-number">6.7</p><p class="fact-text">גיל מתן טלפון חכם בישראל</p></div></div>
-                                <div class="fact-card"><div class="fact-card-content"><p class="fact-number">43%</p><p class="fact-text">מבני הנוער מעידים שהיו רוצים להגביל את זמן המסך שלהם, אך הם לא מצליחים</p></div></div>
-                                <div class="fact-card"><div class="fact-card-content"><p class="fact-number">12.1</p><p class="fact-text">שעות בממוצע ליום בילו בני הנוער בשנת 2023</p></div></div>
-                                <div class="fact-card"><div class="fact-card-content"><p class="fact-text" style="font-weight: 700;">כשאנחנו משועממים, המוח שלנו מתעורר. שעמום אינו תקלה, אלא הזדמנות</p><p class="fact-source">מתוך פודקאסט Digital Social Hour שמארח את ד״ר ארתור ברוקס</p></div></div>
+            </div>
+
+            <div class="screen-main">
+                <!-- New container for vertical layout -->
+                <div class="s7-content">
+                    <h2 class="s7-final-headline">ממש בקרוב איתכם!</h2>
+                    <div class="s7-carousel">
+                        <div class="s7-carousel-track">
+                            <!-- Card 1 -->
+                            <div class="fact-card">
+                                <div class="fact-card-content">
+                                    <p class="fact-number">6.7</p>
+                                    <p class="fact-text">גיל מתן טלפון חכם בישראל</p>
+                                </div>
+                            </div>
+                            <!-- Card 2 -->
+                            <div class="fact-card">
+                                <div class="fact-card-content">
+                                    <p class="fact-number">43%</p>
+                                    <p class="fact-text">מבני הנוער מעידים שהיו רוצים להגביל את זמן המסך שלהם, אך הם לא מצליחים</p>
+                                </div>
+                            </div>
+                            <!-- Card 3 -->
+                            <div class="fact-card">
+                                <div class="fact-card-content">
+                                    <p class="fact-number">12.1</p>
+                                    <p class="fact-text">שעות בממוצע ליום בילו בני הנוער בשנת 2023</p>
+                                </div>
+                            </div>
+                            <!-- Card 4 -->
+                            <div class="fact-card">
+                                <div class="fact-card-content">
+                                    <p class="fact-text" style="font-weight: 700;">כשאנחנו משועממים, המוח שלנו מתעורר. שעמום אינו תקלה, אלא הזדמנות</p>
+                                    <p class="fact-source">מתוך פודקאסט Digital Social Hour שמארח את ד״ר ארתור ברוקס</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="screen-footer"></div>
             </div>
+
+            <!-- Footer is now empty but kept for layout consistency -->
+            <div class="screen-footer"></div>
         </div>
 
     </div> 
