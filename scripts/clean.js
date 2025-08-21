@@ -1,3 +1,5 @@
+// scripts/clean.js - FINAL POLISHED VERSION
+
 // --- App State ---
 let currentScreen = 1;
 const totalScreens = 7;
@@ -31,7 +33,7 @@ function setupScreens() {
     }
 }
 
-// --- Navigation Functions ---
+// --- Navigation Functions (UPDATED for Video Control) ---
 function startAutoTransition() {
     autoTransitionTimeout = setTimeout(() => {
         if (currentScreen === 1) {
@@ -46,12 +48,6 @@ function nextScreen() {
     }
 }
 
-function previousScreen() {
-    if (currentScreen > 2) {
-        moveToScreen(currentScreen - 1);
-    }
-}
-
 function moveToScreen(screenNumber) {
     if (screenNumber < 1 || screenNumber > totalScreens) return;
 
@@ -60,7 +56,7 @@ function moveToScreen(screenNumber) {
     const currentScreenEl = document.getElementById(`screen${currentScreen}`);
     if (currentScreenEl) {
         currentScreenEl.classList.remove('active');
-        // **VIDEO FIX:** Pause video if we are leaving screen 5
+        // VIDEO FIX: Pause video if we are leaving screen 5
         if (currentScreenEl.id === 'screen5') {
             const video = currentScreenEl.querySelector('.animation-video');
             if (video) video.pause();
@@ -71,10 +67,13 @@ function moveToScreen(screenNumber) {
     const nextScreenEl = document.getElementById(`screen${currentScreen}`);
     if (nextScreenEl) {
         nextScreenEl.classList.add('active');
-        // **VIDEO FIX:** Play video if we are entering screen 5
+        // VIDEO FIX: Play video if we are entering screen 5
         if (nextScreenEl.id === 'screen5') {
             const video = nextScreenEl.querySelector('.animation-video');
-            if (video) video.play();
+            if (video) {
+                video.currentTime = 0; // Rewind video to the start
+                video.play();
+            }
         }
     }
 
@@ -84,15 +83,13 @@ function moveToScreen(screenNumber) {
 // --- Progress Bar Update ---
 function updateProgressBar(screenIndex) {
     const totalSegments = 6; 
-
-    document.querySelectorAll('.progress-segment').forEach(segment => {
-        segment.classList.remove('active');
-    });
-
     if (screenIndex > 1) {
         const screenElement = document.getElementById(`screen${screenIndex}`);
         if (screenElement) {
             const activeSegment = screenElement.querySelector(`.progress-segment:nth-child(${screenIndex - 1})`);
+            // First, clear all segments on the current screen
+            screenElement.querySelectorAll('.progress-segment').forEach(seg => seg.classList.remove('active'));
+            // Then, activate the correct one
             if (activeSegment) {
                 activeSegment.classList.add('active');
             }
@@ -152,19 +149,26 @@ function handleSliderDependency(changedSlider) {
     }
 }
 
-// --- Carousel ---
+// --- Carousel (UPDATED for Forward-Only Swipe) ---
 function setupCarousel() {
     const track = document.querySelector('.s7-carousel-track');
     if (!track) return;
 
+    const cards = Array.from(track.children);
+    const cardWidth = cards[0].offsetWidth + 20; // Card width + margin
     let currentIndex = 0;
     let startX = 0;
     let currentTranslate = 0;
     let prevTranslate = 0;
 
+    const setCardPosition = () => {
+        currentTranslate = -currentIndex * cardWidth;
+        track.style.transform = `translateX(${currentTranslate}px)`;
+    };
+
     const touchStart = (event) => {
         startX = event.touches[0].clientX;
-        prevTranslate = -currentIndex * track.offsetWidth;
+        track.style.transition = 'none'; // Disable transition during drag
     };
 
     const touchMove = (event) => {
@@ -176,15 +180,14 @@ function setupCarousel() {
 
     const touchEnd = () => {
         const movedBy = currentTranslate - prevTranslate;
-        if (movedBy < -75 && currentIndex < track.children.length - 1) {
+        // Only allow swiping left (forward)
+        if (movedBy < -75 && currentIndex < cards.length - 1) {
             currentIndex++;
         }
-        if (movedBy > 75 && currentIndex > 0) {
-            currentIndex--;
-        }
-        currentTranslate = -currentIndex * track.offsetWidth;
+        
+        prevTranslate = -currentIndex * cardWidth;
         track.style.transition = 'transform 0.4s ease-in-out';
-        track.style.transform = `translateX(${currentTranslate}px)`;
+        track.style.transform = `translateX(${prevTranslate}px)`;
     };
 
     track.addEventListener('touchstart', touchStart, { passive: true });
@@ -192,25 +195,34 @@ function setupCarousel() {
     track.addEventListener('touchend', touchEnd);
 }
 
-// --- Touch & Keyboard Support ---
+
+// --- Touch & Keyboard Support (UPDATED for Forward-Only) ---
 function setupTouchSupport() {
     let startX = 0;
     document.addEventListener('touchstart', e => startX = e.touches[0].clientX, { passive: true });
     document.addEventListener('touchend', e => {
         const diffX = startX - e.changedTouches[0].clientX;
-        if (diffX > 50) nextScreen();
-        else if (diffX < -50) previousScreen();
+        // Only trigger nextScreen on swipe left
+        if (diffX > 50) {
+            // Don't advance screen if on the carousel screen
+            if (currentScreen !== 7) {
+                nextScreen();
+            }
+        }
     }, { passive: true });
 }
 
 function setupKeyboardSupport() {
     document.addEventListener('keydown', e => {
-        if (e.key === 'ArrowRight') previousScreen();
-        if (e.key === 'ArrowLeft' || e.key === ' ') nextScreen();
+        // Only allow forward navigation
+        if (e.key === 'ArrowLeft' || e.key === ' ') {
+             if (currentScreen !== 7) {
+                nextScreen();
+            }
+        }
     });
 }
 
 // --- Global Functions ---
 window.nextScreen = nextScreen;
-window.previousScreen = previousScreen;
 window.moveToScreen = moveToScreen;

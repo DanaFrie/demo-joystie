@@ -1,3 +1,5 @@
+/* styles/base.css - FINAL POLISHED VERSION */
+
 /* Google Fonts Import */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;600;700&family=Rubik:wght@600&family=Varela+Round&display=swap');
 
@@ -18,21 +20,18 @@ body {
 .app-container {
     width: 100%;
     height: 100vh;
-    height: 100dvh; /* More reliable on mobile */
+    height: 100dvh;
     position: relative;
 }
 
-/* --- Main Screen Layout (THE KEY FIX) --- */
+/* --- Main Screen Layout --- */
 .screen {
     width: 100%;
     height: 100%;
-    padding: 1.5rem;
-    
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Pushes top/footer to edges */
+    justify-content: space-between;
     align-items: center;
-
     position: absolute;
     top: 0;
     left: 0;
@@ -49,21 +48,29 @@ body {
 }
 
 /* --- Unified Structure Rules --- */
-.screen-top, .screen-footer {
-    flex-shrink: 0; /* Prevents top/footer from shrinking */
+.screen-top {
+    flex-shrink: 0;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 1.5rem;
 }
 
 .screen-main {
-    flex-grow: 1; /* Allows main content to fill the space */
+    flex-grow: 1;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow-y: auto; /* Allows scrolling only for main content if it gets too long */
+    overflow: hidden;
+    padding: 1rem 0;
+}
+
+.screen-footer {
+    flex-shrink: 0;
+    width: 100%;
+    padding: 0 1.5rem 1.5rem;
 }
 
 /* --- Reusable Components --- */
@@ -77,7 +84,7 @@ body {
     justify-content: center;
     gap: 5.5px;
     width: 100%;
-    margin-top: 1.5rem;
+    margin-top: 5vh; /* Pushes the bar down */
 }
 
 .progress-segment {
@@ -94,7 +101,7 @@ body {
 
 .screen-base-overlay {
     position: absolute;
-    top: 16%; 
+    top: 20%; 
     bottom: 0;
     left: 0;
     right: 0;
@@ -119,44 +126,5 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-/* --- Form & Other Specific Component Styles --- */
-/* (These styles are for screens 6 & 7 which have a unique layout) */
-
-.screen-content {
-    text-align: center;
-    max-width: 400px;
-    width: 100%;
-    z-index: 10;
-}
-
-.screen-content h1 {
-    font-family: 'Montserrat Alternates';
-    font-size: 2.5rem;
-    color: #273143;
-    margin-bottom: 10px;
-    font-weight: 700;
-}
-
-.screen-content p {
-    font-family: 'Montserrat Alternates';
-    font-size: 1.2rem;
-    color: #273143;
-    opacity: 0.7;
-    margin-bottom: 30px;
-    line-height: 1.4;
-}
-
-.btn-submit {
-    background: #273143;
-    color: #FFFCF8;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 25px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    min-width: 120px;
-    box-shadow: 0 4px 15px rgba(39, 49, 67, 0.2);
+    margin: 0 auto;
 }
