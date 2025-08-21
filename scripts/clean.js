@@ -82,12 +82,14 @@ function moveToScreen(screenNumber) {
 
 // --- Progress Bar Update ---
 function updateProgressBar(screenIndex) {
-    document.querySelectorAll('.progress-segment').forEach(seg => seg.classList.remove('active'));
-    
+    const totalSegments = 6; 
     if (screenIndex > 1) {
         const screenElement = document.getElementById(`screen${screenIndex}`);
         if (screenElement) {
             const activeSegment = screenElement.querySelector(`.progress-segment:nth-child(${screenIndex - 1})`);
+            // First, clear all segments on the current screen
+            screenElement.querySelectorAll('.progress-segment').forEach(seg => seg.classList.remove('active'));
+            // Then, activate the correct one
             if (activeSegment) {
                 activeSegment.classList.add('active');
             }
@@ -200,17 +202,23 @@ function setupTouchSupport() {
     document.addEventListener('touchstart', e => startX = e.touches[0].clientX, { passive: true });
     document.addEventListener('touchend', e => {
         const diffX = startX - e.changedTouches[0].clientX;
-        // Swipe from right-to-left (positive diffX) to go next
-        if (diffX > 50 && currentScreen < 7) {
-            nextScreen();
+        // Only trigger nextScreen on swipe left
+        if (diffX > 50) {
+            // Don't advance screen if on the carousel screen
+            if (currentScreen !== 7) {
+                nextScreen();
+            }
         }
     }, { passive: true });
 }
 
 function setupKeyboardSupport() {
     document.addEventListener('keydown', e => {
-        if ((e.key === 'ArrowLeft' || e.key === ' ') && currentScreen < 7) {
-            nextScreen();
+        // Only allow forward navigation
+        if (e.key === 'ArrowLeft' || e.key === ' ') {
+             if (currentScreen !== 7) {
+                nextScreen();
+            }
         }
     });
 }
