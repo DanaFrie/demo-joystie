@@ -1,4 +1,4 @@
-/* styles/base.css - FINAL POLISHED VERSION */
+/* styles/base.css - FINAL CORRECTED VERSION */
 
 /* Google Fonts Import */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;600;700&family=Rubik:wght@600&family=Varela+Round&display=swap');
@@ -30,7 +30,6 @@ body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
     position: absolute;
     top: 0;
@@ -48,29 +47,36 @@ body {
 }
 
 /* --- Unified Structure Rules --- */
-.screen-top {
+.screen-header {
+    width: 100%;
+    padding: 1.5rem 0;
+    text-align: center;
     flex-shrink: 0;
+}
+
+.screen-body {
+    flex-grow: 1;
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding-top: 1.5rem;
+    justify-content: space-between;
+    padding: 0 1.5rem 1.5rem;
+    position: relative;
 }
 
 .screen-main {
     flex-grow: 1;
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    padding: 1rem 0;
 }
 
 .screen-footer {
     flex-shrink: 0;
     width: 100%;
-    padding: 0 1.5rem 1.5rem;
 }
 
 /* --- Reusable Components --- */
@@ -84,7 +90,7 @@ body {
     justify-content: center;
     gap: 5.5px;
     width: 100%;
-    margin-top: 5vh; /* Pushes the bar down */
+    margin-bottom: 1rem; /* Space below progress bar */
 }
 
 .progress-segment {
@@ -101,7 +107,7 @@ body {
 
 .screen-base-overlay {
     position: absolute;
-    top: 20%; 
+    top: 0;
     bottom: 0;
     left: 0;
     right: 0;
