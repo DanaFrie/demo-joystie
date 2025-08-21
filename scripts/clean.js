@@ -214,8 +214,3 @@ function setupKeyboardSupport() {
 window.nextScreen = nextScreen;
 window.previousScreen = previousScreen;
 window.moveToScreen = moveToScreen;
-// Add the finishFlow function to the window object so the button can call it
-window.finishFlow = () => {
-    // This is a placeholder. You can redirect or show a final message.
-    console.log("Flow finished!");
-};

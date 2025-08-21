@@ -1,5 +1,3 @@
-/* styles/base.css - FINAL CORRECTED VERSION */
-
 /* Google Fonts Import */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;600;700&family=Rubik:wght@600&family=Varela+Round&display=swap');
 
@@ -24,14 +22,15 @@ body {
     position: relative;
 }
 
-/* --- Main Screen Layout --- */
+/* --- Main Screen Layout (THE KEY FIX) --- */
 .screen {
     width: 100%;
     height: 100%;
+    padding: 1.5rem;
     
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-between; /* Pushes top/footer to edges */
     align-items: center;
 
     position: absolute;
@@ -50,29 +49,21 @@ body {
 }
 
 /* --- Unified Structure Rules --- */
-.screen-top {
-    flex-shrink: 0;
+.screen-top, .screen-footer {
+    flex-shrink: 0; /* Prevents top/footer from shrinking */
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1.5rem 1.5rem 0;
 }
 
 .screen-main {
-    flex-grow: 1;
+    flex-grow: 1; /* Allows main content to fill the space */
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
-    padding: 1rem 0;
-}
-
-.screen-footer {
-    flex-shrink: 0;
-    width: 100%;
-    padding: 0 1.5rem 1.5rem;
+    overflow-y: auto; /* Allows scrolling only for main content if it gets too long */
 }
 
 /* --- Reusable Components --- */
@@ -86,7 +77,7 @@ body {
     justify-content: center;
     gap: 5.5px;
     width: 100%;
-    margin-top: 5vh; /* Pushes the bar down into the overlay area */
+    margin-top: 1.5rem;
 }
 
 .progress-segment {
@@ -103,7 +94,7 @@ body {
 
 .screen-base-overlay {
     position: absolute;
-    top: 20%; 
+    top: 16%; 
     bottom: 0;
     left: 0;
     right: 0;
@@ -128,11 +119,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 auto;
 }
 
-/* --- Styles for Screens with Unique Layouts (like Screen 6 Form) --- */
-/* These are kept for screens that don't use the top/main/footer structure */
+/* --- Form & Other Specific Component Styles --- */
+/* (These styles are for screens 6 & 7 which have a unique layout) */
+
 .screen-content {
     text-align: center;
     max-width: 400px;
