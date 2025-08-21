@@ -20,7 +20,7 @@
     <!-- Screens Container -->
     <div class="app-container" id="appContainer">
         
-        <!-- Screen 1 - Unique Layout -->
+        <!-- Screen 1 -->
         <div class="screen active" id="screen1">
             <div class="logo-section">
                 <img src="images/logo-joystie-s1.png" alt="Joystie Logo" class="s1-logo-img">
@@ -178,12 +178,8 @@
             </div>
         </div>
 
-        <!-- Screen 6 -->
-        <div class="screen" id="screen6">
-            <!-- Reusable overlay -->
+  <div class="screen" id="screen6">
             <div class="screen-base-overlay"></div>
-            
-            <!-- Reusable top section -->
             <div class="screen-top">
                 <div class="screen-header">
                     <img src="images/logo-joystie.png" alt="Joystie Logo" class="small-logo-img">
@@ -197,49 +193,42 @@
                     <div class="progress-segment"></div>
                 </div>
             </div>
-
-            <!-- Screen 6 specific main content -->
             <div class="screen-main">
                 <div class="s6-content">
                     <p class="s6-intro-text">רוצה לפתוח את שנת הלימודים בטוב?</p>
                     <p class="s6-intro-text">הצטרפו לאתגר הקרוב ויחד נאזן את הבית</p>
-                    <h2 class="s6-main-headline">👇 השאירו פרטים 👇</h2>
-                    
+                    <h2 class="s6-main-headline">השאירו פרטים 👇</h2>
                     <form class="s6-form" id="registrationForm">
                         <div class="s6-form-row">
                             <div class="s6-input-group">
                                 <label for="lastName">שם משפחה</label>
-                                <input type="text" id="lastName" name="lastName" required>
+                                <input type="text" id="lastName" name="lastName" placeholder="ישראלי" required>
                             </div>
                             <div class="s6-input-group">
                                 <label for="firstName">שם פרטי</label>
-                                <input type="text" id="firstName" name="firstName" required>
+                                <input type="text" id="firstName" name="firstName" placeholder="ישראל" required>
                             </div>
                         </div>
                         <div class="s6-input-group">
                             <label for="email">אימייל</label>
-                            <input type="email" id="email" name="email" required>
+                            <input type="email" id="email" name="email" placeholder="you@gmail.com" required>
                         </div>
                         <div class="s6-input-group">
                             <label for="phone">טלפון</label>
-                            <input type="tel" id="phone" name="phone" required>
+                            <input type="tel" id="phone" name="phone" placeholder="+(972) 525-867-995" required>
                         </div>
                     </form>
                 </div>
             </div>
-
-            <!-- Reusable footer -->
             <div class="screen-footer">
                 <button type="submit" form="registrationForm" class="screen-btn-next">רוצה לשמוע עוד</button>
             </div>
         </div>
 
-        <!-- Screen 7 -->
+        <!-- Screen 7 - UPDATED STRUCTURE -->
         <div class="screen" id="screen7">
-            <!-- Reusable overlay -->
             <div class="screen-base-overlay"></div>
             
-            <!-- Reusable top section -->
             <div class="screen-top">
                 <div class="screen-header">
                     <img src="images/logo-joystie.png" alt="Joystie Logo" class="small-logo-img">
@@ -254,55 +243,53 @@
                 </div>
             </div>
 
-            <!-- Screen 7 specific main content: The Carousel -->
             <div class="screen-main">
-                <div class="s7-carousel">
-                    <div class="s7-carousel-track">
-                        <!-- Card 1 -->
-                        <div class="fact-card">
-                            <div class="fact-card-content">
-                                <p class="fact-number">6.7</p>
-                                <p class="fact-text">גיל מתן טלפון חכם בישראל</p>
+                <!-- New container for vertical layout -->
+                <div class="s7-content">
+                    <h2 class="s7-final-headline">ממש בקרוב איתכם!</h2>
+                    <div class="s7-carousel">
+                        <div class="s7-carousel-track">
+                            <!-- Card 1 -->
+                            <div class="fact-card">
+                                <div class="fact-card-content">
+                                    <p class="fact-number">6.7</p>
+                                    <p class="fact-text">גיל מתן טלפון חכם בישראל</p>
+                                </div>
+                                <!-- Footer removed -->
                             </div>
-                            <div class="fact-card-footer">החלק שמאלה</div>
-                        </div>
-                        <!-- Card 2 -->
-                        <div class="fact-card">
-                            <div class="fact-card-content">
-                                <p class="fact-number">43%</p>
-                                <p class="fact-text">מבני הנוער מעידים שהיו רוצים להגביל את זמן המסך שלהם, אך הם לא מצליחים</p>
+                            <!-- Card 2 -->
+                            <div class="fact-card">
+                                <div class="fact-card-content">
+                                    <p class="fact-number">43%</p>
+                                    <p class="fact-text">מבני הנוער מעידים שהיו רוצים להגביל את זמן המסך שלהם, אך הם לא מצליחים</p>
+                                </div>
                             </div>
-                            <div class="fact-card-footer">החלק שמאלה</div>
-                        </div>
-                        <!-- Card 3 -->
-                        <div class="fact-card">
-                            <div class="fact-card-content">
-                                <p class="fact-number">12.1</p>
-                                <p class="fact-text">שעות בממוצע ליום בילו בני הנוער בשנת 2023</p>
+                            <!-- Card 3 -->
+                            <div class="fact-card">
+                                <div class="fact-card-content">
+                                    <p class="fact-number">12.1</p>
+                                    <p class="fact-text">שעות בממוצע ליום בילו בני הנוער בשנת 2023</p>
+                                </div>
                             </div>
-                            <div class="fact-card-footer">החלק שמאלה</div>
-                        </div>
-                        <!-- Card 4 -->
-                        <div class="fact-card">
-                            <div class="fact-card-content">
-                                <p class="fact-text" style="font-weight: 700;">כשאנחנו משועממים, המוח שלנו מתעורר. שעמום אינו תקלה, אלא הזדמנות</p>
-                                <p class="fact-source">מתוך פודקאסט Digital Social Hour שמארח את ד״ר ארתור ברוקס</p>
+                            <!-- Card 4 -->
+                            <div class="fact-card">
+                                <div class="fact-card-content">
+                                    <p class="fact-text" style="font-weight: 700;">כשאנחנו משועממים, המוח שלנו מתעורר. שעמום אינו תקלה, אלא הזדמנות</p>
+                                    <p class="fact-source">מתוך פודקאסט Digital Social Hour שמארח את ד״ר ארתור ברוקס</p>
+                                </div>
                             </div>
-                            <div class="fact-card-footer">החלק שמאלה</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Footer -->
-            <div class="screen-footer">
-                <button class="screen-btn-next" onclick="finishFlow()">ממש בקרוב איתכם!</button>
-            </div>
+            <!-- Footer is now empty but kept for layout consistency -->
+            <div class="screen-footer"></div>
         </div>
 
     </div> 
     <script src="scripts/clean.js"></script>
-    <script src="scripts/tracking.js"></script>
     <script src="scripts/registration.js"></script>
+    <script src="scripts/tracking.js"></script>
 </body>
 </html>

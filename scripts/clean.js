@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
     setupSliders(); 
     setupCarousel();
     
-    // Initialize the registration form logic from registration.js
     if (window.registrationManager) {
         window.registrationManager.init();
     }
@@ -61,12 +60,22 @@ function moveToScreen(screenNumber) {
     const currentScreenEl = document.getElementById(`screen${currentScreen}`);
     if (currentScreenEl) {
         currentScreenEl.classList.remove('active');
+        // **VIDEO FIX:** Pause video if we are leaving screen 5
+        if (currentScreenEl.id === 'screen5') {
+            const video = currentScreenEl.querySelector('.animation-video');
+            if (video) video.pause();
+        }
     }
 
     currentScreen = screenNumber;
     const nextScreenEl = document.getElementById(`screen${currentScreen}`);
     if (nextScreenEl) {
         nextScreenEl.classList.add('active');
+        // **VIDEO FIX:** Play video if we are entering screen 5
+        if (nextScreenEl.id === 'screen5') {
+            const video = nextScreenEl.querySelector('.animation-video');
+            if (video) video.play();
+        }
     }
 
     updateProgressBar(currentScreen);
@@ -205,3 +214,8 @@ function setupKeyboardSupport() {
 window.nextScreen = nextScreen;
 window.previousScreen = previousScreen;
 window.moveToScreen = moveToScreen;
+// Add the finishFlow function to the window object so the button can call it
+window.finishFlow = () => {
+    // This is a placeholder. You can redirect or show a final message.
+    console.log("Flow finished!");
+};
