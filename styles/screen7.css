@@ -33,9 +33,11 @@
 /* Track that holds and moves all the cards */
 .s7-carousel-track {
     display: flex;
-    /* This padding centers the first card and creates the peek effect */
-    padding-right: calc(50% - 140px); /* 140px is half the card width */
+    direction: ltr; /* <<< הוסף את השורה הזו */
+    /* This padding now correctly centers the first card on the LEFT */
+    padding-left: calc(50% - 140px); /* <<< שנה ל-padding-left */
     transition: transform 0.4s ease-in-out;
+    padding-right: 0; /* Optional: reset right padding if needed */
 }
 
 /* Individual fact card styling */
