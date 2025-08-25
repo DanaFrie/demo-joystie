@@ -149,67 +149,79 @@ function handleSliderDependency(changedSlider) {
     }
 }
 
-// scripts/clean.js
 
-// --- Carousel (UPDATED for Forward-Only Swipe) - FIXED ---
+// --- Carousel (UPDATED for Forward-Only Swipe) - FINAL FIX ---
 function setupCarousel() {
     const track = document.querySelector('.s7-carousel-track');
     if (!track) return;
 
     const cards = Array.from(track.children);
-    // Exit if there are no cards to prevent errors
     if (cards.length === 0) return;
 
-    const cardWidth = cards[0].offsetWidth + 20; // Card width + margin-left
+    // --- FIX: Defer width calculation ---
+    // Initialize cardWidth to 0. We will calculate it on the first touch.
+    let cardWidth = 0;
     let currentIndex = 0;
 
     let startX = 0;
-    let currentX = 0;
     let isDragging = false;
 
-    // A single, reliable function to move the carousel to the correct card
     const goToCard = (index) => {
+        // Ensure we don't try to move if width is still 0
+        if (cardWidth === 0) return;
         const newPosition = -index * cardWidth;
         track.style.transition = 'transform 0.4s ease-in-out';
         track.style.transform = `translateX(${newPosition}px)`;
     };
 
     const touchStart = (event) => {
+        // --- THIS IS THE KEY ---
+        // If cardWidth hasn't been calculated yet, do it now.
+        // This ensures the element is visible and has a measurable width.
+        if (cardWidth === 0 && cards[0]) {
+            // Get the width (280px) and the margin-left (20px) for the total slide distance
+            const style = window.getComputedStyle(cards[0]);
+            const marginLeft = parseInt(style.marginLeft, 10);
+            cardWidth = cards[0].offsetWidth + marginLeft;
+        }
+
         isDragging = true;
-        // Record the starting touch position
         startX = event.touches[0].clientX;
-        // We will need currentX for the touchend event
-        currentX = startX;
-        // Disable the smooth transition during the drag for a responsive feel
-        track.style.transition = 'none';
+        track.style.transition = 'none'; // Disable transition for smooth dragging
     };
 
     const touchMove = (event) => {
         if (!isDragging) return;
-        currentX = event.touches[0].clientX;
+        const currentX = event.touches[0].clientX;
         const diff = currentX - startX;
-        // Calculate the current drag position based on the resting place of the current card
+
+        // Ensure we can drag only after width is calculated
+        if (cardWidth === 0) return;
+
         const currentDragPosition = -currentIndex * cardWidth + diff;
         track.style.transform = `translateX(${currentDragPosition}px)`;
     };
 
-    const touchEnd = () => {
+    const touchEnd = (event) => {
         if (!isDragging) return;
         isDragging = false;
         
-        const diff = currentX - startX;
+        // Use changedTouches for the most reliable final touch position
+        const endX = event.changedTouches[0].clientX;
+        const diff = endX - startX;
 
-        // Check if the user swiped left (forward) with enough distance
+        // Check for a swipe to the left (forward) with enough distance
         if (diff < -75 && currentIndex < cards.length - 1) {
             currentIndex++;
         }
         
-        // Snap to the correct final card position (either the old one or the new one)
+        // Snap to the final card position
         goToCard(currentIndex);
     };
 
     track.addEventListener('touchstart', touchStart, { passive: true });
     track.addEventListener('touchmove', touchMove, { passive: true });
+    // Pass the event object to touchEnd so we can get the final coordinates
     track.addEventListener('touchend', touchEnd);
 }
 
