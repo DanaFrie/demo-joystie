@@ -1,4 +1,4 @@
-// scripts/clean.js - FINAL AND ROBUST VERSION
+// scripts/clean.js - DIAGNOSTIC VERSION
 
 // --- App State ---
 let currentScreen = 1;
@@ -7,18 +7,17 @@ let autoTransitionTimeout;
 
 // --- Main Initializer ---
 document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM Loaded. Setting up application.");
     setupScreens();
     startAutoTransition();
     setupTouchSupport();
     setupKeyboardSupport();
     setupSliders();
-    // We only set up the carousel listeners here, we don't initialize it yet.
     setupCarousel();
 
     if (window.registrationManager) {
         window.registrationManager.init();
     }
-
     updateProgressBar(1);
 });
 
@@ -27,9 +26,7 @@ function setupScreens() {
     for (let i = 1; i <= totalScreens; i++) {
         const screen = document.getElementById(`screen${i}`);
         if (screen) {
-            if (i === 1) {
-                screen.classList.add('active');
-            }
+            if (i === 1) screen.classList.add('active');
         }
     }
 }
@@ -37,21 +34,16 @@ function setupScreens() {
 // --- Navigation Functions ---
 function startAutoTransition() {
     autoTransitionTimeout = setTimeout(() => {
-        if (currentScreen === 1) {
-            nextScreen();
-        }
+        if (currentScreen === 1) nextScreen();
     }, 3000);
 }
 
 function nextScreen() {
-    if (currentScreen < totalScreens) {
-        moveToScreen(currentScreen + 1);
-    }
+    if (currentScreen < totalScreens) moveToScreen(currentScreen + 1);
 }
 
 function moveToScreen(screenNumber) {
     if (screenNumber < 1 || screenNumber > totalScreens) return;
-
     clearTimeout(autoTransitionTimeout);
 
     const currentScreenEl = document.getElementById(`screen${currentScreen}`);
@@ -74,14 +66,11 @@ function moveToScreen(screenNumber) {
                 video.play();
             }
         }
-        // --- KEY CHANGE ---
-        // If we are moving to screen 7, initialize the carousel NOW.
-        // This guarantees it's visible and has correct dimensions.
         if (nextScreenEl.id === 'screen7') {
+            console.log("Moving to Screen 7. Initializing carousel...");
             initializeCarousel();
         }
     }
-
     updateProgressBar(currentScreen);
 }
 
@@ -95,9 +84,7 @@ function updateProgressBar(screenIndex) {
     allSegments.forEach(seg => seg.classList.remove('active'));
 
     const activeSegment = screenElement.querySelector(`.progress-segment:nth-child(${screenIndex - 1})`);
-    if (activeSegment) {
-        activeSegment.classList.add('active');
-    }
+    if (activeSegment) activeSegment.classList.add('active');
 }
 
 // --- Sliders ---
@@ -116,19 +103,16 @@ function setupSliders() {
 function updateSliderVisuals(slider) {
     const valueElement = document.getElementById(slider.dataset.valueId);
     if (!valueElement) return;
-
     const currentValue = parseFloat(slider.value);
     const min = parseFloat(slider.min);
     const max = parseFloat(slider.max);
-
     valueElement.innerText = Math.round(currentValue);
-
     const thumbWidth = 28;
     const trackWidth = slider.offsetWidth;
+    if (trackWidth === 0) return;
     const percentage = (currentValue - min) / (max - min);
     const thumbPosition = percentage * (trackWidth - thumbWidth) + (thumbWidth / 2);
     valueElement.style.left = `${thumbPosition}px`;
-
     const colorStop = `linear-gradient(to right, #E6F19A ${percentage * 100}%, rgba(0, 0, 0, 0.1) ${percentage * 100}%)`;
     slider.style.background = colorStop;
 }
@@ -137,10 +121,8 @@ function handleSliderDependency(changedSlider) {
     const pocketMoneySlider = document.getElementById('pocketMoney');
     const screenTimeSlider = document.getElementById('screenTime');
     if (!pocketMoneySlider || !screenTimeSlider) return;
-
     const changedPercentage = (changedSlider.value - changedSlider.min) / (changedSlider.max - changedSlider.min);
     const inversePercentage = 1 - changedPercentage;
-
     if (changedSlider.id === 'pocketMoney') {
         const newScreenTime = inversePercentage * (screenTimeSlider.max - screenTimeSlider.min);
         screenTimeSlider.value = newScreenTime;
@@ -152,80 +134,82 @@ function handleSliderDependency(changedSlider) {
     }
 }
 
-// --- Carousel Logic (Completely Rewritten) ---
-// State variables for the carousel, defined globally within the script
-let carouselState = {
-    initialized: false,
-    track: null,
-    cards: [],
-    cardWidth: 0,
-    currentIndex: 0,
-    startX: 0,
-    isDragging: false,
-};
+// --- Carousel Logic (with Diagnostics) ---
+let carouselInitialized = false;
+let carouselTrack = null;
+let carouselCards = [];
+let cardWidth = 0;
+let currentIndex = 0;
+let startX = 0;
+let isDragging = false;
 
-// This function only runs ONCE when screen 7 becomes visible
 function initializeCarousel() {
-    // Prevent running this more than once
-    if (carouselState.initialized) return;
-
+    if (carouselInitialized) return;
     const track = document.querySelector('.s7-carousel-track');
+    if (!track) {
+        console.error("Carousel track not found!");
+        return;
+    }
     const cards = Array.from(track.children);
-
-    if (!track || cards.length === 0) return;
-
-    // Now we can be SURE the card has a real width
+    if (cards.length === 0) {
+        console.error("No cards found in carousel track!");
+        return;
+    }
     const style = window.getComputedStyle(cards[0]);
     const marginLeft = parseInt(style.marginLeft, 10) || 0;
-    const cardWidth = cards[0].offsetWidth + marginLeft;
-
-    // Update the global state
-    carouselState = {
-        ...carouselState,
-        initialized: true,
-        track: track,
-        cards: cards,
-        cardWidth: cardWidth,
-    };
-    console.log('Carousel Initialized with card width:', cardWidth);
+    const calculatedWidth = cards[0].offsetWidth + marginLeft;
+    if (calculatedWidth === marginLeft) {
+        console.error("offsetWidth is 0! The card is not visible or has no width.");
+        return;
+    }
+    carouselInitialized = true;
+    carouselTrack = track;
+    carouselCards = cards;
+    cardWidth = calculatedWidth;
+    console.log(`Carousel Initialized. Width: ${cardWidth}, Cards: ${carouselCards.length}`);
 }
 
-// This function just sets up the listeners on page load
 function setupCarousel() {
     const carouselContainer = document.querySelector('.s7-carousel');
     if (!carouselContainer) return;
 
     const onTouchStart = (event) => {
-        if (!carouselState.initialized || carouselState.isDragging) return;
-        carouselState.isDragging = true;
-        carouselState.startX = event.touches[0].clientX;
-        carouselState.track.style.transition = 'none';
+        if (!carouselInitialized) return;
+        isDragging = true;
+        startX = event.touches[0].clientX;
+        carouselTrack.style.transition = 'none';
+        console.log(`%cTouch Start at X: ${startX}`, 'color: blue; font-weight: bold;');
     };
 
     const onTouchMove = (event) => {
-        if (!carouselState.isDragging) return;
+        if (!isDragging) return;
         const currentX = event.touches[0].clientX;
-        const diff = currentX - carouselState.startX;
-        const currentDragPosition = -carouselState.currentIndex * carouselState.cardWidth + diff;
-        carouselState.track.style.transform = `translateX(${currentDragPosition}px)`;
+        const diff = currentX - startX;
+        const currentDragPosition = -currentIndex * cardWidth + diff;
+        carouselTrack.style.transform = `translateX(${currentDragPosition}px)`;
     };
 
     const onTouchEnd = (event) => {
-        if (!carouselState.isDragging) return;
-        carouselState.isDragging = false;
-        
+        if (!isDragging) return;
+        isDragging = false;
         const endX = event.changedTouches[0].clientX;
-        const diff = endX - carouselState.startX;
+        const diff = endX - startX;
 
-        // Swipe Right (forward)
-        if (diff < -75 && carouselState.currentIndex < carouselState.cards.length - 1) {
-            carouselState.currentIndex++;
+        console.log(`Touch End. StartX: ${startX}, EndX: ${endX}, Diff: ${diff.toFixed(2)}`);
+        console.log(`Current Index Before Check: ${currentIndex}`);
+
+        if (diff < -75 && currentIndex < carouselCards.length - 1) {
+            currentIndex++;
+            console.log(`%cSwipe detected! New Index: ${currentIndex}`, 'color: green; font-weight: bold;');
+        } else {
+            console.log("%cNo swipe detected or at the end.", 'color: red;');
         }
-        
-        // Snap to the correct position
-        const newPosition = -carouselState.currentIndex * carouselState.cardWidth;
-        carouselState.track.style.transition = 'transform 0.4s ease-in-out';
-        carouselState.track.style.transform = `translateX(${newPosition}px)`;
+
+        const newPosition = -currentIndex * cardWidth;
+        console.log(`Snapping to new position: ${newPosition}px (Index: ${currentIndex} * Width: ${cardWidth})`);
+
+        carouselTrack.style.transition = 'transform 0.4s ease-in-out';
+        carouselTrack.style.transform = `translateX(${newPosition}px)`;
     };
 
     carouselContainer.addEventListener('touchstart', onTouchStart, { passive: true });
@@ -236,16 +220,14 @@ function setupCarousel() {
 // --- Touch & Keyboard Support for screen navigation ---
 function setupTouchSupport() {
     let startX = 0;
-    document.addEventListener('touchstart', e => startX = e.touches[0].clientX, { passive: true });
+    document.addEventListener('touchstart', e => {
+        startX = e.touches[0].clientX;
+    }, { passive: true });
     document.addEventListener('touchend', e => {
-        // Only navigate if not interacting with the carousel
         if (e.target.closest('.s7-carousel')) return;
-
         const diffX = startX - e.changedTouches[0].clientX;
-        if (diffX > 50) { // Swipe left to go to next screen
-            if (currentScreen !== 7) {
-                nextScreen();
-            }
+        if (diffX > 50) {
+            if (currentScreen !== 7) nextScreen();
         }
     }, { passive: true });
 }
@@ -253,9 +235,7 @@ function setupTouchSupport() {
 function setupKeyboardSupport() {
     document.addEventListener('keydown', e => {
         if (e.key === 'ArrowLeft' || e.key === ' ') {
-            if (currentScreen !== 7) {
-                nextScreen();
-            }
+            if (currentScreen !== 7) nextScreen();
         }
     });
 }
