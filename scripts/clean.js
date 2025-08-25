@@ -1,4 +1,4 @@
-// scripts/clean.js - DIAGNOSTIC VERSION
+// scripts/clean.js - FINAL VERSION
 
 // --- App State ---
 let currentScreen = 1;
@@ -7,7 +7,6 @@ let autoTransitionTimeout;
 
 // --- Main Initializer ---
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("DOM Loaded. Setting up application.");
     setupScreens();
     startAutoTransition();
     setupTouchSupport();
@@ -67,7 +66,6 @@ function moveToScreen(screenNumber) {
             }
         }
         if (nextScreenEl.id === 'screen7') {
-            console.log("Moving to Screen 7. Initializing carousel...");
             initializeCarousel();
         }
     }
@@ -134,7 +132,7 @@ function handleSliderDependency(changedSlider) {
     }
 }
 
-// --- Carousel Logic (with Diagnostics) ---
+// --- Carousel Logic ---
 let carouselInitialized = false;
 let carouselTrack = null;
 let carouselCards = [];
@@ -146,27 +144,20 @@ let isDragging = false;
 function initializeCarousel() {
     if (carouselInitialized) return;
     const track = document.querySelector('.s7-carousel-track');
-    if (!track) {
-        console.error("Carousel track not found!");
-        return;
-    }
+    if (!track) return;
     const cards = Array.from(track.children);
-    if (cards.length === 0) {
-        console.error("No cards found in carousel track!");
-        return;
-    }
+    if (cards.length === 0) return;
+
     const style = window.getComputedStyle(cards[0]);
     const marginLeft = parseInt(style.marginLeft, 10) || 0;
     const calculatedWidth = cards[0].offsetWidth + marginLeft;
-    if (calculatedWidth === marginLeft) {
-        console.error("offsetWidth is 0! The card is not visible or has no width.");
-        return;
-    }
+
+    if (calculatedWidth === marginLeft) return; // Don't initialize if width is 0
+    
     carouselInitialized = true;
     carouselTrack = track;
     carouselCards = cards;
     cardWidth = calculatedWidth;
-    console.log(`Carousel Initialized. Width: ${cardWidth}, Cards: ${carouselCards.length}`);
 }
 
 function setupCarousel() {
@@ -178,36 +169,31 @@ function setupCarousel() {
         isDragging = true;
         startX = event.touches[0].clientX;
         carouselTrack.style.transition = 'none';
-        console.log(`%cTouch Start at X: ${startX}`, 'color: blue; font-weight: bold;');
     };
 
     const onTouchMove = (event) => {
         if (!isDragging) return;
         const currentX = event.touches[0].clientX;
         const diff = currentX - startX;
-        const currentDragPosition = -currentIndex * cardWidth + diff;
+        // The visual movement should feel natural, so we still move the track to the LEFT to reveal the next card
+        const currentDragPosition = -currentIndex * cardWidth - diff;
         carouselTrack.style.transform = `translateX(${currentDragPosition}px)`;
     };
 
     const onTouchEnd = (event) => {
         if (!isDragging) return;
         isDragging = false;
+        
         const endX = event.changedTouches[0].clientX;
         const diff = endX - startX;
 
-        console.log(`Touch End. StartX: ${startX}, EndX: ${endX}, Diff: ${diff.toFixed(2)}`);
-        console.log(`Current Index Before Check: ${currentIndex}`);
-
+        // --- THE ONLY CHANGE IS HERE ---
+        // We now check for a swipe from RIGHT to LEFT (negative diff) to advance
         if (diff < -75 && currentIndex < carouselCards.length - 1) {
             currentIndex++;
-            console.log(`%cSwipe detected! New Index: ${currentIndex}`, 'color: green; font-weight: bold;');
-        } else {
-            console.log("%cNo swipe detected or at the end.", 'color: red;');
         }
-
+        
         const newPosition = -currentIndex * cardWidth;
-        console.log(`Snapping to new position: ${newPosition}px (Index: ${currentIndex} * Width: ${cardWidth})`);
-
         carouselTrack.style.transition = 'transform 0.4s ease-in-out';
         carouselTrack.style.transform = `translateX(${newPosition}px)`;
     };
@@ -216,6 +202,7 @@ function setupCarousel() {
     carouselContainer.addEventListener('touchmove', onTouchMove, { passive: true });
     carouselContainer.addEventListener('touchend', onTouchEnd);
 }
+
 
 // --- Touch & Keyboard Support for screen navigation ---
 function setupTouchSupport() {
