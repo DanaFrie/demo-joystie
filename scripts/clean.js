@@ -149,45 +149,63 @@ function handleSliderDependency(changedSlider) {
     }
 }
 
-// --- Carousel (UPDATED for Forward-Only Swipe) ---
+// scripts/clean.js
+
+// --- Carousel (UPDATED for Forward-Only Swipe) - FIXED ---
 function setupCarousel() {
     const track = document.querySelector('.s7-carousel-track');
     if (!track) return;
 
     const cards = Array.from(track.children);
-    const cardWidth = cards[0].offsetWidth + 20; // Card width + margin
-    let currentIndex = 0;
-    let startX = 0;
-    let currentTranslate = 0;
-    let prevTranslate = 0;
+    // Exit if there are no cards to prevent errors
+    if (cards.length === 0) return;
 
-    const setCardPosition = () => {
-        currentTranslate = -currentIndex * cardWidth;
-        track.style.transform = `translateX(${currentTranslate}px)`;
+    const cardWidth = cards[0].offsetWidth + 20; // Card width + margin-left
+    let currentIndex = 0;
+
+    let startX = 0;
+    let currentX = 0;
+    let isDragging = false;
+
+    // A single, reliable function to move the carousel to the correct card
+    const goToCard = (index) => {
+        const newPosition = -index * cardWidth;
+        track.style.transition = 'transform 0.4s ease-in-out';
+        track.style.transform = `translateX(${newPosition}px)`;
     };
 
     const touchStart = (event) => {
+        isDragging = true;
+        // Record the starting touch position
         startX = event.touches[0].clientX;
-        track.style.transition = 'none'; // Disable transition during drag
+        // We will need currentX for the touchend event
+        currentX = startX;
+        // Disable the smooth transition during the drag for a responsive feel
+        track.style.transition = 'none';
     };
 
     const touchMove = (event) => {
-        const currentX = event.touches[0].clientX;
+        if (!isDragging) return;
+        currentX = event.touches[0].clientX;
         const diff = currentX - startX;
-        currentTranslate = prevTranslate + diff;
-        track.style.transform = `translateX(${currentTranslate}px)`;
+        // Calculate the current drag position based on the resting place of the current card
+        const currentDragPosition = -currentIndex * cardWidth + diff;
+        track.style.transform = `translateX(${currentDragPosition}px)`;
     };
 
     const touchEnd = () => {
-        const movedBy = currentTranslate - prevTranslate;
-        // Only allow swiping left (forward)
-        if (movedBy < -75 && currentIndex < cards.length - 1) {
+        if (!isDragging) return;
+        isDragging = false;
+        
+        const diff = currentX - startX;
+
+        // Check if the user swiped left (forward) with enough distance
+        if (diff < -75 && currentIndex < cards.length - 1) {
             currentIndex++;
         }
         
-        prevTranslate = -currentIndex * cardWidth;
-        track.style.transition = 'transform 0.4s ease-in-out';
-        track.style.transform = `translateX(${prevTranslate}px)`;
+        // Snap to the correct final card position (either the old one or the new one)
+        goToCard(currentIndex);
     };
 
     track.addEventListener('touchstart', touchStart, { passive: true });
