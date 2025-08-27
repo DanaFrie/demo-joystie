@@ -14,7 +14,7 @@
     text-align: center;
     gap: 1rem;
     width: 100%;
-    max-width: 345px; /* Width of the form from Figma */
+    max-width: 345px;
 }
 
 /* --- Text Styling --- */
@@ -85,31 +85,25 @@
     border-color: #E6F19A;
 }
 
-/* --- Contact Section Styling --- */
-.s6-contact-section {
-    margin-top: 2rem;
-    text-align: center;
-    font-family: 'Varela Round', sans-serif;
-    color: #FFFCF8;
-}
-
-.s6-contact-section p {
-    margin-bottom: 0.75rem;
-    font-size: 1rem;
-}
-
-.s6-contact-links {
+/* --- Contact Logos Styling --- */
+.s6-contact-logos {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1.5rem;
+    gap: 2.5rem; /* Space between logos */
+    margin-top: 2rem;
 }
 
-.s6-contact-links a {
-    color: #E6F19A; /* Accent color */
-    text-decoration: none;
-    font-size: 0.9rem;
+.contact-logo {
+    height: 32px; /* Unified height for social logos */
+    width: auto;
+    transition: transform 0.2s ease;
 }
-.s6-contact-links a:hover {
-    text-decoration: underline;
+
+.s6-contact-logos a:hover .contact-logo {
+    transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
+.contact-logo.joystie-logo {
+    height: 38px; /* Making the main logo slightly larger */
 }
