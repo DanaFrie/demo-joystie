@@ -84,3 +84,32 @@
     outline: none;
     border-color: #E6F19A;
 }
+
+/* --- Contact Section Styling --- */
+.s6-contact-section {
+    margin-top: 2rem;
+    text-align: center;
+    font-family: 'Varela Round', sans-serif;
+    color: #FFFCF8;
+}
+
+.s6-contact-section p {
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+}
+
+.s6-contact-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.s6-contact-links a {
+    color: #E6F19A; /* Accent color */
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+.s6-contact-links a:hover {
+    text-decoration: underline;
+}

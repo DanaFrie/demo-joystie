@@ -4,6 +4,24 @@
     background-position: center;
 }
 
+.s5-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0 1rem;
+    max-width: 330px; /* Match the card width */
+    width: 100%;
+}
+
+.s5-intro-text {
+    font-family: 'Varela Round', sans-serif;
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    color: #FFFCF8;
+    line-height: 1.5;
+    text-align: center;
+}
+
 .daily-challenge-card {
     width: 100%;
     max-width: 330px;

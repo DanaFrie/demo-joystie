@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Joystie</title>
-    <!-- Base styles - shared across all screens -->
     <link rel="stylesheet" href="styles/base.css">
-    <!-- Screen specific styles -->
     <link rel="stylesheet" href="styles/screen1.css">
     <link rel="stylesheet" href="styles/screen2.css">
     <link rel="stylesheet" href="styles/screen3.css">
@@ -17,10 +15,8 @@
 </head>
 <body>
 
-    <!-- Screens Container -->
     <div class="app-container" id="appContainer">
         
-        <!-- Screen 1 -->
         <div class="screen active" id="screen1">
             <div class="logo-section">
                 <img src="images/logo-joystie-s1.png" alt="Joystie Logo" class="s1-logo-img">
@@ -28,7 +24,6 @@
             </div>
         </div>
 
-        <!-- Screen 2 - UNIFIED STRUCTURE -->
         <div class="screen" id="screen2">
             <div class="screen-base-overlay"></div>
             
@@ -59,7 +54,6 @@
             </div>
         </div>
 
-        <!-- Screen 3 - UNIFIED STRUCTURE -->
         <div class="screen" id="screen3">
             <div class="screen-base-overlay"></div>
             
@@ -91,7 +85,6 @@
             </div>
         </div>
 
-        <!-- Screen 4 - UNIFIED STRUCTURE -->
         <div class="screen" id="screen4">
             <div class="screen-base-overlay"></div>
             
@@ -111,9 +104,13 @@
 
             <div class="screen-main">
                 <div class="s4-content">
-                    <p class="s4-intro-text">כן.​
-                            אתם כבר יודעים שבמקרה הזה צריך יותר מצ'ופר קטן כדי לאזן את זמן המסך 
-                        <br>דמי הכיס הם הפיתיון ואנחנו בונים את החכה</p>
+                    <p class="s4-intro-text">
+                        כן!
+                        <br><br>
+                        אתם כבר יודעים שבמקרה הזה צריך יותר מצ'ופר קטן כדי לאזן את זמן המסך :)
+                        <br><br>
+                        דמי הכיס הם הפיתיון ואנחנו בונים את החכה
+                    </p>
                     
                     <div class="slider-container">
                         <label for="pocketMoney" class="s4-question">כמה דמי כיס בשבוע הילד שלך מקבל?</label>
@@ -148,7 +145,6 @@
             </div>
         </div>
 
-        <!-- Screen 5 - UNIFIED STRUCTURE -->
         <div class="screen" id="screen5">
             <div class="screen-base-overlay"></div>
             
@@ -167,11 +163,14 @@
             </div>
 
             <div class="screen-main">
-                <div class="daily-challenge-card">
-                    <video autoplay loop muted playsinline class="animation-video">
-                        <source src="images/daily-challenge.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+                <div class="s5-content">
+                    <p class="s5-intro-text">אצלנו בפלטפורמה תוכלו בשיח עם הילד לקבוע את האיזון הנכון</p>
+                    <div class="daily-challenge-card">
+                        <video autoplay loop muted playsinline class="animation-video">
+                            <source src="images/daily-challenge.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
                 </div>
             </div>
 
@@ -180,12 +179,9 @@
             </div>
         </div>
 
-        <!-- Screen 6 -->
         <div class="screen" id="screen6">
-            <!-- Reusable overlay -->
             <div class="screen-base-overlay"></div>
             
-            <!-- Reusable top section -->
             <div class="screen-top">
                 <div class="screen-header">
                     <img src="images/logo-joystie.png" alt="Joystie Logo" class="small-logo-img">
@@ -200,10 +196,9 @@
                 </div>
             </div>
 
-            <!-- Screen 6 specific main content -->
             <div class="screen-main">
                 <div class="s6-content">
-                    <p class="s6-intro-text">החופש הגדול מאחורינו! בוא נפתח את השנה בטוב!</p>
+                    <p class="s6-intro-text">החופש הגדול מאחורינו! בואו נפתח את השנה בטוב!</p>
                     <p class="s6-intro-text">הצטרפו לאתגר הקרוב בחופשת סוכות</p>
                     <h2 class="s6-main-headline">👇 השאירו פרטים 👇</h2>
                     
@@ -230,13 +225,18 @@
                 </div>
             </div>
 
-            <!-- Reusable footer -->
             <div class="screen-footer">
                 <button type="submit" form="registrationForm" class="screen-btn-next">שלח</button>
+                <div class="s6-contact-section">
+                    <p>צור קשר</p>
+                    <div class="s6-contact-links">
+                        <a href="https://www.linkedin.com/company/joistie/" target="_blank">LinkedIn</a>
+                        <a href="mailto:info@joystie.com">info@joystie.com</a>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Screen 7 -->
         <div class="screen" id="screen7">
             <div class="screen-base-overlay"></div>
             
@@ -255,33 +255,28 @@
             </div>
 
             <div class="screen-main">
-                <!-- New container for vertical layout -->
                 <div class="s7-content">
                     <h2 class="s7-final-headline">ממש בקרוב איתכם!</h2>
                     <div class="s7-carousel">
                         <div class="s7-carousel-track">
-                            <!-- Card 1 -->
                             <div class="fact-card">
                                 <div class="fact-card-content">
                                     <p class="fact-number">6.7</p>
                                     <p class="fact-text">גיל מתן טלפון חכם בישראל</p>
                                 </div>
                             </div>
-                            <!-- Card 2 -->
                             <div class="fact-card">
                                 <div class="fact-card-content">
                                     <p class="fact-number">43%</p>
                                     <p class="fact-text">מבני הנוער מעידים שהיו רוצים להגביל את זמן המסך שלהם, אך הם לא מצליחים</p>
                                 </div>
                             </div>
-                            <!-- Card 3 -->
                             <div class="fact-card">
                                 <div class="fact-card-content">
                                     <p class="fact-number">12.1</p>
                                     <p class="fact-text">שעות בממוצע ליום בילו בני הנוער בשנת 2023</p>
                                 </div>
                             </div>
-                            <!-- Card 4 -->
                             <div class="fact-card">
                                 <div class="fact-card-content">
                                     <p class="fact-text" style="font-weight: 700;">כשאנחנו משועממים, המוח שלנו מתעורר. שעמום אינו תקלה, אלא הזדמנות</p>
@@ -293,7 +288,6 @@
                 </div>
             </div>
 
-            <!-- Footer is now empty but kept for layout consistency -->
             <div class="screen-footer"></div>
         </div>
 
