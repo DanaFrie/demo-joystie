@@ -77,7 +77,8 @@ body {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    padding: 1rem 0;
+    /* MODIFIED: Added horizontal padding to create a "safe area" */
+    padding: 1rem;
 }
 
 .screen-footer {

@@ -13,10 +13,9 @@
 }
 
 .s3-piggy-bank-img {
-    width: 50%;
-    max-width: 219px;
+    /* MODIFIED: Made image size fluid to prevent overflow */
+    width: clamp(120px, 40vw, 180px);
     height: auto;
-    margin-top: 1rem;
 }
 
 .s3-intro-text, .s3-sub-text {

@@ -18,7 +18,8 @@
 
 .s4-intro-text, .s4-question {
     font-family: 'Varela Round', sans-serif;
-    font-size: clamp(0.9rem, 3.5vw, 1.2rem);
+    /* MODIFIED: Reduced the minimum font size for better wrapping on small screens */
+    font-size: clamp(0.85rem, 3.5vw, 1.1rem);
     color: #FFFCF8;
     line-height: 1.5;
 }
@@ -26,7 +27,7 @@
 .s4-main-headline {
     font-family: 'Rubik', sans-serif;
     font-weight: 600;
-    font-size: clamp(1.5rem, 5vw, 2rem);
+    font-size: clamp(1.4rem, 5vw, 1.8rem);
     color: #E6F19A;
     line-height: 1.4;
 }
@@ -97,10 +98,4 @@
     border: 2px solid #E6F19A;
     border-radius: 50%;
     cursor: pointer;
-}
-
-.s4-footer {
-    width: 100%;
-    display: flex;
-    justify-content: center;
 }
