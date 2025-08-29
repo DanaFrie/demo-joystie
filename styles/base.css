@@ -10,6 +10,12 @@
     box-sizing: border-box;
 }
 
+/* MODIFIED: Added responsive root font size */
+html {
+    /* This makes all REM units scale fluidly with the screen size */
+    font-size: clamp(0.9rem, 0.4vw + 0.8rem, 1rem);
+}
+
 body {
     font-family: 'Montserrat Alternates', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     direction: rtl;
@@ -45,7 +51,7 @@ body {
     z-index: 2;
 }
 
-/* --- NEW Unified Structure Rules --- */
+/* --- Unified Structure Rules --- */
 .screen-header-area {
     flex-shrink: 0;
     height: 20%;
@@ -82,7 +88,8 @@ body {
 
 /* --- Reusable Components --- */
 .small-logo-img {
-    width: 131px;
+    /* MODIFIED: Made logo width fluid */
+    width: clamp(110px, 30vw, 131px);
     height: auto;
 }
 
@@ -95,7 +102,8 @@ body {
 }
 
 .progress-segment {
-    width: 36px;
+    /* MODIFIED: Made segment width fluid */
+    width: clamp(28px, 8vw, 36px);
     height: 4px;
     background-color: rgba(255, 252, 248, 0.4);
     border-radius: 35px;
@@ -109,11 +117,15 @@ body {
 .screen-btn-next {
     width: 100%;
     max-width: 343px;
-    height: 50px;
+    /* MODIFIED: Replaced fixed height with padding for flexibility */
+    /* height: 50px; */ 
+    min-height: 50px;
+    padding: 0.9rem 1rem;
     background: #E6F19A;
     color: #282743;
     font-family: 'Varela Round', sans-serif;
-    font-size: 1.1rem;
+    /* MODIFIED: Made font size fluid */
+    font-size: clamp(1rem, 4vw, 1.1rem);
     border-radius: 8px;
     border: 1px solid #000000;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
