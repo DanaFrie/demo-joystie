@@ -129,28 +129,24 @@ function updateSliderVisuals(slider) {
 
     const thumbWidth = 28;
     const trackWidth = slider.offsetWidth;
+    // The raw percentage is still calculated LTR (0% at min, 100% at max)
     const percentage = (currentValue - min) / (max - min);
     
-    // --- START OF MODIFIED CODE ---
+    // --- START OF RTL MODIFICATIONS ---
 
+    // 1. Calculate the thumb's position from the RIGHT edge
     const thumbPosition = percentage * (trackWidth - thumbWidth);
     
-    // Set the style
-    valueElement.style.left = `${thumbPosition}px`;
-    
-    // Add logs for debugging
-    console.log({
-        sliderId: slider.id,
-        percentage: percentage.toFixed(2),
-        trackWidth: trackWidth,
-        thumbPosition: thumbPosition.toFixed(2),
-        finalCssLeft: valueElement.style.left
-    });
+    // 2. Set the 'right' property instead of 'left'
+    valueElement.style.right = `${thumbPosition}px`;
+    // We also need to clear any 'left' property that might remain
+    valueElement.style.left = 'auto';
 
-    const colorStop = `linear-gradient(to right, #E6F19A ${percentage * 100}%, rgba(0, 0, 0, 0.1) ${percentage * 100}%)`;
+    // 3. Draw the gradient from RIGHT to LEFT
+    const colorStop = `linear-gradient(to left, #E6F19A ${percentage * 100}%, rgba(0, 0, 0, 0.1) ${percentage * 100}%)`;
     slider.style.background = colorStop;
     
-    // --- END OF MODIFIED CODE ---
+    // --- END OF RTL MODIFICATIONS ---
 }
 
 function handleSliderDependency(changedSlider) {
