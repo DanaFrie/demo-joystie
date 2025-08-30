@@ -35,16 +35,15 @@
 /* Track that holds and moves all the cards */
 .s7-carousel-track {
     display: flex;
-    direction: ltr; /* <<< הוסף את השורה הזו */
-    /* This padding now correctly centers the first card on the LEFT */
-    padding-left: calc(50% - 140px); /* <<< שנה ל-padding-left */
+    direction: ltr; 
+    padding-left: calc(50% - 140px);
     transition: transform 0.4s ease-in-out;
-    padding-right: 0; /* Optional: reset right padding if needed */
+    padding-right: 0; 
 }
 
 /* Individual fact card styling */
 .fact-card {
-    flex: 0 0 280px; /* Give cards a fixed width */
+    flex: 0 0 280px;
     width: 280px;
     height: 350px;
     background: #FFFCF8;
