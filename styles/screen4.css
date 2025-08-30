@@ -43,11 +43,13 @@
     margin-top: 1.5rem;
 }
 
+/* In styles/screen4.css */
+
 .slider-value {
     position: absolute;
-    top: -25px; /* Position value above the slider track */
-    left: 50%; /* Will be updated by JS */
-    transform: translateX(-50%);
+    top: -25px;
+    left: 0; /* Let JavaScript control the 'left' property entirely */
+    /* transform: translateX(-50%); <-- REMOVE OR COMMENT OUT THIS LINE */
     background: #E6F19A;
     color: #282743;
     padding: 2px 8px;

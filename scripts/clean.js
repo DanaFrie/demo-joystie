@@ -131,16 +131,26 @@ function updateSliderVisuals(slider) {
     const trackWidth = slider.offsetWidth;
     const percentage = (currentValue - min) / (max - min);
     
+    // --- START OF MODIFIED CODE ---
 
     const thumbPosition = percentage * (trackWidth - thumbWidth);
+    
+    // Set the style
     valueElement.style.left = `${thumbPosition}px`;
     
-    valueElement.style.transform = `translateX(0)`; 
+    // Add logs for debugging
+    console.log({
+        sliderId: slider.id,
+        percentage: percentage.toFixed(2),
+        trackWidth: trackWidth,
+        thumbPosition: thumbPosition.toFixed(2),
+        finalCssLeft: valueElement.style.left
+    });
 
-    const colorStop = `linear-gradient(to left, #E6F19A ${percentage * 100}%, rgba(0, 0, 0, 0.1) ${percentage * 100}%)`;
-    
-
+    const colorStop = `linear-gradient(to right, #E6F19A ${percentage * 100}%, rgba(0, 0, 0, 0.1) ${percentage * 100}%)`;
     slider.style.background = colorStop;
+    
+    // --- END OF MODIFIED CODE ---
 }
 
 function handleSliderDependency(changedSlider) {
