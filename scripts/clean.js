@@ -137,7 +137,7 @@ function updateSliderVisuals(slider) {
     
     valueElement.style.transform = `translateX(0)`; 
 
-    const colorStop = `linear-gradient(to right, #E6F19A ${percentage * 100}%, rgba(0, 0, 0, 0.1) ${percentage * 100}%)`;
+    const colorStop = `linear-gradient(to left, #E6F19A ${percentage * 100}%, rgba(0, 0, 0, 0.1) ${percentage * 100}%)`;
     
 
     slider.style.background = colorStop;
