@@ -1,4 +1,4 @@
-// scripts/clean.js - FINAL POLISHED VERSION
+// scripts/clean.js
 
 // --- App State ---
 let currentScreen = 1;
@@ -130,10 +130,16 @@ function updateSliderVisuals(slider) {
     const thumbWidth = 28;
     const trackWidth = slider.offsetWidth;
     const percentage = (currentValue - min) / (max - min);
-    const thumbPosition = percentage * (trackWidth - thumbWidth) + (thumbWidth / 2);
+    
+
+    const thumbPosition = percentage * (trackWidth - thumbWidth);
     valueElement.style.left = `${thumbPosition}px`;
+    
+    valueElement.style.transform = `translateX(0)`; 
 
     const colorStop = `linear-gradient(to right, #E6F19A ${percentage * 100}%, rgba(0, 0, 0, 0.1) ${percentage * 100}%)`;
+    
+
     slider.style.background = colorStop;
 }
 
