@@ -149,22 +149,23 @@ function handleSliderDependency(changedSlider) {
     }
 }
 
-// --- Carousel (UPDATED for Forward-Only Swipe) ---
+// --- Carousel (UPDATED for Bidirectional Swipe) ---
 function setupCarousel() {
     const track = document.querySelector('.s7-carousel-track');
     if (!track) return;
 
     const cards = Array.from(track.children);
+    if (cards.length === 0) return; // Prevent errors if no cards
+    
     const cardWidth = cards[0].offsetWidth + 20; // Card width + margin
     let currentIndex = 0;
     let startX = 0;
     let currentTranslate = 0;
     let prevTranslate = 0;
 
-    const setCardPosition = () => {
-        currentTranslate = -currentIndex * cardWidth;
-        track.style.transform = `translateX(${currentTranslate}px)`;
-    };
+    // Set initial position
+    prevTranslate = -currentIndex * cardWidth;
+    track.style.transform = `translateX(${prevTranslate}px)`;
 
     const touchStart = (event) => {
         startX = event.touches[0].clientX;
@@ -180,9 +181,14 @@ function setupCarousel() {
 
     const touchEnd = () => {
         const movedBy = currentTranslate - prevTranslate;
-        // Only allow swiping left (forward)
+        
+        // Swipe left (forward)
         if (movedBy < -75 && currentIndex < cards.length - 1) {
             currentIndex++;
+        } 
+        // Swipe right (backward)
+        else if (movedBy > 75 && currentIndex > 0) {
+            currentIndex--;
         }
         
         prevTranslate = -currentIndex * cardWidth;
