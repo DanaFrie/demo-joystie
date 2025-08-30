@@ -10,9 +10,7 @@
     box-sizing: border-box;
 }
 
-/* MODIFIED: Added responsive root font size */
 html {
-    /* This makes all REM units scale fluidly with the screen size */
     font-size: clamp(0.9rem, 0.4vw + 0.8rem, 1rem);
 }
 
@@ -20,20 +18,25 @@ body {
     font-family: 'Montserrat Alternates', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     direction: rtl;
     background: #FFFCF8;
+    /* Ensure body itself doesn't have weird overflow issues on mobile */
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
 .app-container {
     width: 100%;
-    min-height: 100vh; /* השתמש ב-min-height במקום height */
-    min-height: 100dvh;
+    height: 100vh;
+    height: 100dvh;
     position: relative;
-    overflow-x: hidden; /* מונע גלילה הצידה באופן מוחלט */
+    overflow-x: hidden;
 }
 
 /* --- Main Screen Layout --- */
 .screen {
     width: 100%;
-    min-height: 100%; /* השתמש ב-min-height */
+    height: 100%; /* Use height instead of min-height for this structure */
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -42,8 +45,7 @@ body {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s ease-in-out;
-    overflow-y: auto; /* מאפשר גלילה למטה רק אם צריך */
-    overflow-x: hidden; /* מוודא שאין גלילה הצידה ברמת המסך */
+    overflow: hidden; /* Prevent the whole screen from scrolling */
 }
 
 .screen.active {
@@ -54,11 +56,14 @@ body {
 
 /* --- Unified Structure Rules --- */
 .screen-header-area {
-    flex-shrink: 0;
+    flex-shrink: 0; /* Header will not shrink */
     height: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 80px;
+    position: relative; /* For z-index stacking if needed */
+    z-index: 5;
 }
 
 .screen-base-overlay {
@@ -69,6 +74,8 @@ body {
     background-size: cover;
     background-position: center;
     padding-top: 5vh;
+    overflow-y: auto;   /* Allow ONLY this container to scroll */
+    min-height: 0;      /* Fix for flexbox overflow */
 }
 
 .screen-main {
@@ -88,7 +95,6 @@ body {
 
 /* --- Reusable Components --- */
 .small-logo-img {
-    /* MODIFIED: Made logo width fluid */
     width: clamp(110px, 30vw, 131px);
     height: auto;
 }
@@ -102,7 +108,6 @@ body {
 }
 
 .progress-segment {
-    /* MODIFIED: Made segment width fluid */
     width: clamp(28px, 8vw, 36px);
     height: 4px;
     background-color: rgba(255, 252, 248, 0.4);
@@ -117,14 +122,11 @@ body {
 .screen-btn-next {
     width: 100%;
     max-width: 343px;
-    /* MODIFIED: Replaced fixed height with padding for flexibility */
-    /* height: 50px; */ 
     min-height: 50px;
     padding: 0.9rem 1rem;
     background: #E6F19A;
     color: #282743;
     font-family: 'Varela Round', sans-serif;
-    /* MODIFIED: Made font size fluid */
     font-size: clamp(1rem, 4vw, 1.1rem);
     border-radius: 8px;
     border: 1px solid #000000;
