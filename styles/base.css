@@ -19,21 +19,21 @@ html {
 body {
     font-family: 'Montserrat Alternates', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     direction: rtl;
-    overflow: hidden;
     background: #FFFCF8;
 }
 
 .app-container {
     width: 100%;
-    height: 100vh;
-    height: 100dvh;
+    min-height: 100vh; /* השתמש ב-min-height במקום height */
+    min-height: 100dvh;
     position: relative;
+    overflow-x: hidden; /* מונע גלילה הצידה באופן מוחלט */
 }
 
 /* --- Main Screen Layout --- */
 .screen {
     width: 100%;
-    height: 100%;
+    min-height: 100%; /* השתמש ב-min-height */
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -42,7 +42,8 @@ body {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s ease-in-out;
-    overflow: hidden;
+    overflow-y: auto; /* מאפשר גלילה למטה רק אם צריך */
+    overflow-x: hidden; /* מוודא שאין גלילה הצידה ברמת המסך */
 }
 
 .screen.active {
@@ -76,8 +77,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
-    /* MODIFIED: Added horizontal padding to create a "safe area" */
     padding: 1rem;
 }
 
