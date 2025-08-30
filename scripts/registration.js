@@ -75,7 +75,7 @@ class RegistrationManager {
 
             // If we get here, the submission was successful on the server
             const result = await response.json();
-            console.log('✅ Registration successful:', result);
+            // console.log('✅ Registration successful:', result);
             this.showSuccess();
             
             // --- END OF MODIFIED CODE ---

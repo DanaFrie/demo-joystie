@@ -35,32 +35,33 @@ class EventTracker {
 
             const result = await response.json();
 
-            if (response.ok && result.success) {
-                console.log('📊 Screen 6 visit tracked successfully');
-            } else {
-                console.warn('⚠️ Screen 6 tracking failed:', result.error);
-            }
+            // if (response.ok && result.success) {
+            //     console.log('📊 Screen 6 visit tracked successfully');
+            // } else {
+            //     console.warn('⚠️ Screen 6 tracking failed:', result.error);
+            // }
 
         } catch (error) {
-            console.warn('⚠️ Screen 6 tracking error:', error.message);
+            
+            // console.warn('⚠️ Screen 6 tracking error:', error.message);
         }
     }
 
     // Disable tracking (for privacy/GDPR)
     disableTracking() {
         this.isTrackingEnabled = false;
-        console.log('📊 Screen 6 tracking disabled');
+        // console.log('📊 Screen 6 tracking disabled');
     }
 
     enableTracking() {
         this.isTrackingEnabled = true;
-        console.log('📊 Screen 6 tracking enabled');
+        // console.log('📊 Screen 6 tracking enabled');
     }
 
     // Reset tracking flag (for testing)
     resetTracking() {
         this.screen6Tracked = false;
-        console.log('📊 Screen 6 tracking reset');
+        // console.log('📊 Screen 6 tracking reset');
     }
 }
 
