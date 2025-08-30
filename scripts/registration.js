@@ -18,74 +18,77 @@ class RegistrationManager {
         }
     }
 
+
     async handleSubmit(e) {
         e.preventDefault();
         
-        // Get form data
         const formData = {
-            name: document.getElementById('name').value.trim(),
-            phone: document.getElementById('phone').value.trim(),
+            firstName: document.getElementById('firstName').value.trim(),
+            lastName: document.getElementById('lastName').value.trim(),
             email: document.getElementById('email').value.trim(),
-            timestamp: new Date().toLocaleString('he-IL', {
-                timeZone: 'Asia/Jerusalem'
-            })
+            phone: document.getElementById('phone').value.trim(),
+            timestamp: new Date().toLocaleString('he-IL', { timeZone: 'Asia/Jerusalem' })
         };
         
+        const fullName = `${formData.firstName} ${formData.lastName}`;
+
         // Validate
-        if (!formData.name || !formData.phone || !formData.email) {
+        if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone) {
             alert('אנא מלא את כל השדות');
             return;
         }
-
-        // Validate email
         if (!this.isValidEmail(formData.email)) {
             alert('אנא הכנס אימייל תקין');
             return;
         }
-
-        // Validate phone
         if (!this.isValidPhone(formData.phone)) {
             alert('אנא הכנס מספר טלפון תקין');
             return;
         }
         
-        // Show loading
         this.showLoading(true);
         
         try {
-            // Submit to API
+            // --- START OF MODIFIED CODE ---
+
+            // This is the REAL API call
             const response = await fetch('/api/submit', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify({
+                    name: fullName,
+                    email: formData.email,
+                    phone: formData.phone,
+                    timestamp: formData.timestamp
+                }),
             });
-            
-            const result = await response.json();
-            
-            if (response.ok && result.success) {
-                console.log('✅ Registration successful:', result);
-                
-                // Show success
-                this.showSuccess();
-                
-                // Move to next screen after delay
-                setTimeout(() => {
-                    if (window.nextScreen) {
-                        window.nextScreen();
-                    }
-                }, 1500);
-                
-            } else {
-                throw new Error(result.error || 'שגיאה לא ידועה');
+
+            // Check if the server responded with an error
+            if (!response.ok) {
+                // Get error details from the server's response
+                const errorResult = await response.json();
+                // Throw an error to be caught by the catch block
+                throw new Error(errorResult.error || 'Server responded with an error');
             }
+
+            // If we get here, the submission was successful on the server
+            const result = await response.json();
+            console.log('✅ Registration successful:', result);
+            this.showSuccess();
+            
+            // --- END OF MODIFIED CODE ---
+            
+            setTimeout(() => {
+                if (window.nextScreen) {
+                    window.nextScreen();
+                }
+            }, 1000);
             
         } catch (error) {
             console.error('❌ Registration error:', error);
             this.showError(`שגיאה בשליחה: ${error.message}`);
-        } finally {
-            this.showLoading(false);
         }
     }
 

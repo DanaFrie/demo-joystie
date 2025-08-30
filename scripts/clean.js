@@ -48,6 +48,7 @@ function nextScreen() {
     }
 }
 
+
 function moveToScreen(screenNumber) {
     if (screenNumber < 1 || screenNumber > totalScreens) return;
 
@@ -73,6 +74,12 @@ function moveToScreen(screenNumber) {
             if (video) {
                 video.currentTime = 0; // Rewind video to the start
                 video.play();
+            }
+        }
+        
+        if (nextScreenEl.id === 'screen6') {
+            if (window.eventTracker) {
+                window.eventTracker.trackScreen6Visit();
             }
         }
     }
