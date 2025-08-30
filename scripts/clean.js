@@ -125,28 +125,26 @@ function updateSliderVisuals(slider) {
     const min = parseFloat(slider.min);
     const max = parseFloat(slider.max);
     
-    valueElement.innerText = Math.round(currentValue);
+    // Check if this is the screenTime slider to format the text
+    if (slider.id === 'screenTime') {
+        // Display the value with one decimal place (e.g., "1.5")
+        valueElement.innerText = currentValue.toFixed(1);
+    } else {
+        // Otherwise, display a rounded number for pocket money
+        valueElement.innerText = Math.round(currentValue);
+    }
 
     const thumbWidth = 28;
     const trackWidth = slider.offsetWidth;
-    // The raw percentage is still calculated LTR (0% at min, 100% at max)
     const percentage = (currentValue - min) / (max - min);
     
-    // --- START OF RTL MODIFICATIONS ---
-
-    // 1. Calculate the thumb's position from the RIGHT edge
     const thumbPosition = percentage * (trackWidth - thumbWidth);
     
-    // 2. Set the 'right' property instead of 'left'
     valueElement.style.right = `${thumbPosition}px`;
-    // We also need to clear any 'left' property that might remain
     valueElement.style.left = 'auto';
 
-    // 3. Draw the gradient from RIGHT to LEFT
     const colorStop = `linear-gradient(to left, #E6F19A ${percentage * 100}%, rgba(0, 0, 0, 0.1) ${percentage * 100}%)`;
     slider.style.background = colorStop;
-    
-    // --- END OF RTL MODIFICATIONS ---
 }
 
 function handleSliderDependency(changedSlider) {
