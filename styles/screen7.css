@@ -28,6 +28,7 @@
 .s7-carousel {
     width: 100%;
    overflow: hidden;
+   touch-action: pan-y;
 }
 
 /* Track that holds and moves all the cards */
