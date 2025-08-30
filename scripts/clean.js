@@ -219,16 +219,16 @@ function setupCarousel() {
 }
 
 
-// --- Touch & Keyboard Support (UPDATED for Forward-Only) ---
 function setupTouchSupport() {
     let startX = 0;
     document.addEventListener('touchstart', e => startX = e.touches[0].clientX, { passive: true });
     document.addEventListener('touchend', e => {
         const diffX = startX - e.changedTouches[0].clientX;
-        // Only trigger nextScreen on swipe left
+        
+        // Check for a left swipe
         if (diffX > 50) {
-            // Don't advance screen if on the carousel screen
-            if (currentScreen !== 7) {
+            // MODIFIED: Only advance if not on screens 4, 6, or 7
+            if (currentScreen !== 4 && currentScreen !== 6 && currentScreen !== 7) {
                 nextScreen();
             }
         }
@@ -237,9 +237,10 @@ function setupTouchSupport() {
 
 function setupKeyboardSupport() {
     document.addEventListener('keydown', e => {
-        // Only allow forward navigation
+        // Check for forward navigation keys
         if (e.key === 'ArrowLeft' || e.key === ' ') {
-             if (currentScreen !== 7) {
+            // MODIFIED: Only advance if not on screens 4, 6, or 7
+            if (currentScreen !== 4 && currentScreen !== 6 && currentScreen !== 7) {
                 nextScreen();
             }
         }
