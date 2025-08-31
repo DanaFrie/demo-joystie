@@ -75,6 +75,7 @@ body {
     background-position: center;
     padding-top: 5vh;
     overflow-y: auto;   /* Allow ONLY this container to scroll */
+    overflow-x: hidden;
     min-height: 0;      /* Fix for flexbox overflow */
 }
 
