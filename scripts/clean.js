@@ -198,7 +198,7 @@ function setupCarousel() {
     if (cards.length === 0) return; // Prevent errors if no cards
     
     const cardWidth = cards[0].offsetWidth + 20; // Card width + margin
-    let currentIndex = 0;
+     let currentIndex = cards.length - 1; 
     let startX = 0;
     let currentTranslate = 0;
     let prevTranslate = 0;
