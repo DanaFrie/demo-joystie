@@ -18,6 +18,7 @@ body {
     font-family: 'Montserrat Alternates', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     direction: rtl;
     background: #FFFCF8;
+    /* Ensure body itself doesn't have weird overflow issues on mobile */
     position: fixed;
     width: 100%;
     height: 100%;
@@ -35,7 +36,7 @@ body {
 /* --- Main Screen Layout --- */
 .screen {
     width: 100%;
-    height: 100%;
+    height: 100%; /* Use height instead of min-height for this structure */
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -44,7 +45,7 @@ body {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s ease-in-out;
-    overflow: hidden;
+    overflow: hidden; /* Prevent the whole screen from scrolling */
 }
 
 .screen.active {
@@ -55,13 +56,13 @@ body {
 
 /* --- Unified Structure Rules --- */
 .screen-header-area {
-    flex-shrink: 0;
+    flex-shrink: 0; /* Header will not shrink */
     height: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 80px;
-    position: relative;
+    position: relative; /* For z-index stacking if needed */
     z-index: 5;
 }
 
@@ -73,9 +74,8 @@ body {
     background-size: cover;
     background-position: center;
     padding-top: 5vh;
-    overflow-y: auto;
-    min-height: 0;
-    position: relative; /* נוסף כדי למקם את האייקון המלווה */
+    overflow-y: auto;   /* Allow ONLY this container to scroll */
+    min-height: 0;      /* Fix for flexbox overflow */
 }
 
 .screen-main {
@@ -91,13 +91,7 @@ body {
     flex-shrink: 0;
     width: 100%;
     padding: 0 1.5rem 1.5rem;
-    /* MODIFIED: הפכנו את הפוטר למיכל Flexbox */
-    display: flex;
-    justify-content: space-between; /* דוחף את התוכן הראשי והאייקון לקצוות */
-    align-items: flex-end;      /* מיישר את שניהם לתחתית */
-    gap: 1rem;                  /* רווח קטן ביניהם */
 }
-
 
 /* --- Reusable Components --- */
 .small-logo-img {
@@ -142,44 +136,4 @@ body {
     justify-content: center;
     align-items: center;
     margin: 0 auto;
-}
-
-/* --- Accompanying Character Component --- */
-
-/* NEW: מיכל חדש עבור התוכן המרכזי בפוטר (כפתורים, לוגואים וכו') */
-.footer-main-content {
-    flex-grow: 1; /* מאפשר לו לתפוס את רוב המקום */
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* ממשיך למרכז את הכפתור והלוגואים */
-    gap: 2rem; /* שומר על רווח בין הכפתור ללוגואים */
-}
-
-/* ... (שאר הסגנונות כמו .small-logo-img נשארים זהים) ... */
-
-/* --- Accompanying Character Component (MODIFIED) --- */
-.accompanying-piggy {
-    /* REMOVED: אין יותר צורך במיקום אבסולוטי */
-    /* position: absolute; */
-    /* bottom: 20px; */
-    /* right: 20px; */
-
-    width: clamp(60px, 15vw, 85px);
-    height: auto;
-    flex-shrink: 0; /* מונע מהאייקון להתכווץ */
-
-    /* עדכון האנימציה כך שתתאים לזרימה החדשה */
-    animation: piggy-fade-in 0.8s ease-out 0.3s forwards;
-    opacity: 0;
-}
-
-@keyframes piggy-fade-in {
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
