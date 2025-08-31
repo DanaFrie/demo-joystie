@@ -117,6 +117,10 @@ function setupSliders() {
     });
 }
 
+/**
+ * מעדכן את המראה הוויזואלי של מחוון (slider).
+ * תפקיד הפונקציה הזו הוא קוסמטי בלבד ואין צורך לשנות אותה.
+ */
 function updateSliderVisuals(slider) {
     const valueElement = document.getElementById(slider.dataset.valueId);
     if (!valueElement) return;
@@ -125,18 +129,18 @@ function updateSliderVisuals(slider) {
     const min = parseFloat(slider.min);
     const max = parseFloat(slider.max);
     
-    // Check if this is the screenTime slider to format the text
+    // בודק אם זה המחוון של זמן המסך כדי לעצב את הטקסט
     if (slider.id === 'screenTime') {
-        // Display the value with one decimal place (e.g., "1.5")
+        // מציג את הערך עם ספרה אחת אחרי הנקודה (לדוגמה: "2.5")
         valueElement.innerText = currentValue.toFixed(1);
     } else {
-        // Otherwise, display a rounded number for pocket money
+        // אחרת, מציג מספר מעוגל עבור דמי הכיס
         valueElement.innerText = Math.round(currentValue);
     }
 
     const thumbWidth = 28;
     const trackWidth = slider.offsetWidth;
-    const percentage = (currentValue - min) / (max - min);
+    const percentage = (max - min) === 0 ? 0 : (currentValue - min) / (max - min);
     
     const thumbPosition = percentage * (trackWidth - thumbWidth);
     
@@ -147,21 +151,39 @@ function updateSliderVisuals(slider) {
     slider.style.background = colorStop;
 }
 
+
+/**
+ * מעדכן את המחוון התלוי בהתבסס על המחוון שהשתנה.
+ * משתמש בנוסחת "תשואה שולית פוחתת" (חזקה ושורש).
+ */
 function handleSliderDependency(changedSlider) {
-    
     const pocketMoneySlider = document.getElementById('pocketMoney');
     const screenTimeSlider = document.getElementById('screenTime');
     if (!pocketMoneySlider || !screenTimeSlider) return;
 
-    const changedPercentage = (changedSlider.value - changedSlider.min) / (changedSlider.max - changedSlider.min);
-    const inversePercentage = 1 - Math.pow(moneyPercentage, 2);
-
+    // --- לוגיקה חדשה ---
     if (changedSlider.id === 'pocketMoney') {
-        const newScreenTime = inversePercentage * (screenTimeSlider.max - screenTimeSlider.min);
+        // אם מזיזים את דמי הכיס, חשב את זמן המסך החדש
+        const moneyPercentage = (changedSlider.value - changedSlider.min) / (changedSlider.max - changedSlider.min);
+        
+        // הנוסחה: אחוז הזמן = 1 פחות (אחוז הכסף בריבוע)
+        const newScreenTimePercentage = 1 - Math.pow(moneyPercentage, 2);
+        
+        const newScreenTime = newScreenTimePercentage * (screenTimeSlider.max - screenTimeSlider.min) + parseFloat(screenTimeSlider.min);
+        
         screenTimeSlider.value = newScreenTime;
         updateSliderVisuals(screenTimeSlider);
+
     } else if (changedSlider.id === 'screenTime') {
-        const newPocketMoney = inversePercentage * (pocketMoneySlider.max - pocketMoneySlider.min);
+        // אם מזיזים את זמן המסך, חשב את דמי הכיס החדשים
+        const screenTimePercentage = (changedSlider.value - changedSlider.min) / (changedSlider.max - changedSlider.min);
+
+        // הנוסחה ההפוכה: אחוז הכסף = שורש של (1 פחות אחוז הזמן)
+        const valueForSqrt = 1 - screenTimePercentage;
+        const newMoneyPercentage = Math.sqrt(Math.max(0, valueForSqrt)); // Math.max מונע שורש למספר שלילי
+        
+        const newPocketMoney = newMoneyPercentage * (pocketMoneySlider.max - pocketMoneySlider.min) + parseFloat(pocketMoneySlider.min);
+
         pocketMoneySlider.value = newPocketMoney;
         updateSliderVisuals(pocketMoneySlider);
     }
