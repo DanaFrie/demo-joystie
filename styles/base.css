@@ -91,7 +91,13 @@ body {
     flex-shrink: 0;
     width: 100%;
     padding: 0 1.5rem 1.5rem;
+    /* MODIFIED: הפכנו את הפוטר למיכל Flexbox */
+    display: flex;
+    justify-content: space-between; /* דוחף את התוכן הראשי והאייקון לקצוות */
+    align-items: flex-end;      /* מיישר את שניהם לתחתית */
+    gap: 1rem;                  /* רווח קטן ביניהם */
 }
+
 
 /* --- Reusable Components --- */
 .small-logo-img {
@@ -139,13 +145,30 @@ body {
 }
 
 /* --- Accompanying Character Component --- */
+
+/* NEW: מיכל חדש עבור התוכן המרכזי בפוטר (כפתורים, לוגואים וכו') */
+.footer-main-content {
+    flex-grow: 1; /* מאפשר לו לתפוס את רוב המקום */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* ממשיך למרכז את הכפתור והלוגואים */
+    gap: 2rem; /* שומר על רווח בין הכפתור ללוגואים */
+}
+
+/* ... (שאר הסגנונות כמו .small-logo-img נשארים זהים) ... */
+
+/* --- Accompanying Character Component (MODIFIED) --- */
 .accompanying-piggy {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
+    /* REMOVED: אין יותר צורך במיקום אבסולוטי */
+    /* position: absolute; */
+    /* bottom: 20px; */
+    /* right: 20px; */
+
     width: clamp(60px, 15vw, 85px);
     height: auto;
-    z-index: 10;
+    flex-shrink: 0; /* מונע מהאייקון להתכווץ */
+
+    /* עדכון האנימציה כך שתתאים לזרימה החדשה */
     animation: piggy-fade-in 0.8s ease-out 0.3s forwards;
     opacity: 0;
 }
