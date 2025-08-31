@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     startAutoTransition();
     setupTouchSupport();
     setupKeyboardSupport();
-    initializeControls(); 
+    setupSliders(); 
     setupCarousel();
     
     if (window.registrationManager) {
@@ -104,76 +104,68 @@ function updateProgressBar(screenIndex) {
     }
 }
 
-// --- Control Initialization ---
-
-function initializeControls() {
-    const controls = document.querySelectorAll('.interactive-slider');
-    controls.forEach(control => {
-        updateControlUI(control); // קובע את המראה הראשוני
-        control.addEventListener('input', (event) => {
-            const activeControl = event.target;
-            updateControlUI(activeControl);
-            syncControls(activeControl);
+// --- Sliders ---
+function setupSliders() {
+    const sliders = document.querySelectorAll('.interactive-slider');
+    sliders.forEach(slider => {
+        updateSliderVisuals(slider);
+        slider.addEventListener('input', (event) => {
+            const changedSlider = event.target;
+            updateSliderVisuals(changedSlider);
+            handleSliderDependency(changedSlider);
         });
     });
 }
 
-/**
- * מעדכן את המראה הוויזואלי של רכיב שליטה בודד.
- * מזיז את תצוגת הערך ומעדכן את צבע הרקע של המסילה.
- * @param {HTMLElement} control - רכיב השליטה שיש לעדכן.
- */
-function updateControlUI(control) {
-    const displayEl = document.getElementById(control.dataset.valueId);
-    if (!displayEl) return;
+function updateSliderVisuals(slider) {
+    const valueElement = document.getElementById(slider.dataset.valueId);
+    if (!valueElement) return;
 
-    const val = parseFloat(control.value);
-    const min = parseFloat(control.min);
-    const max = parseFloat(control.max);
+    const currentValue = parseFloat(slider.value);
+    const min = parseFloat(slider.min);
+    const max = parseFloat(slider.max);
     
-    if (control.dataset.format === 'decimal') {
-        displayEl.innerText = val.toFixed(1);
+    // Check if this is the screenTime slider to format the text
+    if (slider.id === 'screenTime') {
+        // Display the value with one decimal place (e.g., "1.5")
+        valueElement.innerText = currentValue.toFixed(1);
     } else {
-        displayEl.innerText = Math.round(val);
+        // Otherwise, display a rounded number for pocket money
+        valueElement.innerText = Math.round(currentValue);
     }
-    
+
     const thumbWidth = 28;
-    const trackWidth = control.offsetWidth;
-    const percentage = (max - min) === 0 ? 0 : (val - min) / (max - min);
+    const trackWidth = slider.offsetWidth;
+    const percentage = (currentValue - min) / (max - min);
     
     const thumbPosition = percentage * (trackWidth - thumbWidth);
-    displayEl.style.right = `${thumbPosition}px`;
-    displayEl.style.left = 'auto';
+    
+    valueElement.style.right = `${thumbPosition}px`;
+    valueElement.style.left = 'auto';
 
     const colorStop = `linear-gradient(to left, #E6F19A ${percentage * 100}%, rgba(0, 0, 0, 0.1) ${percentage * 100}%)`;
-    control.style.background = colorStop;
+    slider.style.background = colorStop;
 }
 
-/**
- * מסנכרן את הערך של רכיב שליטה אחד בהתבסס על השינוי באחר,
- * תוך שימוש בנוסחת "תשואה פוחתת" (חזקה ריבועית).
- * @param {HTMLElement} activeControl - הרכיב שהמשתמש שינה כרגע.
- */
-function syncControls(activeControl) {
-  // יש לוודא שה-IDs ב-HTML תואמים
-  const controlA = document.getElementById('controlA');
-  const controlB = document.getElementById('controlB');
+function handleSliderDependency(changedSlider) {
+    
+    const pocketMoneySlider = document.getElementById('pocketMoney');
+    const screenTimeSlider = document.getElementById('screenTime');
+    if (!pocketMoneySlider || !screenTimeSlider) return;
 
-  if (!controlA || !controlB) return;
+    const changedPercentage = (changedSlider.value - changedSlider.min) / (changedSlider.max - changedSlider.min);
+    const inversePercentage = 1 - Math.pow(moneyPercentage, 2);
 
-  const normalizedValue = (activeControl.value - activeControl.min) / (activeControl.max - activeControl.min);
-
-  const inverseValue = 1 - Math.pow(normalizedValue, 2);
-
-  const targetControl = (activeControl.id === 'controlA') ? controlB : controlA;
-  
-  const newTargetValue = inverseValue * (targetControl.max - targetControl.min) + targetControl.min;
-
-  targetControl.value = newTargetValue;
-
-  updateControlUI(targetControl);
+    if (changedSlider.id === 'pocketMoney') {
+        const newScreenTime = inversePercentage * (screenTimeSlider.max - screenTimeSlider.min);
+        screenTimeSlider.value = newScreenTime;
+        updateSliderVisuals(screenTimeSlider);
+    } else if (changedSlider.id === 'screenTime') {
+        const newPocketMoney = inversePercentage * (pocketMoneySlider.max - pocketMoneySlider.min);
+        pocketMoneySlider.value = newPocketMoney;
+        updateSliderVisuals(pocketMoneySlider);
+    }
 }
-
 
 // --- Carousel (UPDATED for Bidirectional Swipe) ---
 function setupCarousel() {
