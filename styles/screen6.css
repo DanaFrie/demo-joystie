@@ -98,18 +98,12 @@
 
 .s6-phone-mockup {
     max-width: 250px;
-    /* Set a max-height to control how much is shown */
-    max-height: 400px; 
     border-radius: 30px;
     border: 6px solid #F0ECE4;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     background: #F0ECE4;
     position: relative;
-
-    /* This is the magic part that creates the fade effect */
-    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
 }
 
 .s6-phone-mockup img {
@@ -125,24 +119,21 @@
     max-width: 343px;
     margin: 2rem auto 0;
     padding-top: 1.5rem;
-    border-top: 1px solid rgba(255, 252, 248, 0.3); /* Lighter border for dark BG */
-    text-align: center;
-}
-
-.s6-footer-contact h4 {
-    margin-bottom: 1rem;
-    color: rgba(255, 252, 248, 0.7); /* Softer white color */
-    font-weight: 600;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.contact-links {
+    border-top: 1px solid rgba(255, 252, 248, 0.3);
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+}
+
+.s6-footer-contact .s6-intro-text {
+    color: rgba(255, 252, 248, 0.7);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0;
+    line-height: 1.2;
 }
 
 .contact-link-item {
@@ -150,7 +141,7 @@
     align-items: center;
     gap: 10px;
     text-decoration: none;
-    color: #FFFCF8; /* Main white color */
+    color: #FFFCF8;
     font-family: 'Varela Round', sans-serif;
     font-size: clamp(0.9rem, 2.5vw, 1rem);
     transition: opacity 0.2s ease;
@@ -166,10 +157,8 @@
     object-fit: contain;
 }
 
-/* Style for the "Copied!" feedback text */
 .contact-link-item:active span,
 .contact-link-item:focus span {
-    /* Changes text color to your brand's accent when copying */
     color: #E6F19A; 
     font-weight: bold;
     transition: color 0.1s ease-in-out;
