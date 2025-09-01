@@ -130,11 +130,45 @@ body {
     font-family: 'Varela Round', sans-serif;
     font-size: clamp(1rem, 4vw, 1.1rem);
     border-radius: 8px;
-    border: 1px solid #000000;
+    border: none;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 0 auto;
+    gap: 15px;               
+}
+
+
+.swipe-arrows {
+    display: flex;
+    align-items: center;
+    gap: 5px; 
+}
+
+
+.swipe-arrow {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-style: solid;
+    border-width: 0 2px 2px 0;
+    transform: rotate(135deg);
+}
+
+
+/* Arrow 1 (Right-most, darkest) */
+.swipe-arrow:nth-child(1) {
+    border-color: #717D7B;
+}
+
+/* Arrow 2 (Middle) */
+.swipe-arrow:nth-child(2) {
+    border-color: #9FA8A8;
+}
+
+/* Arrow 3 (Left-most, lightest) */
+.swipe-arrow:nth-child(3) {
+    border-color: #BDC3C2; /* A slightly lighter shade for better effect */
 }
