@@ -79,28 +79,6 @@
     border-color: #E6F19A;
 }
 
-.s6-contact-logos {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2.5rem;
-    margin-top: 2rem;
-}
-
-.contact-logo {
-    height: 32px;
-    width: auto;
-    transition: transform 0.2s ease;
-}
-
-.s6-contact-logos a:hover .contact-logo {
-    transform: scale(1.1);
-}
-
-.contact-logo.joystie-logo {
-    height: 38px;
-}
-
 .s6-app-preview {
     width: 100%;
     display: flex;
@@ -113,7 +91,7 @@
 .s6-preview-headline {
     font-family: 'Rubik', sans-serif;
     font-size: clamp(1.4rem, 5vw, 1.6rem);
-    color: #282743;
+    color: #FFFCF8;
     font-weight: 600;
     text-align: center;
 }
@@ -132,4 +110,52 @@
     width: 100%;
     height: auto;
     display: block;
+}
+
+/* --- Screen 6: Modern Contact Footer --- */
+
+.s6-footer-contact {
+    width: 100%;
+    max-width: 343px;
+    margin: 2rem auto 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 252, 248, 0.3); /* Lighter border for dark BG */
+    text-align: center;
+}
+
+.s6-footer-contact h4 {
+    margin-bottom: 1rem;
+    color: rgba(255, 252, 248, 0.7); /* Softer white color */
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.contact-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.contact-link-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #FFFCF8; /* Main white color */
+    font-family: 'Varela Round', sans-serif;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    transition: opacity 0.2s ease;
+}
+
+.contact-link-item:hover {
+    opacity: 0.8;
+}
+
+.contact-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
 }
