@@ -1,12 +1,9 @@
-/* styles/screen6.css */
-
 #screen6 {
     background-image: url('../images/bg.png');
     background-size: cover;
     background-position: center;
 }
 
-/* Main content container */
 .s6-content {
     display: flex;
     flex-direction: column;
@@ -17,7 +14,6 @@
     max-width: 345px;
 }
 
-/* --- Text Styling --- */
 .s6-intro-text {
     font-family: 'Varela Round', sans-serif;
     font-size: clamp(1rem, 4vw, 1.5rem);
@@ -34,7 +30,6 @@
     margin-bottom: 1rem;
 }
 
-/* --- Form Styling --- */
 .s6-form {
     width: 100%;
     display: flex;
@@ -69,7 +64,6 @@
     border: 1px solid #EDF1F3;
     box-shadow: 0px 1px 2px rgba(228, 229, 231, 0.24);
     border-radius: 10px;
-    
     font-family: 'Varela', sans-serif;
     font-size: 1rem;
     color: #1A1C1E;
@@ -85,27 +79,26 @@
     border-color: #E6F19A;
 }
 
-/* --- Contact Logos Styling --- */
 .s6-contact-logos {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 2.5rem; /* Space between logos */
+    gap: 2.5rem;
     margin-top: 2rem;
 }
 
 .contact-logo {
-    height: 32px; /* Unified height for social logos */
+    height: 32px;
     width: auto;
     transition: transform 0.2s ease;
 }
 
 .s6-contact-logos a:hover .contact-logo {
-    transform: scale(1.1); /* Slight zoom effect on hover */
+    transform: scale(1.1);
 }
 
 .contact-logo.joystie-logo {
-    height: 38px; /* Making the main logo slightly larger */
+    height: 38px;
 }
 
 .s6-app-preview {
@@ -113,8 +106,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;       /* Space between headline and image */
-    margin-bottom: 2rem; /* Space before the form headline */
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
 
 .s6-preview-headline {
@@ -128,17 +121,15 @@
 .s6-phone-mockup {
     max-width: 250px;
     border-radius: 30px;
-    /* Lighter border color, closer to your background or a very light gray */
-    border: 6px solid #F0ECE4; /* A soft, off-white/light beige */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Softer, less prominent shadow */
+    border: 6px solid #F0ECE4;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    background: #F0ECE4; /* Match the background of the border */
-    position: relative; /* Needed for any internal elements like a notch */
+    background: #F0ECE4;
+    position: relative;
 }
 
-/* Styles the actual screenshot image */
 .s6-phone-mockup img {
     width: 100%;
     height: auto;
-    display: block; /* Removes any extra space below the image */
+    display: block;
 }
