@@ -125,14 +125,15 @@
     text-align: center;
 }
 
-/* Creates the phone frame effect */
 .s6-phone-mockup {
-    max-width: 250px; /* Adjust size as needed */
-    border-radius: 30px; /* Rounded corners of a phone */
-    border: 8px solid #282743; /* The phone's bezel/frame */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Give it depth */
-    overflow: hidden; /* Ensures the image corners are clipped */
-    background: #282743;
+    max-width: 250px;
+    border-radius: 30px;
+    /* Lighter border color, closer to your background or a very light gray */
+    border: 6px solid #F0ECE4; /* A soft, off-white/light beige */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Softer, less prominent shadow */
+    overflow: hidden;
+    background: #F0ECE4; /* Match the background of the border */
+    position: relative; /* Needed for any internal elements like a notch */
 }
 
 /* Styles the actual screenshot image */
