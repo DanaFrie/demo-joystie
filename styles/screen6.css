@@ -98,12 +98,17 @@
 
 .s6-phone-mockup {
     max-width: 250px;
+    max-height: 400px; /* Controls how much of the image is shown */
     border-radius: 30px;
     border: 6px solid #F0ECE4;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     background: #F0ECE4;
     position: relative;
+
+    /* The fade-out effect */
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
 }
 
 .s6-phone-mockup img {
