@@ -107,3 +107,37 @@
 .contact-logo.joystie-logo {
     height: 38px; /* Making the main logo slightly larger */
 }
+
+.s6-app-preview {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;       /* Space between headline and image */
+    margin-bottom: 2rem; /* Space before the form headline */
+}
+
+.s6-preview-headline {
+    font-family: 'Rubik', sans-serif;
+    font-size: clamp(1.4rem, 5vw, 1.6rem);
+    color: #282743;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Creates the phone frame effect */
+.s6-phone-mockup {
+    max-width: 250px; /* Adjust size as needed */
+    border-radius: 30px; /* Rounded corners of a phone */
+    border: 8px solid #282743; /* The phone's bezel/frame */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Give it depth */
+    overflow: hidden; /* Ensures the image corners are clipped */
+    background: #282743;
+}
+
+/* Styles the actual screenshot image */
+.s6-phone-mockup img {
+    width: 100%;
+    height: auto;
+    display: block; /* Removes any extra space below the image */
+}
