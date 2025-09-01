@@ -270,6 +270,35 @@ function setupKeyboardSupport() {
     });
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    const emailLink = document.getElementById('copyEmailLink');
+    
+    if (emailLink) {
+        const emailSpan = emailLink.querySelector('span');
+        const emailAddress = emailSpan.dataset.email;
+        const originalText = emailSpan.textContent;
+
+        emailLink.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevents the link from jumping to the top of the page
+
+            // Use the modern Clipboard API
+            navigator.clipboard.writeText(emailAddress).then(() => {
+                // --- Provide user feedback on success ---
+                emailSpan.textContent = 'Copied!';
+                
+                // Revert the text back after 2 seconds
+                setTimeout(() => {
+                    emailSpan.textContent = originalText;
+                }, 2000);
+
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+                // You could show an error message to the user here if needed
+            });
+        });
+    }
+});
+
 // --- Global Functions ---
 window.nextScreen = nextScreen;
 window.moveToScreen = moveToScreen;

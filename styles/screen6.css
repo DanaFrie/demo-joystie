@@ -159,3 +159,12 @@
     height: 24px;
     object-fit: contain;
 }
+
+/* Style for the "Copied!" feedback text */
+.contact-link-item:active span,
+.contact-link-item:focus span {
+    /* Changes text color to your brand's accent when copying */
+    color: #E6F19A; 
+    font-weight: bold;
+    transition: color 0.1s ease-in-out;
+}
