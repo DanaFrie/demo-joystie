@@ -98,12 +98,18 @@
 
 .s6-phone-mockup {
     max-width: 250px;
+    /* Set a max-height to control how much is shown */
+    max-height: 400px; 
     border-radius: 30px;
     border: 6px solid #F0ECE4;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     background: #F0ECE4;
     position: relative;
+
+    /* This is the magic part that creates the fade effect */
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
 }
 
 .s6-phone-mockup img {

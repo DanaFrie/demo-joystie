@@ -284,12 +284,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // Use the modern Clipboard API
             navigator.clipboard.writeText(emailAddress).then(() => {
                 // --- Provide user feedback on success ---
-                emailSpan.textContent = 'Copied!';
-                
+                emailSpan.textContent = 'הועתק!';
+
                 // Revert the text back after 2 seconds
                 setTimeout(() => {
                     emailSpan.textContent = originalText;
-                }, 2000);
+                }, 1300);
 
             }).catch(err => {
                 console.error('Failed to copy text: ', err);
