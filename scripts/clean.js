@@ -112,44 +112,44 @@ function setupSliders() {
         slider.addEventListener('input', (event) => {
             const changedSlider = event.target;
             updateSliderVisuals(changedSlider);
-            handleSliderDependency(changedSlider);
+            // handleSliderDependency(changedSlider);
         });
     });
 }
 
-/**
- * מעדכן את המראה הוויזואלי של מחוון (slider).
- * תפקיד הפונקציה הזו הוא קוסמטי בלבד ואין צורך לשנות אותה.
- */
-function updateSliderVisuals(slider) {
-    const valueElement = document.getElementById(slider.dataset.valueId);
-    if (!valueElement) return;
+// /**
+//  * מעדכן את המראה הוויזואלי של מחוון (slider).
+//  * תפקיד הפונקציה הזו הוא קוסמטי בלבד ואין צורך לשנות אותה.
+//  */
+// function updateSliderVisuals(slider) {
+//     const valueElement = document.getElementById(slider.dataset.valueId);
+//     if (!valueElement) return;
 
-    const currentValue = parseFloat(slider.value);
-    const min = parseFloat(slider.min);
-    const max = parseFloat(slider.max);
+//     const currentValue = parseFloat(slider.value);
+//     const min = parseFloat(slider.min);
+//     const max = parseFloat(slider.max);
     
-    // בודק אם זה המחוון של זמן המסך כדי לעצב את הטקסט
-    if (slider.id === 'screenTime') {
-        // מציג את הערך עם ספרה אחת אחרי הנקודה (לדוגמה: "2.5")
-        valueElement.innerText = currentValue.toFixed(1);
-    } else {
-        // אחרת, מציג מספר מעוגל עבור דמי הכיס
-        valueElement.innerText = Math.round(currentValue);
-    }
+//     // בודק אם זה המחוון של זמן המסך כדי לעצב את הטקסט
+//     if (slider.id === 'screenTime') {
+//         // מציג את הערך עם ספרה אחת אחרי הנקודה (לדוגמה: "2.5")
+//         valueElement.innerText = currentValue.toFixed(1);
+//     } else {
+//         // אחרת, מציג מספר מעוגל עבור דמי הכיס
+//         valueElement.innerText = Math.round(currentValue);
+//     }
 
-    const thumbWidth = 28;
-    const trackWidth = slider.offsetWidth;
-    const percentage = (max - min) === 0 ? 0 : (currentValue - min) / (max - min);
+//     const thumbWidth = 28;
+//     const trackWidth = slider.offsetWidth;
+//     const percentage = (max - min) === 0 ? 0 : (currentValue - min) / (max - min);
     
-    const thumbPosition = percentage * (trackWidth - thumbWidth);
+//     const thumbPosition = percentage * (trackWidth - thumbWidth);
     
-    valueElement.style.right = `${thumbPosition}px`;
-    valueElement.style.left = 'auto';
+//     valueElement.style.right = `${thumbPosition}px`;
+//     valueElement.style.left = 'auto';
 
-    const colorStop = `linear-gradient(to left, #E6F19A ${percentage * 100}%, rgba(0, 0, 0, 0.1) ${percentage * 100}%)`;
-    slider.style.background = colorStop;
-}
+//     const colorStop = `linear-gradient(to left, #E6F19A ${percentage * 100}%, rgba(0, 0, 0, 0.1) ${percentage * 100}%)`;
+//     slider.style.background = colorStop;
+// }
 
 
 /**
