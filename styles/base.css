@@ -57,8 +57,12 @@ body {
 /* --- Unified Structure Rules --- */
 .screen-header-area {
     flex-shrink: 0;
-    /* height: 20%; */ /* <-- REMOVE this line */
-    padding: 2vh 0;    /* <-- ADD this for some vertical spacing */
+    /* REMOVE the fixed height */
+    /* height: 20%; */ 
+    
+    /* ADD padding to create a smaller frame around the logo */
+    padding: 2vh 0; 
+    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -74,10 +78,10 @@ body {
     background-image: url('../images/base-overlay.png');
     background-size: cover;
     background-position: center;
-    padding-top: 2vh; /* <-- REDUCE this value (e.g., from 5vh to 2vh) */
-    overflow-y: auto;
+    padding-top: 5vh;
+    overflow-y: auto;   /* Allow ONLY this container to scroll */
     overflow-x: hidden;
-    min-height: 0;
+    min-height: 0;      /* Fix for flexbox overflow */
 }
 
 .screen-main {
