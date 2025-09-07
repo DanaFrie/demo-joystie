@@ -25,30 +25,17 @@
 .daily-challenge-card {
     width: 100%;
     max-width: 330px;
-    
-    /* These define the card's tall, vertical shape */
-    height: 60vh; 
+    height: 60vh;
     max-height: 484px;
-
-    /* KEY CHANGE: Remove the green-yellow background */
-    background: black; 
-    
+    background: #E6F19A;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 18px;
-    overflow: hidden;
-
-    /* Use flexbox to perfectly center the video inside */
     display: flex;
-    justify-content: center;
-    align-items: center;
+    overflow: hidden;
 }
 
 .animation-video {
-    /* Let the video scale naturally within the flex container */
-    max-width: 100%;
-    max-height: 100%;
-    
-    /* Remove any fixed width/height to prevent stretching */
-    width: auto;
-    height: auto;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
