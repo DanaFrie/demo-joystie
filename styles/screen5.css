@@ -25,17 +25,30 @@
 .daily-challenge-card {
     width: 100%;
     max-width: 330px;
-    height: 60vh;
-    max-height: 484px;
-    background: #E6F19A;
+    
+    /* REMOVE fixed height */
+    /* height: 60vh; */ 
+    /* max-height: 484px; */ /* Also remove this or adjust it to be dynamic */
+    
+    /* Use padding-bottom hack for 16:9 aspect ratio */
+    position: relative; /* Needed for absolute positioning of video */
+    padding-bottom: 56.25%; /* For 16:9 aspect ratio (9 / 16 = 0.5625) */
+    height: 0; /* Important to collapse height and let padding define it */
+
+    background: none; /* Ensure no background color shows through */
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 18px;
-    display: flex;
-    overflow: hidden;
+    overflow: hidden; /* Keep the rounded corners on the video */
+    display: block; /* Change to block as flex isn't needed here anymore */
 }
 
 .animation-video {
+    position: absolute; /* Position video absolutely within its parent */
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover; /* This will ensure the video fills the absolute container */
+    /* Ensure no background on the video itself */
+    background: black; 
 }
