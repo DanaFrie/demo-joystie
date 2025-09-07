@@ -61,7 +61,7 @@ body {
     /* height: 20%; */ 
     
     /* ADD padding to create a smaller frame around the logo */
-    padding: 0.5vh 0; 
+    padding: 0.5vh 0.5vh; 
     
     display: flex;
     justify-content: center;
