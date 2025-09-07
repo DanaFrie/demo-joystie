@@ -56,13 +56,14 @@ body {
 
 /* --- Unified Structure Rules --- */
 .screen-header-area {
-    flex-shrink: 0; /* Header will not shrink */
-    height: 20%;
+    flex-shrink: 0;
+    /* height: 20%; */ /* <-- REMOVE this line */
+    padding: 2vh 0;    /* <-- ADD this for some vertical spacing */
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 80px;
-    position: relative; /* For z-index stacking if needed */
+    position: relative;
     z-index: 5;
 }
 
@@ -73,10 +74,10 @@ body {
     background-image: url('../images/base-overlay.png');
     background-size: cover;
     background-position: center;
-    padding-top: 5vh;
-    overflow-y: auto;   /* Allow ONLY this container to scroll */
+    padding-top: 2vh; /* <-- REDUCE this value (e.g., from 5vh to 2vh) */
+    overflow-y: auto;
     overflow-x: hidden;
-    min-height: 0;      /* Fix for flexbox overflow */
+    min-height: 0;
 }
 
 .screen-main {
