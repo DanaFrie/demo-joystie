@@ -117,77 +117,77 @@ function setupSliders() {
     });
 }
 
-// /**
-//  * מעדכן את המראה הוויזואלי של מחוון (slider).
-//  * תפקיד הפונקציה הזו הוא קוסמטי בלבד ואין צורך לשנות אותה.
-//  */
-// function updateSliderVisuals(slider) {
-//     const valueElement = document.getElementById(slider.dataset.valueId);
-//     if (!valueElement) return;
-
-//     const currentValue = parseFloat(slider.value);
-//     const min = parseFloat(slider.min);
-//     const max = parseFloat(slider.max);
-    
-//     // בודק אם זה המחוון של זמן המסך כדי לעצב את הטקסט
-//     if (slider.id === 'screenTime') {
-//         // מציג את הערך עם ספרה אחת אחרי הנקודה (לדוגמה: "2.5")
-//         valueElement.innerText = currentValue.toFixed(1);
-//     } else {
-//         // אחרת, מציג מספר מעוגל עבור דמי הכיס
-//         valueElement.innerText = Math.round(currentValue);
-//     }
-
-//     const thumbWidth = 28;
-//     const trackWidth = slider.offsetWidth;
-//     const percentage = (max - min) === 0 ? 0 : (currentValue - min) / (max - min);
-    
-//     const thumbPosition = percentage * (trackWidth - thumbWidth);
-    
-//     valueElement.style.right = `${thumbPosition}px`;
-//     valueElement.style.left = 'auto';
-
-//     const colorStop = `linear-gradient(to left, #E6F19A ${percentage * 100}%, rgba(0, 0, 0, 0.1) ${percentage * 100}%)`;
-//     slider.style.background = colorStop;
-// }
-
-
 /**
- * מעדכן את המחוון התלוי בהתבסס על המחוון שהשתנה.
- * משתמש בנוסחת "תשואה שולית פוחתת" (חזקה ושורש).
+ * מעדכן את המראה הוויזואלי של מחוון (slider).
+ * תפקיד הפונקציה הזו הוא קוסמטי בלבד ואין צורך לשנות אותה.
  */
-function handleSliderDependency(changedSlider) {
-    const pocketMoneySlider = document.getElementById('pocketMoney');
-    const screenTimeSlider = document.getElementById('screenTime');
-    if (!pocketMoneySlider || !screenTimeSlider) return;
+function updateSliderVisuals(slider) {
+    const valueElement = document.getElementById(slider.dataset.valueId);
+    if (!valueElement) return;
 
-    // --- לוגיקה חדשה ---
-    if (changedSlider.id === 'pocketMoney') {
-        // אם מזיזים את דמי הכיס, חשב את זמן המסך החדש
-        const moneyPercentage = (changedSlider.value - changedSlider.min) / (changedSlider.max - changedSlider.min);
-        
-        // הנוסחה: אחוז הזמן = 1 פחות (אחוז הכסף בריבוע)
-        const newScreenTimePercentage = 1 - Math.pow(moneyPercentage, 2);
-        
-        const newScreenTime = newScreenTimePercentage * (screenTimeSlider.max - screenTimeSlider.min) + parseFloat(screenTimeSlider.min);
-        
-        screenTimeSlider.value = newScreenTime;
-        updateSliderVisuals(screenTimeSlider);
-
-    } else if (changedSlider.id === 'screenTime') {
-        // אם מזיזים את זמן המסך, חשב את דמי הכיס החדשים
-        const screenTimePercentage = (changedSlider.value - changedSlider.min) / (changedSlider.max - changedSlider.min);
-
-        // הנוסחה ההפוכה: אחוז הכסף = שורש של (1 פחות אחוז הזמן)
-        const valueForSqrt = 1 - screenTimePercentage;
-        const newMoneyPercentage = Math.sqrt(Math.max(0, valueForSqrt)); // Math.max מונע שורש למספר שלילי
-        
-        const newPocketMoney = newMoneyPercentage * (pocketMoneySlider.max - pocketMoneySlider.min) + parseFloat(pocketMoneySlider.min);
-
-        pocketMoneySlider.value = newPocketMoney;
-        updateSliderVisuals(pocketMoneySlider);
+    const currentValue = parseFloat(slider.value);
+    const min = parseFloat(slider.min);
+    const max = parseFloat(slider.max);
+    
+    // בודק אם זה המחוון של זמן המסך כדי לעצב את הטקסט
+    if (slider.id === 'screenTime') {
+        // מציג את הערך עם ספרה אחת אחרי הנקודה (לדוגמה: "2.5")
+        valueElement.innerText = currentValue.toFixed(1);
+    } else {
+        // אחרת, מציג מספר מעוגל עבור דמי הכיס
+        valueElement.innerText = Math.round(currentValue);
     }
+
+    const thumbWidth = 28;
+    const trackWidth = slider.offsetWidth;
+    const percentage = (max - min) === 0 ? 0 : (currentValue - min) / (max - min);
+    
+    const thumbPosition = percentage * (trackWidth - thumbWidth);
+    
+    valueElement.style.right = `${thumbPosition}px`;
+    valueElement.style.left = 'auto';
+
+    const colorStop = `linear-gradient(to left, #E6F19A ${percentage * 100}%, rgba(0, 0, 0, 0.1) ${percentage * 100}%)`;
+    slider.style.background = colorStop;
 }
+
+
+// /**
+//  * מעדכן את המחוון התלוי בהתבסס על המחוון שהשתנה.
+//  * משתמש בנוסחת "תשואה שולית פוחתת" (חזקה ושורש).
+//  */
+// function handleSliderDependency(changedSlider) {
+//     const pocketMoneySlider = document.getElementById('pocketMoney');
+//     const screenTimeSlider = document.getElementById('screenTime');
+//     if (!pocketMoneySlider || !screenTimeSlider) return;
+
+//     // --- לוגיקה חדשה ---
+//     if (changedSlider.id === 'pocketMoney') {
+//         // אם מזיזים את דמי הכיס, חשב את זמן המסך החדש
+//         const moneyPercentage = (changedSlider.value - changedSlider.min) / (changedSlider.max - changedSlider.min);
+        
+//         // הנוסחה: אחוז הזמן = 1 פחות (אחוז הכסף בריבוע)
+//         const newScreenTimePercentage = 1 - Math.pow(moneyPercentage, 2);
+        
+//         const newScreenTime = newScreenTimePercentage * (screenTimeSlider.max - screenTimeSlider.min) + parseFloat(screenTimeSlider.min);
+        
+//         screenTimeSlider.value = newScreenTime;
+//         updateSliderVisuals(screenTimeSlider);
+
+//     } else if (changedSlider.id === 'screenTime') {
+//         // אם מזיזים את זמן המסך, חשב את דמי הכיס החדשים
+//         const screenTimePercentage = (changedSlider.value - changedSlider.min) / (changedSlider.max - changedSlider.min);
+
+//         // הנוסחה ההפוכה: אחוז הכסף = שורש של (1 פחות אחוז הזמן)
+//         const valueForSqrt = 1 - screenTimePercentage;
+//         const newMoneyPercentage = Math.sqrt(Math.max(0, valueForSqrt)); // Math.max מונע שורש למספר שלילי
+        
+//         const newPocketMoney = newMoneyPercentage * (pocketMoneySlider.max - pocketMoneySlider.min) + parseFloat(pocketMoneySlider.min);
+
+//         pocketMoneySlider.value = newPocketMoney;
+//         updateSliderVisuals(pocketMoneySlider);
+//     }
+// }
 
 // --- Carousel (UPDATED for Bidirectional Swipe) ---
 function setupCarousel() {
