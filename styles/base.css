@@ -56,18 +56,13 @@ body {
 
 /* --- Unified Structure Rules --- */
 .screen-header-area {
-    flex-shrink: 0;
-    /* REMOVE the fixed height */
-    /* height: 20%; */ 
-    
-    /* ADD padding to create a smaller frame around the logo */
-    padding: 2vh 0; 
-    
+    flex-shrink: 0; /* Header will not shrink */
+    height: 15%;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 80px;
-    position: relative;
+    position: relative; /* For z-index stacking if needed */
     z-index: 5;
 }
 
