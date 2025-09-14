@@ -8,6 +8,7 @@ let autoTransitionTimeout;
 
 // --- Main Initializer ---
 document.addEventListener('DOMContentLoaded', function() {
+    // --- Main App Setup ---
     setupScreens();
     startAutoTransition();
     setupTouchSupport();
@@ -18,9 +19,53 @@ document.addEventListener('DOMContentLoaded', function() {
     if (window.registrationManager) {
         window.registrationManager.init();
     }
-
     updateProgressBar(1);
+
+    // --- Email Copy Link Setup ---
+    const emailLink = document.getElementById('copyEmailLink');
+    if (emailLink) {
+        const emailSpan = emailLink.querySelector('span');
+        const emailAddress = emailSpan.dataset.email;
+        const originalText = emailSpan.textContent;
+
+        emailLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            navigator.clipboard.writeText(emailAddress).then(() => {
+                emailSpan.textContent = 'הועתק!';
+                setTimeout(() => {
+                    emailSpan.textContent = originalText;
+                }, 1300);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        });
+    }
+
+    // --- Share Copy Link Setup ---
+    const shareLink = document.getElementById('shareLink');
+    if (shareLink) {
+        const shareSpan = shareLink.querySelector('span');
+        const originalText = shareSpan.textContent;
+        const linkToCopy = shareLink.dataset.linkToCopy;
+
+        shareLink.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevents the link from navigating
+            navigator.clipboard.writeText(linkToCopy).then(() => {
+                shareSpan.textContent = 'הועתק!';
+                setTimeout(() => {
+                    shareSpan.textContent = originalText;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy link: ', err);
+                shareSpan.textContent = 'שגיאה בהעתקה';
+                 setTimeout(() => {
+                    shareSpan.textContent = originalText;
+                }, 2000);
+            });
+        });
+    }
 });
+
 
 // --- Screen Setup ---
 function setupScreens() {
@@ -114,8 +159,6 @@ function setupSliders() {
             updateSliderVisuals(event.target);
         });
 
-        // When a touch starts ON the slider, set the flag to true.
-        // This event fires before the document's touchstart event.
         slider.addEventListener('touchstart', () => {
             isSliderInteraction = true;
         }, { passive: true });
@@ -177,31 +220,32 @@ function setupCarousel() {
 
 // --- Touch & Keyboard Support ---
 
-// ✨ UPDATED: This function contains the corrected logic for handling slider interaction.
+// ✨ UPDATED: Logic for handling screen 7 swiping
 function setupTouchSupport() {
     let startX = 0;
 
     document.addEventListener('touchstart', e => {
-        // We DO NOT reset the flag here. This allows the slider's touchstart
-        // event to set the flag to 'true' without it being immediately overwritten.
         startX = e.touches[0].clientX;
     }, { passive: true });
 
 
     document.addEventListener('touchend', e => {
-        // First, check the flag. If it's true, it means the touch started on a slider.
+        // ✨ ADDED: Block all page-level swipes on the final screen
+        if (currentScreen === 7) {
+            return;
+        }
+
         if (isSliderInteraction) {
-            // Block the swipe and, importantly, reset the flag for the next touch.
             isSliderInteraction = false;
             return;
         }
 
-        // If the flag was false, it was a normal touch, so proceed with swipe logic.
         const diffX = startX - e.changedTouches[0].clientX;
 
         // Swipe Left (Forward in RTL)
         if (diffX > 50) {
-            if (currentScreen !== 6 && currentScreen !== 7) {
+            // Screen 7 is already blocked by the check above
+            if (currentScreen !== 6) {
                 nextScreen();
             }
         }
@@ -214,10 +258,17 @@ function setupTouchSupport() {
     }, { passive: true });
 }
 
+// ✨ UPDATED: Logic for handling screen 7 keyboard navigation
 function setupKeyboardSupport() {
     document.addEventListener('keydown', e => {
+        // ✨ ADDED: Block all keyboard navigation on the final screen
+        if (currentScreen === 7) {
+            return;
+        }
+
         if (e.key === 'ArrowLeft' || e.key === ' ') {
-            if (currentScreen !== 6 && currentScreen !== 7) {
+            // Screen 7 is already blocked by the check above
+            if (currentScreen !== 6) {
                 nextScreen();
             }
         }
@@ -228,60 +279,6 @@ function setupKeyboardSupport() {
         }
     });
 }
-
-// --- Email Copy Link ---
-document.addEventListener('DOMContentLoaded', () => {
-    const emailLink = document.getElementById('copyEmailLink');
-    if (emailLink) {
-        const emailSpan = emailLink.querySelector('span');
-        const emailAddress = emailSpan.dataset.email;
-        const originalText = emailSpan.textContent;
-
-        emailLink.addEventListener('click', (event) => {
-            event.preventDefault();
-            navigator.clipboard.writeText(emailAddress).then(() => {
-                emailSpan.textContent = 'הועתק!';
-                setTimeout(() => {
-                    emailSpan.textContent = originalText;
-                }, 1300);
-            }).catch(err => {
-                console.error('Failed to copy text: ', err);
-            });
-        });
-    }
-});
-
-// --- Share Copy Link ---
-document.addEventListener('DOMContentLoaded', function() {
-    const shareLink = document.getElementById('shareLink');
-    if (shareLink) {
-        const shareSpan = shareLink.querySelector('span');
-        const originalText = shareSpan.textContent;
-        const linkToCopy = shareLink.dataset.linkToCopy;
-
-        shareLink.addEventListener('click', (event) => {
-            event.preventDefault(); // Prevents the link from navigating
-
-            navigator.clipboard.writeText(linkToCopy).then(() => {
-                // --- Success Feedback ---
-                shareSpan.textContent = 'הועתק!';
-
-                // Revert the text back after 2 seconds
-                setTimeout(() => {
-                    shareSpan.textContent = originalText;
-                }, 2000);
-
-            }).catch(err => {
-                console.error('Failed to copy link: ', err);
-                // Optional: show an error to the user
-                shareSpan.textContent = 'שגיאה בהעתקה';
-                 setTimeout(() => {
-                    shareSpan.textContent = originalText;
-                }, 2000);
-            });
-        });
-    }
-});
 
 // --- Global Functions ---
 window.nextScreen = nextScreen;
