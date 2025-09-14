@@ -39,9 +39,17 @@
                 </div>
                 <div class="screen-main">
                     <div class="s2-content">
+                        
                         <p class="s2-intro-text">עדיין רבים עם הילדים על זמן מסך?</p>
-                        <p class="s2-intro-text">ניסיתם כבר הכל וכלום לא עובד? 😟</p>
+                        <p class="s2-intro-text">ניסיתם כבר הכל וכלום לא עובד?</p>
                         <h2 class="s2-main-headline">אתם לא לבד!</h2>
+                        
+                        <img src="images/family-photoroom.png" alt="Family struggling with screen time" class="s2-image">
+
+                        
+                        
+                        
+                        
                     </div>
                 </div>
                 <div class="screen-footer">
@@ -107,15 +115,17 @@
                 <div class="screen-main">
                     <div class="s4-content">
                         <p class="s4-intro-text">
-                            אתם כבר יודעים שבמקרה הזה צריך יותר מצ'ופר קטן כדי לאזן את זמן המסך 😉
+                            בשביל לאזן את זמן המסך דרוש יותר מצ'ופר קטן 😉
                             <br><br>
-                            דמי הכיס הם הפיתיון ואנחנו בונים את החכה
+                            דמי כיס מאזנים את זמן המסך וממחישים לילד ש-
+                            <br>
+                            זמן = כסף
                         </p>
                         <div class="slider-container">
                             <label for="pocketMoney" class="s4-question">כמה דמי כיס בשבוע תרצו לתת לילד שלכם?</label>
                             <div class="slider-wrapper">
                                 <span class="slider-value" id="pocketMoneyValue">50</span>
-                                <input type="range" id="pocketMoney" class="interactive-slider" min="0" max="100" value="50" data-value-id="pocketMoneyValue">
+                                <input type="range" id="pocketMoney" class="interactive-slider" min="0" max="100" value="35" data-value-id="pocketMoneyValue">
                                 <div class="slider-labels">
                                     <span>0 ש"ח</span>
                                     <span>100 ש"ח</span>
@@ -126,7 +136,7 @@
                             <label for="screenTime" class="s4-question">כמה זמן מסך יומי תרצו שהילד יקבל?</label>
                             <div class="slider-wrapper">
                                 <span class="slider-value" id="screenTimeValue">1.5</span>
-                                <input type="range" id="screenTime" class="interactive-slider" min="0" max="3" value="2.3" step="0.1" data-value-id="screenTimeValue">
+                                <input type="range" id="screenTime" class="interactive-slider" min="0" max="3" value="1.8" step="0.1" data-value-id="screenTimeValue">
                                 <div class="slider-labels">
                                     <span>0 שעות</span>
                                     <span>3 שעות</span>
@@ -208,7 +218,7 @@
                             </div>
                         </div>
                         <p class="s6-intro-text">החופש הגדול מאחורינו! בואו נפתח את השנה בטוב!</p>
-                        <p class="s6-intro-text">השאירו פרטים ואנחנו נשלח לכם את הקישור למוצר שיחזיר לכם את האיזון בבית</p>
+                        <p class="s6-intro-text">השאירו פרטים ואנחנו נשלח לכם את הקישור למוצר שיחזיר לכם את איזון בבית</p>
                         <h2 class="s6-main-headline">👇 השאירו פרטים 👇</h2>
                         <form class="s6-form" id="registrationForm">
                             <div class="s6-form-row">
@@ -233,7 +243,9 @@
                     </div>
                 </div>
                 <div class="screen-footer">
-                    <button type="submit" form="registrationForm" class="screen-btn-next">שלח</button>
+                    <button type="submit" form="registrationForm" class="screen-btn-next" id="submitBtn">
+                        <span>שלח</span>
+                    </button>
                     <div class="s6-footer-contact">
                     <p class="s6-intro-text">צור קשר</p>
                     <a href="#" id="copyEmailLink" class="contact-link-item" title="Copy email to clipboard">
@@ -265,9 +277,14 @@
                 <div class="screen-main">
                     <div class="s7-content">
                         <h2 class="s7-final-headline">ממש בקרוב איתכם!</h2>
+
+                        <a href="#" id="shareLink" class="s7-share-link" data-link-to-copy="https://balance-time.joystie.com">
+                            <img src="images/copy-link-icon.png" alt="Copy Link" class="s7-share-icon">
+                            <span>שתפו עם מי שהיה רוצה להצטרף אלינו</span>
+                        </a>
+
                         <div class="s7-carousel">
                             <div class="s7-carousel-track">
-                               
                                 <div class="fact-card">
                                     <div class="fact-card-content">
                                         <p class="fact-number">43%</p>
@@ -286,7 +303,7 @@
                                         <p class="fact-source">מתוך פודקאסט Digital Social Hour שמארח את ד״ר ארתור ברוקס</p>
                                     </div>
                                 </div>
-                                 <div class="fact-card">
+                                <div class="fact-card">
                                     <div class="fact-card-content">
                                         <p class="fact-number">6.7</p>
                                         <p class="fact-text">גיל מתן טלפון חכם בישראל</p>

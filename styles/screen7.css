@@ -22,7 +22,7 @@
     font-size: clamp(1.5rem, 6vw, 2rem);
     color: #E6F19A;
     margin-top: 0.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0rem;
 }
 
 /* Carousel container - this is the visible window */
@@ -83,4 +83,36 @@
     font-size: 0.75rem;
     color: #075F8F;
     margin-top: 2rem;
+}
+
+
+/* --- Share Link Styling --- */
+.s7-share-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px; /* A bit more space between icon and text */
+    text-decoration: none;
+    color: #FFFCF8;
+    font-family: 'Varela Round', sans-serif;
+    font-size: clamp(0.9rem, 3vw, 1rem);
+    transition: opacity 0.2s ease;
+    margin-top: 0.5rem; /* Add some space above */
+    cursor: pointer;
+}
+
+.s7-share-link:hover {
+    opacity: 0.8;
+}
+
+.s7-share-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+/* Add this new rule to your screen7.css file */
+.s7-share-link.copied span {
+    color: #E6F19A;
+    font-weight: bold;
+    transition: color 0.2s ease-in-out;
 }

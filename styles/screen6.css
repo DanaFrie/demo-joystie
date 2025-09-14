@@ -168,3 +168,32 @@
     font-weight: bold;
     transition: color 0.1s ease-in-out;
 }
+
+/* --- Button Submitting State --- */
+.screen-btn-next.submitting {
+    pointer-events: none; /* Disable clicks while submitting */
+    position: relative;
+    color: transparent; /* Hide the original text ('שלח') */
+}
+
+/* This creates the spinner animation */
+.screen-btn-next.submitting::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin-top: -10px;
+    margin-left: -10px;
+    border: 3px solid rgba(40, 39, 67, 0.2);
+    border-top-color: #282743;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

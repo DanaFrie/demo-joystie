@@ -1,25 +1,73 @@
 // scripts/clean.js
 
 // --- App State ---
+let isSliderInteraction = false;
 let currentScreen = 1;
 const totalScreens = 7;
 let autoTransitionTimeout;
 
 // --- Main Initializer ---
 document.addEventListener('DOMContentLoaded', function() {
+    // --- Main App Setup ---
     setupScreens();
     startAutoTransition();
     setupTouchSupport();
     setupKeyboardSupport();
-    setupSliders(); 
+    setupSliders();
     setupCarousel();
-    
+
     if (window.registrationManager) {
         window.registrationManager.init();
     }
-    
     updateProgressBar(1);
+
+    // --- Email Copy Link Setup ---
+    const emailLink = document.getElementById('copyEmailLink');
+    if (emailLink) {
+        const emailSpan = emailLink.querySelector('span');
+        const emailAddress = emailSpan.dataset.email;
+        const originalText = emailSpan.textContent;
+
+        emailLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            navigator.clipboard.writeText(emailAddress).then(() => {
+                emailSpan.textContent = 'הועתק!';
+                setTimeout(() => {
+                    emailSpan.textContent = originalText;
+                }, 1300);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        });
+    }
+
+    // --- Share Copy Link Setup ---
+    const shareLink = document.getElementById('shareLink');
+    if (shareLink) {
+        const shareSpan = shareLink.querySelector('span');
+        const originalText = shareSpan.textContent;
+        const linkToCopy = shareLink.dataset.linkToCopy;
+
+        shareLink.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevents the link from navigating
+            navigator.clipboard.writeText(linkToCopy).then(() => {
+                shareSpan.textContent = 'הועתק!';
+                shareLink.classList.add('copied'); // ✨ ADDED: Apply the new style
+                setTimeout(() => {
+                    shareSpan.textContent = originalText;
+                    shareLink.classList.remove('copied'); // ✨ ADDED: Remove the style
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy link: ', err);
+                shareSpan.textContent = 'שגיאה בהעתקה';
+                setTimeout(() => {
+                    shareSpan.textContent = originalText;
+                }, 2000);
+            });
+        });
+}
 });
+
 
 // --- Screen Setup ---
 function setupScreens() {
@@ -33,7 +81,7 @@ function setupScreens() {
     }
 }
 
-// --- Navigation Functions (UPDATED for Video Control) ---
+// --- Navigation Functions ---
 function startAutoTransition() {
     autoTransitionTimeout = setTimeout(() => {
         if (currentScreen === 1) {
@@ -48,6 +96,13 @@ function nextScreen() {
     }
 }
 
+// ✨ MODIFIED: This function now prevents going back to screen 1
+function prevScreen() {
+    // Only allow navigating back if the current screen is 3 or higher
+    if (currentScreen > 2) {
+        moveToScreen(currentScreen - 1);
+    }
+}
 
 function moveToScreen(screenNumber) {
     if (screenNumber < 1 || screenNumber > totalScreens) return;
@@ -57,7 +112,6 @@ function moveToScreen(screenNumber) {
     const currentScreenEl = document.getElementById(`screen${currentScreen}`);
     if (currentScreenEl) {
         currentScreenEl.classList.remove('active');
-        // VIDEO FIX: Pause video if we are leaving screen 5
         if (currentScreenEl.id === 'screen5') {
             const video = currentScreenEl.querySelector('.animation-video');
             if (video) video.pause();
@@ -68,15 +122,14 @@ function moveToScreen(screenNumber) {
     const nextScreenEl = document.getElementById(`screen${currentScreen}`);
     if (nextScreenEl) {
         nextScreenEl.classList.add('active');
-        // VIDEO FIX: Play video if we are entering screen 5
         if (nextScreenEl.id === 'screen5') {
             const video = nextScreenEl.querySelector('.animation-video');
             if (video) {
-                video.currentTime = 0; // Rewind video to the start
+                video.currentTime = 0;
                 video.play();
             }
         }
-        
+
         if (nextScreenEl.id === 'screen6') {
             if (window.eventTracker) {
                 window.eventTracker.trackScreen6Visit();
@@ -89,14 +142,11 @@ function moveToScreen(screenNumber) {
 
 // --- Progress Bar Update ---
 function updateProgressBar(screenIndex) {
-    const totalSegments = 6; 
     if (screenIndex > 1) {
         const screenElement = document.getElementById(`screen${screenIndex}`);
         if (screenElement) {
             const activeSegment = screenElement.querySelector(`.progress-segment:nth-child(${screenIndex - 1})`);
-            // First, clear all segments on the current screen
             screenElement.querySelectorAll('.progress-segment').forEach(seg => seg.classList.remove('active'));
-            // Then, activate the correct one
             if (activeSegment) {
                 activeSegment.classList.add('active');
             }
@@ -110,17 +160,15 @@ function setupSliders() {
     sliders.forEach(slider => {
         updateSliderVisuals(slider);
         slider.addEventListener('input', (event) => {
-            const changedSlider = event.target;
-            updateSliderVisuals(changedSlider);
-            handleSliderDependency(changedSlider);
+            updateSliderVisuals(event.target);
         });
+
+        slider.addEventListener('touchstart', () => {
+            isSliderInteraction = true;
+        }, { passive: true });
     });
 }
 
-/**
- * מעדכן את המראה הוויזואלי של מחוון (slider).
- * תפקיד הפונקציה הזו הוא קוסמטי בלבד ואין צורך לשנות אותה.
- */
 function updateSliderVisuals(slider) {
     const valueElement = document.getElementById(slider.dataset.valueId);
     if (!valueElement) return;
@@ -128,22 +176,17 @@ function updateSliderVisuals(slider) {
     const currentValue = parseFloat(slider.value);
     const min = parseFloat(slider.min);
     const max = parseFloat(slider.max);
-    
-    // בודק אם זה המחוון של זמן המסך כדי לעצב את הטקסט
+
     if (slider.id === 'screenTime') {
-        // מציג את הערך עם ספרה אחת אחרי הנקודה (לדוגמה: "2.5")
         valueElement.innerText = currentValue.toFixed(1);
     } else {
-        // אחרת, מציג מספר מעוגל עבור דמי הכיס
         valueElement.innerText = Math.round(currentValue);
     }
 
     const thumbWidth = 28;
     const trackWidth = slider.offsetWidth;
     const percentage = (max - min) === 0 ? 0 : (currentValue - min) / (max - min);
-    
     const thumbPosition = percentage * (trackWidth - thumbWidth);
-    
     valueElement.style.right = `${thumbPosition}px`;
     valueElement.style.left = 'auto';
 
@@ -151,86 +194,24 @@ function updateSliderVisuals(slider) {
     slider.style.background = colorStop;
 }
 
-
-/**
- * מעדכן את המחוון התלוי בהתבסס על המחוון שהשתנה.
- * משתמש בנוסחת "תשואה שולית פוחתת" (חזקה ושורש).
- */
-function handleSliderDependency(changedSlider) {
-    const pocketMoneySlider = document.getElementById('pocketMoney');
-    const screenTimeSlider = document.getElementById('screenTime');
-    if (!pocketMoneySlider || !screenTimeSlider) return;
-
-    // --- לוגיקה חדשה ---
-    if (changedSlider.id === 'pocketMoney') {
-        // אם מזיזים את דמי הכיס, חשב את זמן המסך החדש
-        const moneyPercentage = (changedSlider.value - changedSlider.min) / (changedSlider.max - changedSlider.min);
-        
-        // הנוסחה: אחוז הזמן = 1 פחות (אחוז הכסף בריבוע)
-        const newScreenTimePercentage = 1 - Math.pow(moneyPercentage, 2);
-        
-        const newScreenTime = newScreenTimePercentage * (screenTimeSlider.max - screenTimeSlider.min) + parseFloat(screenTimeSlider.min);
-        
-        screenTimeSlider.value = newScreenTime;
-        updateSliderVisuals(screenTimeSlider);
-
-    } else if (changedSlider.id === 'screenTime') {
-        // אם מזיזים את זמן המסך, חשב את דמי הכיס החדשים
-        const screenTimePercentage = (changedSlider.value - changedSlider.min) / (changedSlider.max - changedSlider.min);
-
-        // הנוסחה ההפוכה: אחוז הכסף = שורש של (1 פחות אחוז הזמן)
-        const valueForSqrt = 1 - screenTimePercentage;
-        const newMoneyPercentage = Math.sqrt(Math.max(0, valueForSqrt)); // Math.max מונע שורש למספר שלילי
-        
-        const newPocketMoney = newMoneyPercentage * (pocketMoneySlider.max - pocketMoneySlider.min) + parseFloat(pocketMoneySlider.min);
-
-        pocketMoneySlider.value = newPocketMoney;
-        updateSliderVisuals(pocketMoneySlider);
-    }
-}
-
-// --- Carousel (UPDATED for Bidirectional Swipe) ---
+// --- Carousel ---
 function setupCarousel() {
     const track = document.querySelector('.s7-carousel-track');
     if (!track) return;
-
     const cards = Array.from(track.children);
-    if (cards.length === 0) return; // Prevent errors if no cards
-    
-    const cardWidth = cards[0].offsetWidth + 20; // Card width + margin
-    let currentIndex = cards.length - 1; 
-    let startX = 0;
-    let currentTranslate = 0;
-    let prevTranslate = 0;
+    if (cards.length === 0) return;
 
-    // Set initial position
-    prevTranslate = -currentIndex * cardWidth;
+    const cardWidth = cards[0].offsetWidth + 20;
+    let currentIndex = cards.length - 1;
+    let startX = 0, currentTranslate = 0, prevTranslate = -currentIndex * cardWidth;
     track.style.transform = `translateX(${prevTranslate}px)`;
 
-    const touchStart = (event) => {
-        startX = event.touches[0].clientX;
-        track.style.transition = 'none'; // Disable transition during drag
-    };
-
-    const touchMove = (event) => {
-        const currentX = event.touches[0].clientX;
-        const diff = currentX - startX;
-        currentTranslate = prevTranslate + diff;
-        track.style.transform = `translateX(${currentTranslate}px)`;
-    };
-
+    const touchStart = (event) => { startX = event.touches[0].clientX; track.style.transition = 'none'; };
+    const touchMove = (event) => { const diff = event.touches[0].clientX - startX; currentTranslate = prevTranslate + diff; track.style.transform = `translateX(${currentTranslate}px)`; };
     const touchEnd = () => {
         const movedBy = currentTranslate - prevTranslate;
-        
-        // Swipe left (forward)
-        if (movedBy < -75 && currentIndex < cards.length - 1) {
-            currentIndex++;
-        } 
-        // Swipe right (backward)
-        else if (movedBy > 75 && currentIndex > 0) {
-            currentIndex--;
-        }
-        
+        if (movedBy < -75 && currentIndex < cards.length - 1) { currentIndex++; }
+        else if (movedBy > 75 && currentIndex > 0) { currentIndex--; }
         prevTranslate = -currentIndex * cardWidth;
         track.style.transition = 'transform 0.4s ease-in-out';
         track.style.transform = `translateX(${prevTranslate}px)`;
@@ -241,64 +222,65 @@ function setupCarousel() {
     track.addEventListener('touchend', touchEnd);
 }
 
+// --- Touch & Keyboard Support ---
 
+// ✨ MODIFIED: Now blocks swiping on Screen 1
 function setupTouchSupport() {
     let startX = 0;
-    document.addEventListener('touchstart', e => startX = e.touches[0].clientX, { passive: true });
+
+    document.addEventListener('touchstart', e => {
+        startX = e.touches[0].clientX;
+    }, { passive: true });
+
+
     document.addEventListener('touchend', e => {
+        // ✨ MODIFIED: Block all page-level swipes on the FIRST and final screen
+        if (currentScreen === 1 || currentScreen === 7) {
+            return;
+        }
+
+        if (isSliderInteraction) {
+            isSliderInteraction = false;
+            return;
+        }
+
         const diffX = startX - e.changedTouches[0].clientX;
-        
-        // Check for a left swipe
+
+        // Swipe Left (Forward in RTL)
         if (diffX > 50) {
-            // MODIFIED: Only advance if not on screens 4, 6, or 7
-            if (currentScreen !== 4 && currentScreen !== 6 && currentScreen !== 7) {
+            if (currentScreen !== 6) {
                 nextScreen();
             }
+        }
+        // Swipe Right (Backward in RTL)
+        else if (diffX < -50) {
+            // This will call the modified prevScreen() function
+            prevScreen();
         }
     }, { passive: true });
 }
 
+// ✨ MODIFIED: Now blocks keyboard navigation on Screen 1
 function setupKeyboardSupport() {
     document.addEventListener('keydown', e => {
-        // Check for forward navigation keys
+        // ✨ MODIFIED: Block all keyboard navigation on the FIRST and final screen
+        if (currentScreen === 1 || currentScreen === 7) {
+            return;
+        }
+
         if (e.key === 'ArrowLeft' || e.key === ' ') {
-            // MODIFIED: Only advance if not on screens 4, 6, or 7
-            if (currentScreen !== 4 && currentScreen !== 6 && currentScreen !== 7) {
+            if (currentScreen !== 6) {
                 nextScreen();
             }
+        }
+        else if (e.key === 'ArrowRight') {
+            // This will call the modified prevScreen() function
+            prevScreen();
         }
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const emailLink = document.getElementById('copyEmailLink');
-    
-    if (emailLink) {
-        const emailSpan = emailLink.querySelector('span');
-        const emailAddress = emailSpan.dataset.email;
-        const originalText = emailSpan.textContent;
-
-        emailLink.addEventListener('click', (event) => {
-            event.preventDefault(); // Prevents the link from jumping to the top of the page
-
-            // Use the modern Clipboard API
-            navigator.clipboard.writeText(emailAddress).then(() => {
-                // --- Provide user feedback on success ---
-                emailSpan.textContent = 'הועתק!';
-
-                // Revert the text back after 2 seconds
-                setTimeout(() => {
-                    emailSpan.textContent = originalText;
-                }, 1300);
-
-            }).catch(err => {
-                console.error('Failed to copy text: ', err);
-                // You could show an error message to the user here if needed
-            });
-        });
-    }
-});
-
 // --- Global Functions ---
 window.nextScreen = nextScreen;
+window.prevScreen = prevScreen;
 window.moveToScreen = moveToScreen;
