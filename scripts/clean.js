@@ -52,18 +52,20 @@ document.addEventListener('DOMContentLoaded', function() {
             event.preventDefault(); // Prevents the link from navigating
             navigator.clipboard.writeText(linkToCopy).then(() => {
                 shareSpan.textContent = 'הועתק!';
+                shareLink.classList.add('copied'); // ✨ ADDED: Apply the new style
                 setTimeout(() => {
                     shareSpan.textContent = originalText;
+                    shareLink.classList.remove('copied'); // ✨ ADDED: Remove the style
                 }, 2000);
             }).catch(err => {
                 console.error('Failed to copy link: ', err);
                 shareSpan.textContent = 'שגיאה בהעתקה';
-                 setTimeout(() => {
+                setTimeout(() => {
                     shareSpan.textContent = originalText;
                 }, 2000);
             });
         });
-    }
+}
 });
 
 

@@ -96,7 +96,7 @@
     font-family: 'Varela Round', sans-serif;
     font-size: clamp(0.9rem, 3vw, 1rem);
     transition: opacity 0.2s ease;
-    margin-top: 1.5rem; /* Add some space above */
+    margin-top: 0.5rem; /* Add some space above */
     cursor: pointer;
 }
 
@@ -108,4 +108,11 @@
     width: 24px;
     height: 24px;
     object-fit: contain;
+}
+
+/* Add this new rule to your screen7.css file */
+.s7-share-link.copied span {
+    color: #E6F19A;
+    font-weight: bold;
+    transition: color 0.2s ease-in-out;
 }
