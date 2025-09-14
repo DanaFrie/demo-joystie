@@ -94,8 +94,10 @@ function nextScreen() {
     }
 }
 
+// ✨ MODIFIED: This function now prevents going back to screen 1
 function prevScreen() {
-    if (currentScreen > 1) {
+    // Only allow navigating back if the current screen is 3 or higher
+    if (currentScreen > 2) {
         moveToScreen(currentScreen - 1);
     }
 }
@@ -220,7 +222,7 @@ function setupCarousel() {
 
 // --- Touch & Keyboard Support ---
 
-// ✨ UPDATED: Logic for handling screen 7 swiping
+// ✨ MODIFIED: Now blocks swiping on Screen 1
 function setupTouchSupport() {
     let startX = 0;
 
@@ -230,8 +232,8 @@ function setupTouchSupport() {
 
 
     document.addEventListener('touchend', e => {
-        // ✨ ADDED: Block all page-level swipes on the final screen
-        if (currentScreen === 7) {
+        // ✨ MODIFIED: Block all page-level swipes on the FIRST and final screen
+        if (currentScreen === 1 || currentScreen === 7) {
             return;
         }
 
@@ -244,38 +246,34 @@ function setupTouchSupport() {
 
         // Swipe Left (Forward in RTL)
         if (diffX > 50) {
-            // Screen 7 is already blocked by the check above
             if (currentScreen !== 6) {
                 nextScreen();
             }
         }
         // Swipe Right (Backward in RTL)
         else if (diffX < -50) {
-            if (currentScreen > 1) {
-                prevScreen();
-            }
+            // This will call the modified prevScreen() function
+            prevScreen();
         }
     }, { passive: true });
 }
 
-// ✨ UPDATED: Logic for handling screen 7 keyboard navigation
+// ✨ MODIFIED: Now blocks keyboard navigation on Screen 1
 function setupKeyboardSupport() {
     document.addEventListener('keydown', e => {
-        // ✨ ADDED: Block all keyboard navigation on the final screen
-        if (currentScreen === 7) {
+        // ✨ MODIFIED: Block all keyboard navigation on the FIRST and final screen
+        if (currentScreen === 1 || currentScreen === 7) {
             return;
         }
 
         if (e.key === 'ArrowLeft' || e.key === ' ') {
-            // Screen 7 is already blocked by the check above
             if (currentScreen !== 6) {
                 nextScreen();
             }
         }
         else if (e.key === 'ArrowRight') {
-            if (currentScreen > 1) {
-                prevScreen();
-            }
+            // This will call the modified prevScreen() function
+            prevScreen();
         }
     });
 }

@@ -28,9 +28,9 @@
 }
 
 .s2-image {
-    max-width: 100%; /* Ensures the image doesn't overflow its container */
+    max-width: 75%; /* Ensures the image doesn't overflow its container */
     height: auto;    /* Maintains aspect ratio */
-    margin-top: 1.5rem; /* Add some space above the image */
-    margin-bottom: 1.5rem; /* Add some space below the image, before the button */
+    margin-top: 1.0rem; /* Add some space above the image */
+    margin-bottom: 1.0rem; /* Add some space below the image, before the button */
     display: block; /* Ensures it takes up its own line for margin */
 }
