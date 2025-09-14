@@ -4,8 +4,6 @@
     background-position: center;
 }
 
-/* In screen6.css */
-
 .s6-content {
     display: flex;
     flex-direction: column;
@@ -14,13 +12,8 @@
     gap: 1rem;
     width: 100%;
     max-width: 345px;
-    position: relative; /* ✨ ADD THIS LINE if not present, crucial for z-index */
-    z-index: 10;     /* ✨ ADD THIS LINE (or a higher number if needed) */
-    background-color: #282743; /* ✨ ADD THIS LINE: Use your screen's background color */
-    /* You might need to adjust padding-top/bottom to ensure space for the fixed header/footer */
-    padding-top: 20px; /* Adjust as needed to push content down from any fixed header */
-    padding-bottom: 20px; /* Adjust as needed */
 }
+
 .s6-intro-text {
     font-family: 'Varela Round', sans-serif;
     font-size: clamp(1rem, 4vw, 1.5rem);
@@ -174,4 +167,33 @@
     color: #E6F19A; 
     font-weight: bold;
     transition: color 0.1s ease-in-out;
+}
+
+/* --- Button Submitting State --- */
+.screen-btn-next.submitting {
+    pointer-events: none; /* Disable clicks while submitting */
+    position: relative;
+    color: transparent; /* Hide the original text ('שלח') */
+}
+
+/* This creates the spinner animation */
+.screen-btn-next.submitting::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin-top: -10px;
+    margin-left: -10px;
+    border: 3px solid rgba(40, 39, 67, 0.2);
+    border-top-color: #282743;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
