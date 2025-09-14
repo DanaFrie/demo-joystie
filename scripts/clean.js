@@ -111,6 +111,8 @@ function updateProgressBar(screenIndex) {
 }
 
 // --- Sliders ---
+
+// ✨ UPDATED: Added event stoppers to prevent sliders from triggering page swipes
 function setupSliders() {
     const sliders = document.querySelectorAll('.interactive-slider');
     sliders.forEach(slider => {
@@ -120,6 +122,17 @@ function setupSliders() {
             updateSliderVisuals(changedSlider);
             // handleSliderDependency(changedSlider);
         });
+
+        // --- NEW CODE START ---
+        // Stop touch events on the slider from bubbling up to the document,
+        // which prevents them from triggering the page swipe.
+        const stopPropagation = (event) => {
+            event.stopPropagation();
+        };
+
+        slider.addEventListener('touchstart', stopPropagation, { passive: true });
+        slider.addEventListener('touchmove', stopPropagation, { passive: true });
+        // --- NEW CODE END ---
     });
 }
 
@@ -205,14 +218,13 @@ function setupTouchSupport() {
 
         // Swipe Left (Forward in RTL)
         if (diffX > 50) {
-            // Cannot swipe forward from screens 4 (sliders), 6 (form), or 7 (end)
-            if (currentScreen !== 4 && currentScreen !== 6 && currentScreen !== 7) {
+            // MODIFIED: Removed screen 4 from the exclusion
+            if (currentScreen !== 6 && currentScreen !== 7) {
                 nextScreen();
             }
         }
         // Swipe Right (Backward in RTL)
         else if (diffX < -50) {
-            // Can swipe back from any screen except the first one
             if (currentScreen > 1) {
                 prevScreen();
             }
@@ -225,21 +237,19 @@ function setupKeyboardSupport() {
     document.addEventListener('keydown', e => {
         // Forward navigation (ArrowLeft for RTL, Space)
         if (e.key === 'ArrowLeft' || e.key === ' ') {
-            // Cannot navigate forward from screens 4, 6, or 7 with keys
-            if (currentScreen !== 4 && currentScreen !== 6 && currentScreen !== 7) {
+            // MODIFIED: Removed screen 4 from the exclusion
+            if (currentScreen !== 6 && currentScreen !== 7) {
                 nextScreen();
             }
         }
         // Backward navigation (ArrowRight for RTL)
         else if (e.key === 'ArrowRight') {
-            // Can navigate back from any screen except the first one
             if (currentScreen > 1) {
                 prevScreen();
             }
         }
     });
 }
-
 
 document.addEventListener('DOMContentLoaded', () => {
     const emailLink = document.getElementById('copyEmailLink');
