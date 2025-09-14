@@ -89,7 +89,7 @@ class RegistrationManager {
         if (!this.submitBtn) return;
         this.submitBtn.classList.remove('submitting');
         // Temporarily show a success message inside the button
-        this.submitBtn.innerHTML = `<span>נשלח בהצלחה! ✓</span>`;
+        // this.submitBtn.innerHTML = `<span>נשלח בהצלחה! ✓</span>`;
         // No need to re-enable, we are navigating away
     }
 

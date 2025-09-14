@@ -251,6 +251,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// --- Share Copy Link ---
+document.addEventListener('DOMContentLoaded', function() {
+    const shareLink = document.getElementById('shareLink');
+    if (shareLink) {
+        const shareSpan = shareLink.querySelector('span');
+        const originalText = shareSpan.textContent;
+        const linkToCopy = shareLink.dataset.linkToCopy;
+
+        shareLink.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevents the link from navigating
+
+            navigator.clipboard.writeText(linkToCopy).then(() => {
+                // --- Success Feedback ---
+                shareSpan.textContent = 'הועתק!';
+
+                // Revert the text back after 2 seconds
+                setTimeout(() => {
+                    shareSpan.textContent = originalText;
+                }, 2000);
+
+            }).catch(err => {
+                console.error('Failed to copy link: ', err);
+                // Optional: show an error to the user
+                shareSpan.textContent = 'שגיאה בהעתקה';
+                 setTimeout(() => {
+                    shareSpan.textContent = originalText;
+                }, 2000);
+            });
+        });
+    }
+});
+
 // --- Global Functions ---
 window.nextScreen = nextScreen;
 window.prevScreen = prevScreen;
