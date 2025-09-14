@@ -1,6 +1,7 @@
 // scripts/clean.js
 
 // --- App State ---
+let isSliderInteraction = false;
 let currentScreen = 1;
 const totalScreens = 7;
 let autoTransitionTimeout;
@@ -112,7 +113,6 @@ function updateProgressBar(screenIndex) {
 
 // --- Sliders ---
 
-// ✨ UPDATED: Added event stoppers to prevent sliders from triggering page swipes
 function setupSliders() {
     const sliders = document.querySelectorAll('.interactive-slider');
     sliders.forEach(slider => {
@@ -120,19 +120,12 @@ function setupSliders() {
         slider.addEventListener('input', (event) => {
             const changedSlider = event.target;
             updateSliderVisuals(changedSlider);
-            // handleSliderDependency(changedSlider);
         });
 
-        // --- NEW CODE START ---
-        // Stop touch events on the slider from bubbling up to the document,
-        // which prevents them from triggering the page swipe.
-        const stopPropagation = (event) => {
-            event.stopPropagation();
-        };
-
-        slider.addEventListener('touchstart', stopPropagation, { passive: true });
-        slider.addEventListener('touchmove', stopPropagation, { passive: true });
-        // --- NEW CODE END ---
+        // ✨ NEW: When a touch starts on the slider, set the flag to true.
+        slider.addEventListener('touchstart', () => {
+            isSliderInteraction = true;
+        }, { passive: true });
     });
 }
 
@@ -209,16 +202,30 @@ function setupCarousel() {
     track.addEventListener('touchend', touchEnd);
 }
 
-// ✨ UPDATED: Bidirectional touch support with screen rules
+
 function setupTouchSupport() {
     let startX = 0;
-    document.addEventListener('touchstart', e => startX = e.touches[0].clientX, { passive: true });
+
+    // This listener now also resets our flag
+    document.addEventListener('touchstart', e => {
+        // ✨ Reset the flag for every new touch
+        isSliderInteraction = false;
+        startX = e.touches[0].clientX;
+    }, { passive: true });
+
+
     document.addEventListener('touchend', e => {
+        // ✨ First, check if the interaction was on a slider. If so, exit.
+        if (isSliderInteraction) {
+            return;
+        }
+
+        // If it wasn't a slider, proceed with swipe logic as normal
         const diffX = startX - e.changedTouches[0].clientX;
 
         // Swipe Left (Forward in RTL)
         if (diffX > 50) {
-            // MODIFIED: Removed screen 4 from the exclusion
+            // Screen 4 is now allowed
             if (currentScreen !== 6 && currentScreen !== 7) {
                 nextScreen();
             }
