@@ -4,6 +4,8 @@
     background-position: center;
 }
 
+/* In screen6.css */
+
 .s6-content {
     display: flex;
     flex-direction: column;
@@ -12,8 +14,13 @@
     gap: 1rem;
     width: 100%;
     max-width: 345px;
+    position: relative; /* ✨ ADD THIS LINE if not present, crucial for z-index */
+    z-index: 10;     /* ✨ ADD THIS LINE (or a higher number if needed) */
+    background-color: #282743; /* ✨ ADD THIS LINE: Use your screen's background color */
+    /* You might need to adjust padding-top/bottom to ensure space for the fixed header/footer */
+    padding-top: 20px; /* Adjust as needed to push content down from any fixed header */
+    padding-bottom: 20px; /* Adjust as needed */
 }
-
 .s6-intro-text {
     font-family: 'Varela Round', sans-serif;
     font-size: clamp(1rem, 4vw, 1.5rem);
