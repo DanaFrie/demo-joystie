@@ -224,6 +224,7 @@ function setupCarousel() {
 
 // --- Touch & Keyboard Support ---
 
+// ✨ MODIFIED: Now blocks swiping on Screen 1
 function setupTouchSupport() {
     let startX = 0;
 
