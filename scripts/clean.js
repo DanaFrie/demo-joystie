@@ -224,7 +224,6 @@ function setupCarousel() {
 
 // --- Touch & Keyboard Support ---
 
-// ✨ MODIFIED: Swapped swipe directions
 function setupTouchSupport() {
     let startX = 0;
 
@@ -232,7 +231,9 @@ function setupTouchSupport() {
         startX = e.touches[0].clientX;
     }, { passive: true });
 
+
     document.addEventListener('touchend', e => {
+        // ✨ MODIFIED: Block all page-level swipes on the FIRST and final screen
         if (currentScreen === 1 || currentScreen === 7) {
             return;
         }
@@ -244,15 +245,16 @@ function setupTouchSupport() {
 
         const diffX = startX - e.changedTouches[0].clientX;
 
-        // SWAPPED: Swipe Right (now Forward)
-        if (diffX < -50) { // Was diffX > 50
+        // Swipe Left (Forward in RTL)
+        if (diffX > 50) {
             if (currentScreen !== 6) {
-                nextScreen(); // Was prevScreen()
+                nextScreen();
             }
         }
-        // SWAPPED: Swipe Left (now Backward)
-        else if (diffX > 50) { // Was diffX < -50
-            prevScreen(); // Was nextScreen()
+        // Swipe Right (Backward in RTL)
+        else if (diffX < -50) {
+            // This will call the modified prevScreen() function
+            prevScreen();
         }
     }, { passive: true });
 }
