@@ -15,7 +15,7 @@
 .s3-piggy-bank-img {
     max-width: 75%; /* This makes it the same relative size as the family photo */
     height: auto;
-    margin-top: 1rem; /* Adds some breathing room above the image */
+    margin-top: 0rem; /* Adds some breathing room above the image */
 }
 
 .s3-intro-text, .s3-sub-text {
